@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<head>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="js/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+		function movieDialog(str) {
+			$("#movie_src").attr("src", $(str).attr("value"));
+			$("#a_video").load();
+			document.getElementById("a_video").play();
+	};
+</script>
+</head>
+<style>
+ input {
+	 display: inline-block;
+	 box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.8);
+ }
+
+</style>
+<body>
+
+			<div style="text-align:center">
+				<div class="headline">
+					<p><img src="spark.png" width="100%"></p>
+				</div>
+				<div id="wrapper" style="text-align:center;float:center">
+				<div style="float:left;width:50%;text-align:right;font-size:1.3em">
+					<p><iframe type="text/html" allowtransparency="true" frameborder="0" width="450" height="450" src="http://www.youtube.com/embed/MTV0GPtTz_M?iv_load_policy=3&amp;controls=1&amp;rel=0&amp;html5=1&amp;autohide=1&amp;start=7"></iframe></p>
+					<br/>
+				</div>
+				<div style="float:left;margin:0 10px;width:45%;">
+					<div id="imglist" style="background:#ffffff">
+						<p style="background:#ffffff;padding:5px;text-align:center;font-size:1.3em">[Crack List]<br/>
+							 <br/><input type="image" src="frame0.jpg" onclick="window.location.href='btn1.html'" style="width:100px" title="0:00"/>
+						   <input type="image" src="frame45.jpg" onclick="window.location.href='btn2.html'" style="width:100px" title="0:01"/></a>
+						   <input type="image" src="frame120.jpg" onclick="window.location.href='btn3.html'" style="width:100px" title="0:04"/></a>
+						 	<input type="image" src="frame170.jpg" onclick="window.location.href='#'" style="width:100px" title="0:07"/></a></p>
+						<p style="background:#ffffff;padding:5px"><input type="image" src="frame195.jpg" onclick="window.location.href='btn5.html'" style="width:100px" title="0:08"/></a>
+							<input type="image" src="frame220.jpg" onclick="window.location.href='btn6.html'" style="width:100px" title="0:09"/></a>
+						 	<input type="image" src="frame250.jpg" onclick="window.location.href='btn7.html'" style="width:100px" title="0:10"/></a>
+						  <input type="image" src="frame320.jpg" onclick="window.location.href='btn8.html'" style="width:100px" title="0:12"/></a></p>
+							 <br/>
+					</div>
+					<div style="background:#ffffff">
+						<p style="line-height:2em;font-size:1.3em;background:#ffffff">[Crack Information]<br/></p>
+						<p style="background:#ffffff"><span style="background:#ffffff">Predicted boxes: <span style="background:#ffffff;color:red">xmin: 0.19 ymin: 21.30 xmax: 832.17 ymax: 201.42</p>
+						<br/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br/>
+
+</body>
+</html>
