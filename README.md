@@ -67,7 +67,7 @@ S/W가 리포트 한 부분들에 대해서만 정밀진단 -> 안전 진단 시
 1. Crack detection : Install Anaconda, Keras, Tensorflow, Python -> 명령어 써주기
 2. Crack width estimation : Install Scikit-image -> pip install -U scikit-image </br>
 3. Crack location reporting : </br>
-
+크랙 이미지 데이터 링크, h5 파일 링크, annotation file들 링크도 </br>
 </br>
 
 ## Development Documentation
