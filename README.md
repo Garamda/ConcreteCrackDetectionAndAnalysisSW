@@ -9,3 +9,13 @@ Crack on the surface of concrete is the one of the most clear signs of deteriora
 Plus, UAV(Unmanned Aerial Vehicle), or drone, can amplify the synergy for software-based safety inspection because it can easily approach where human is impossible to reach. Especially, drone becomes particularly useful if used to examine the large scale concrete structure where safety inspectors are not able to reach every parts directly. That's why drone is recently being actively researched and utilized for large scale concrete structure health monitoring system. Therefore, the software tool for drone-based safety inspection is needed for the efficient examination in the future.
 </br></br>
 However, there isn't open source software yet to detect crack in the video recorded by drone which shoots the concrete structure surface. Hereby, I share my own concrete crack detection software for drone-based safety inspection. Single Shot Multibox Detector(SSD) is used for detecting cracks and Hybrid image processing is employed to estimate the crack width.
+
+</br>
+## Problem of Existing Safety Inspection Methodd
+## The Role of SPARK (role? 이상함)
+## User Benefit
+## Performance
+## Framework
+## How to use
+## Development Documentation
+## LICENSE
