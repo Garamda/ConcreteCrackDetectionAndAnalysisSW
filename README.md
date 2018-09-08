@@ -1,6 +1,6 @@
 # Concrete Crack Detection Using Drone & Deep Learning
 
-Introduction
+## Introduction
 </br></br></br>
     Crack on the surface of concrete is the one of the most clear signs of deterioration of concrete structure. Therefore, the concrete crack on the surface is the first target for the safety inspection, in most cases. Since the concrete crack has typical patterns, software can support the structual health monitoring through automatic crack detection. However, there has been mainly hardware-supported approach to safety inspection, not software-based one. Software-supported approach can save the cost, time and effort for saftey inspection through automatic evaluation on concrete image data.
 </br></br>
