@@ -11,6 +11,7 @@ Plus, UAV(Unmanned Aerial Vehicle), or drone, can amplify the synergy for softwa
 However, there isn't open source software yet to detect crack in the video recorded by drone which shoots the concrete structure surface. Hereby, I share my own concrete crack detection software for drone-based safety inspection. Single Shot Multibox Detector(SSD) is used for detecting cracks and Hybrid image processing is employed to estimate the crack width.
 
 </br>
+
 ## Problem of Current Safety Inspection Methods
 The Current problem of hardware-based concrete structure safety inspection.
 the Korea Expressway Corporation(한국도로공사) U-BIROS
