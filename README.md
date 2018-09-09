@@ -77,8 +77,10 @@ S/W가 리포트 한 부분들에 대해서만 정밀진단 -> 안전 진단 시
 
 ## Reference
 (링크 달아주기)</br>
-1. SSD 논문 </br>
-2. 균열 폭 논문
+1. Liu, Wei, et al. "SSD: Single shot multibox detector." European conference on computer vision. Springer, Cham, 2016. (Link : https://arxiv.org/abs/1512.02325) </br>
+2. Kim, Hyunjun, et al. "Concrete crack identification using a UAV incorporating hybrid image processing." Sensors 17.9 (2017): 2052. (Link : http://www.mdpi.com/1424-8220/17/9/2052/htm)
+
+</br>
 
 ## LICENSE
 </br>
