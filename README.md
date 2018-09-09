@@ -23,11 +23,12 @@ https://github.com/Garamda/SPARK/blob/master/images/U-BIROS.jpg
 
 </br>
 
-## The Role of SPARK (role? 이상함)
-1. Crack detection
-2. Crack width estimation
-3. Crack location reporting
+## The Objective of SPARK
+1. Crack detection : SPARK detects the cracks on the surface of the concrete structure.</br>
+2. Crack width estimation & classification based on seriousness: SPARK estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
+3. Crack location reporting : SPARK reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
 
+</br>
 </br>
 
 ## User Benefit
