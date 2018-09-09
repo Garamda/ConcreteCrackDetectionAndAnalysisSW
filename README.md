@@ -59,19 +59,18 @@ S/W가 리포트 한 부분들에 대해서만 정밀진단 -> 안전 진단 시
 
 SPARK | Detection | ()
 :---: | :---: | :---:
-Crack Images from Google | dd | **초급 개발자**
-코드 라인수 | dd | **10~30 라인**
-재사용/확장성 | 전체 소스코드 수정 | **애니메이션 추가 및 조합**
-안정성 | Thread 자체관리(에러율 높음) | **Android SDK에서 Thread 자동관리**
+Crack Images from Google | d | d
+d | d | d
+d | d | d
+d | d | d
 
 <br><br>
 
 SPARK | Width Estimation | ()
 :---: | :---: | :---:
-개발 난이도 | 고급 개발자 | **초급 개발자**
-코드 라인수 | 500~100 라인 | **10~30 라인**
-재사용/확장성 | 전체 소스코드 수정 | **애니메이션 추가 및 조합**
-안정성 | Thread 자체관리(에러율 높음) | **Android SDK에서 Thread 자동관리**
+d | d | d
+d | d | d
+d | d | d
 
 </br>
 
