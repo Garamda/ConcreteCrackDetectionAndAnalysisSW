@@ -17,7 +17,8 @@ The Current problem of hardware-based concrete structure safety inspection.
 the Korea Expressway Corporation(한국도로공사) U-BIROS
 https://github.com/Garamda/SPARK/blob/master/images/U-BIROS.jpg
 
-1. Automatation : The assessment on data is still done by safety inspectors, even though the process can be automated through software because crack has typical patterns. Hardware can only help to collect data, but cannot make any decision on data instead of human.
+1. Automatation
+</br>The assessment on data is still done by safety inspectors, even though the process can be automated through software because crack has typical patterns. Hardware can only help to collect data, but cannot make any decision on data instead of human.
 
 2. Expensive
 1) The rental charge for under-bridge inspection vehicle : under-bridge inspection vehicle is used when inspecting the status of bridges. The problem is that the rental charges are expensive. It costs approximately 1,000 dollars(1,000,000 won) per one rental. The drone, however, demands only one purchase cost.<br>
