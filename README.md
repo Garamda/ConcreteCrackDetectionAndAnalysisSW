@@ -38,7 +38,7 @@ https://github.com/Garamda/SPARK/blob/master/images/U-BIROS.jpg
 
 1. Automation of Safety Inspection
 </br>
-The examination on structual health can be partially automated. That means, S/W initially detects danger signs of the concrete structure. SPARK selects which crack must be inspected based on width, which makes the further safety inspection more efficient. SPARK filters.
+The examination on structual health can be partially automated. SPARK selects which crack must be inspected based on width, which makes the further safety inspection done by human more efficient. SPARK "filters".
 </br></br>
 2. Reducing the time spent on Safety Inspection
 </br>
