@@ -38,8 +38,7 @@ https://github.com/Garamda/SPARK/blob/master/images/U-BIROS.jpg
 
 1. Automation of Safety Inspection
 </br>
--  데이터에 대한 판단 -> 자동화 
-S/W가 1차적으로 위험 징후를 탐지, 추가 진단이 부분들을 선별
+The examination on structual health can be partially automated. That means, S/W initially detects danger signs of the concrete structure. SPARK selects which crack must be inspected based on width, which makes the further safety inspection more efficient. SPARK filters.
 </br></br>
 2. Reducing the time spent on Safety Inspection
 </br>
