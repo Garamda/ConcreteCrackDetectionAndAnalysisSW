@@ -88,6 +88,7 @@ d | d | d
 2. Crack width estimation : Install Scikit-image -> pip install -U scikit-image </br>
 3. Crack location reporting : </br>
 크랙 이미지 데이터 링크, h5 파일 링크, annotation file들 링크도 </br>
+기본 설정에 기반한 내 친절한 설명이 들어가 있어야 함 -> 내 오픈소스 장점 어필 가능</br>
 </br>
 
 ## Development Documentation
