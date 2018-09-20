@@ -43,7 +43,7 @@ The examination on structual health can be partially automated. SPARK selects wh
 2. Reducing the time spent on Safety Inspection
 </br>
 추후 정밀 진단이 필요한 균열들의 위치를 미리 파악 
-S/W가 리포트 한 부분들에 대해서만 정밀진단 -> 안전 진단 시 소요 시간이 단축
+S/W가 리포트 한 부분들에 대해서만 정밀진단 -> 안전 진단 시 소요 시간이 단축 -> 면담 결과를 표로 넣을것(객관적인 근거, 별도의 항목이 되는게 좋을듯)
 </br></br>
 3. One-stop System 
 </br>
