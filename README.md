@@ -92,7 +92,8 @@ d | d | d
 </br>
 
 ## Development Documentation
-
+</br>
+파일들간 관계를 설명, 중요한 파일들 위주로 설명 13 ~ 15 참조
 </br>
 
 ## Reference
