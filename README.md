@@ -42,8 +42,7 @@ The examination on structual health can be partially automated. SPARK selects wh
 </br></br>
 2. Reducing the time spent on Safety Inspection
 </br>
-추후 정밀 진단이 필요한 균열들의 위치를 미리 파악 
-S/W가 리포트 한 부분들에 대해서만 정밀진단 -> 안전 진단 시 소요 시간이 단축 -> 면담 결과를 표로 넣을것(객관적인 근거, 별도의 항목이 되는게 좋을듯)
+추후 정밀 진단이 필요한 균열들의 위치와 심각한 정도를 사전에 알 수 있습니다. SPARK가 균열의 폭을 바탕으로 심각도가 높은 균열들부터 우선적으로 리포트하기 때문입니다. 따라서 안전 진단 시 소요 시간이 단축됩니다. 
 </br></br>
 3. One-stop System 
 </br>
@@ -94,6 +93,10 @@ d | d | d
 ## Development Documentation
 </br>
 파일들간 관계를 설명, 중요한 파일들 위주로 설명 13 ~ 15 참조, EX) 얘는 학습용, 얘는 진단용, 얘는 UI, 얘는 라이브러리 등등 큰 범주들을 쓴 후 각 부분들을 들어가서 자세히, 폴더 구조로 해보자! 이게 제일 좋을듯 / 설정 파일(유저가 직접 변경해서 사용해야 하는 경우)은 
+</br></br>
+
+## Consultation
+면담 결과를 표로 넣을것(객관적인 근거)
 </br>
 
 ## Reference
