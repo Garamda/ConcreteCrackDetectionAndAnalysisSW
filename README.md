@@ -54,7 +54,7 @@ The examination on structual health can be partially automated. SPARK selects wh
 </br></br>
 
 ## Performance
-도표 사용, 실제 test 결과를 넣을 것(코드 사용하여 evaluation한 결과)
+도표 사용, 실제 test 결과를 넣을 것(코드 사용하여 evaluation한 결과), 업데이트
 
 <br><br>
 
