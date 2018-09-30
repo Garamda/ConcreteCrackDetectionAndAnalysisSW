@@ -86,7 +86,7 @@ d | d | d
 1. Crack detection : Install Anaconda, Keras, Tensorflow, Python -> 명령어 써주기
 2. Crack width estimation : Install Scikit-image -> pip install -U scikit-image </br>
 3. Crack location reporting : </br>
-크랙 이미지 데이터 링크, h5 파일 링크, annotation file들 링크도 </br>
+크랙 이미지 데이터 링크, h5 파일 링크, annotation file들 링크도 -> 구글 드라이브 링크로 </br>
 기본 설정에 기반한 내 친절한 설명이 들어가 있어야 함 -> 내 오픈소스 장점 어필 가능</br>
 </br>
 
