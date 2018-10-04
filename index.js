@@ -69,20 +69,22 @@ router.get('/', function(req, res, next) {
 	//videolist = filelist;
 
 	res.render('./index', {
-		'title': 'Express',
+		title: videolist[0],
 		videoList: videolist,
 		listsize: videolist.length
 	});
 });
 // videoname을 이용한 python파일 실행 및 이미지,텍스트 정보 send
-router.post('/video/:name', function(req, res){
+router.get('/video/:name', function(req, res){
 	//1. videoname으로 videoname 보내주기
 	//todo: python-shell을 통한 code 실행 ->각각의 디렉토리에 이미지 텍스트 구현 완료 되었다 가정한 개발
 	
 	var filename = req.params.name;
 	console.log(filename);
+	var videolist = fs.readdirSync(videoDir);
+
 	//전체 이미지 이름 리스트
-	var videolist = fs.readdirSync('./public/images/'+filename+'/');
+	var imglist = fs.readdirSync('./public/images/'+filename+'/');
 	//균열 감지된 이미지 이름 리스트
 	var framelist = fs.readdirSync('./public/images/'+filename+'_crack/');
 	//균열 감지된 이미지 정보 이름 리스트
@@ -90,10 +92,14 @@ router.post('/video/:name', function(req, res){
 	// var files = fs.readdirSync('C:\Users\rlaal\Desktop\frame');
 	
 	// console.log(videolist);
-
-	res.send({
+	console.log(videolist);
+	console.log(imglist);
+	res.render('./index', {
 		title: filename,
 		videoList: videolist,
+		listsize: videolist.length,
+		imgList: imglist,
+		imglistsize: imglist.length,
 		frameList: framelist,
 		textList: textlist
 	});
