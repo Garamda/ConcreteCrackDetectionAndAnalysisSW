@@ -7,28 +7,32 @@
 </br></br>
 뿐만 아니라, 드론이 여기에 함께 사용된다면 더욱 효율적인 안전 진단이 가능합니다. 드론은 사람이 직접 닿기 어려운 부분에 쉽게 접근할 수 있기 때문입니다. 특히 대형 콘크리트 구조물을 진단할 때 드론은 더욱 유용하게 쓰입니다. 대형 구조물은 안전 진단 인력이 모든 부분을 직접 살피기 불가능하기 때문입니다. 이러한 이유로 드론은 최근들어 대형 콘크리트 구조물의 안전 진단을 위해 활발히 연구 및 활용되고 있습니다. 따라서 드론을 활용한 안전 진단에 맞는 SW가 필요합니다.
 </br></br>
-하지만 드론으로 촬영한 콘크리트 외벽 영상에서 균열을 탐지하고 분석하는 오픈소스 SW는 아직 없는 실정입니다. 이제 SPARK에서 드론을 활용한 안전 진단을 위한 콘크리트 균열 탐지 SW를 사용하실 수 있습니다. 균열을 탐지하기 위한 딥러닝 알고리즘으로는 Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras)를 사용했습니다. 균열의 폭을 측정하기 위해서 Image binarization, Skeletonize, Edge detection의 전처리 방법론을 사용하였습니다.
+하지만 드론으로 촬영한 콘크리트 외벽 영상에서 균열을 탐지하고 분석하는 오픈소스 SW는 아직 없는 실정입니다. 이제 SPARK에서 드론을 활용한 안전 진단을 위한 콘크리트 균열 탐지 SW를 사용하실 수 있습니다. 균열을 탐지하기 위한 딥러닝 알고리즘으로는 Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용했습니다. 균열의 폭을 측정하기 위해서 Image binarization, Skeletonize, Edge detection의 전처리 방법론을 사용하였습니다.
 
 </br>
 
 ## 기존 안전 진단의 문제점
-The Current problem of hardware-based concrete structure safety inspection.
-the Korea Expressway Corporation(한국도로공사) U-BIROS
-https://github.com/Garamda/SPARK/blob/master/images/U-BIROS.jpg
 
-1. Automatation
-</br>The assessment on data is still done by safety inspectors, even though the process can be automated through software because crack has typical patterns. Hardware can only help to collect data, but cannot make any decision on data instead of human.
-
-2. Expensive 
-1) The rental charge for under-bridge inspection vehicle : under-bridge inspection vehicle is used when inspecting the status of bridges. The problem is that the rental charges are expensive. It costs approximately 1,000 dollars(1,000,000 won) per one rental. The drone, however, demands only one purchase cost.<br>
-2) Additional manpower for inspection : when inspecting bridges, normally 8 people are needed to control the traffic, 2 people to get on the arm of the vehicle to examine the under-bridge, and 1 person to drive the vehicle. Totally, 11 people are required to inspect one bridge, which means not only rental cost for the special vehicle, but also additional employees are needed when using the existing way of structual health monitoring. Only 1 person will be needed if using drone for same purpose.
+1. 자동화 되지 않은 진단
+</br>데이터에 대한 모든 판단은 안전 진단 인력이 직접 해야합니다. 균열은 일정한 패턴을 가지고 있기 때문에 SW를 통한 자동화가 가능함에도, 특수 장비는 데이터를 수집하는 것만 도울 뿐입니다.
 
 </br>
 
-## The Objective of SPARK
-1. Crack detection : SPARK detects the cracks on the surface of the concrete structure.</br>
-2. Crack width estimation & classification based on seriousness: SPARK estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
-3. Crack location reporting : SPARK reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
+2. 높은 비용 
+<img src="https://user-images.githubusercontent.com/28426269/46481857-3bf91d80-c82f-11e8-8a9f-718a18bb5e86.jpg" width="70%">
+
+교량 안전 진단을 예시로 설명하겠습니다.
+
+1) 굴절차 대여 비용 : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 SPARK를 사용하면 초기 구매 비용만 소요됩니다.<br></br>
+2) 투입 인력 : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
+
+</br>
+</br>
+
+## SPARK의 목표
+1. 균열 탐지 : 콘크리트 외벽상의 균열을 탐지합니다.</br></br>
+2. 균열 폭 측정 & 심각도에 따른 분류: 탐지된 균열의 폭을 측정하고, 폭이 큰 심각한 균열을 우선적으로 리포트 합니다. 균열의 폭을 측정하는 이유는 실제 안전 진단 현장에서 위험도를 판단하기 위해 사용하는 중요한 정보이기 때문입니다. 폭이 0.3mm보다 크면 유지 보수 작업에 들어가고, 0.3mm~0.2mm에 해당하면 추이를 지켜봅니다. 0.2mm 미만인 균열은 위험도가 낮다고 판단합니다. SPARK에서는 이 기준을 그대로 사용하였습니다. 폭이 0.3mm보다 큰 균열은 "상"위험군으로, 0.3mm ~ 0.2mm의 균열은 "중"위험군으로, 0.2mm 미만의 균열은 "하" 위험군으로 분류합니다.</br></br>
+3. 균열 위치 리포트 : 균열이 탐지 되었을 때의 드론 GPS 정보를 리포트합니다.
 
 </br>
 </br>
