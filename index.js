@@ -1,3 +1,16 @@
+(function(){
+var childProcess = require("child_process");
+var oldSpawn = childProcess.spawn;
+function mySpawn(){
+        console.log('spawn called');
+        console.log(arguments);
+var result = oldSpawn.apply(this, arguments);
+return result;
+}
+    childProcess.spawn = mySpawn;
+})();
+console.log( process.env.PATH );
+
 var express = require('express');
 var router = express.Router();
 var videoDir = './public/videos';
@@ -28,6 +41,14 @@ var multer = require('multer')
 // 	console.log('results: %j', results);
   
 //   });  
+
+let {PythonShell} = require('python-shell');
+//console.log(PythonShell);
+
+PythonShell.run('./engine/test.py', null, function (err, results) {
+  if (err) throw err;
+  console.log('result: %j', results);
+});
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
