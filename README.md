@@ -25,8 +25,8 @@
 
 교량 안전 진단을 예시로 설명하겠습니다.
 
-1) 굴절차 대여 비용 : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 SPARK를 사용하면 초기 구매 비용만 소요됩니다.<br></br>
-2) 투입 인력 : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 이와 같은 이유로, 10개 교량을 기준으로 평균 4천만원의 진단 비용이 발생합니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
+[1] 굴절차 대여 비용 : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 SPARK를 사용하면 초기 구매 비용만 소요됩니다.<br></br>
+[2] 투입 인력 : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 이와 같은 이유로, 10개 교량을 기준으로 평균 4천만원의 진단 비용이 발생합니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
 
 </br>
 </br>
@@ -40,11 +40,10 @@
 </br>
 
 ## 사용 기술
-1. 균열 탐지 : Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras)를 사용하였습니다. </br>
+1. 균열 탐지 : Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용하였습니다. </br>
 2. 균열 폭 측정 : 
 
 ## SPARK의 장점
-
 1. 안전 진단의 자동화
 </br>
 콘크리트 구조물의 안전 진단을 일부 자동화 할 수 있습니다. SPARK가 어떤 균열이 추가 진단이 필요할 지를 균열 폭에 근거하여 리포트합니다. 이는 후에 있을 추가 정밀 진단이 더욱 효율적으로 이루어지도록 돕습니다.
@@ -91,11 +90,10 @@ d | d | d
 </br>
 
 ## Framework
-1. Crack detection : Keras 2.2, Tensorflow 1.9.0, Python 3.6.6</br>
+1. Crack detection : Keras 2.2, Tensorflow-gpu 1.9.0, Python 3.6.6</br>
 2. Crack width estimation : Scikit-image 0.14.0, Python 3.6.6</br>
-3. Crack location reporting : </br>
 
-</br>
+</br></br>
 
 ## 사용하는 방법
 1. 균열 탐지 딥러닝 : Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
@@ -124,28 +122,16 @@ d | d | d
 
 <br><br>
 
-ㅇㅁㅇ | 대상 교량 | 시행 횟수 | 점검 수준 | 굴절차 필요 여부 | 비용(교량의 종류 및 길이에 따라 금액 산정이 달라지기는 하지만, 평균적으로)
-| 필요 인원 | 소요 시간 |
-:---: | :---: | :---: | :---: | :---: | :---: | :---: | :---:
-정기점검 | d | d | d | d | d | d | d |
-정밀 안전점검 | d | d | d | d | d | d | d |
-정밀 진단 | d | d | d | d | d | d | d |
-
-</br>
-
 ## Reference
 1. Liu, Wei, et al. "SSD: Single shot multibox detector." European conference on computer vision. Springer, Cham, 2016. (Link : https://arxiv.org/abs/1512.02325) </br>
 2. Kim, Hyunjun, et al. "Concrete crack identification using a UAV incorporating hybrid image processing." Sensors 17.9 (2017): 2052. (Link : http://www.mdpi.com/1424-8220/17/9/2052/htm)
 
-</br>
+</br></br>
 
 ## LICENSE
 오픈소스 어느부분 수정했는지 아주 큰 범주로만 
-</br>
 
-
-
-
+</br></br></br>
 
 # Concrete Crack Detection Using Drone & Deep Learning
 
