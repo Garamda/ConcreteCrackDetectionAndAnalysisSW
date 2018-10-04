@@ -26,7 +26,7 @@
 교량 안전 진단을 예시로 설명하겠습니다.
 
 1) 굴절차 대여 비용 : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 SPARK를 사용하면 초기 구매 비용만 소요됩니다.<br></br>
-2) 투입 인력 : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
+2) 투입 인력 : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 이와 같은 이유로, 10개 교량을 기준으로 평균 4천만원의 진단 비용이 발생합니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
 
 </br>
 </br>
@@ -39,25 +39,37 @@
 </br>
 </br>
 
+## 사용 기술
+1. 균열 탐지 : Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras)를 사용하였습니다. </br>
+2. 균열 폭 측정 : 
+
 ## SPARK의 장점
 
 1. 안전 진단의 자동화
 </br>
-The examination on structual health can be partially automated. SPARK selects which crack must be inspected based on width, which makes the further safety inspection done by human more efficient. SPARK "filters".
+콘크리트 구조물의 안전 진단을 일부 자동화 할 수 있습니다. SPARK가 어떤 균열이 추가 진단이 필요할 지를 균열 폭에 근거하여 리포트합니다. 이는 후에 있을 추가 정밀 진단이 더욱 효율적으로 이루어지도록 돕습니다.
 </br></br>
 2. 비용 감소
-
+</br>
+표 사용
 </br></br>
 3. 안전 진단 시간 절약
-</br></br>
+</br>
 추후 정밀 진단이 필요한 균열들의 위치와 심각한 정도를 사전에 알 수 있습니다. SPARK가 균열의 폭을 바탕으로 심각도가 높은 균열들부터 우선적으로 리포트하기 때문입니다. 따라서 안전 진단 시 소요 시간이 단축됩니다. 
 </br></br>
-4. Assuring the higher level of safety in the long term
+4. 장기적으로 더욱 높은 수준의 안전을 담보 
+</br>
+딥러닝 균열 탐지 엔진은 상당히 높은 수준의 탐지율을 보입니다. 
+</br></br>
+5. 범용성
+</br>
+콘크리트 균열은 건물의 종류, 지역, 국가와 상관없이 모두 비슷한 패턴을 보입니다. 즉, 어느 종류의 대상에 적용이 되건 상관없이 
+</br></br>
 
 </br></br>
 
-## Performance
-도표 사용, 실제 test 결과를 넣을 것(코드 사용하여 evaluation한 결과), 업데이트
+## 성능
+도표 사용, 실제 test 결과를 넣을 것(코드 사용하여 evaluation한 결과)
 
 <br><br>
 
@@ -85,21 +97,30 @@ d | d | d
 
 </br>
 
-## How to use
-1. Crack detection : Install Anaconda, Keras, Tensorflow, Python -> 명령어 써주기
-2. Crack width estimation : Install Scikit-image -> pip install -U scikit-image </br>
-3. Crack location reporting : </br>
-크랙 이미지 데이터 링크, h5 파일 링크, annotation file들 링크도 -> 구글 드라이브 링크로 </br>
+## 사용하는 방법
+1. 균열 탐지 딥러닝 : Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
+2. 균열 폭 측정 알고리즘 : Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하여 설치합니다.</br>```pip install -U scikit-image```
+</br></br>
+1. 균열 이미지 데이터</br>
+1) METU 캠퍼스 균열 이미지 데이터 세트 :  https://data.mendeley.com/datasets/5y9wdsg2zt/1 </br>
+2) </br>
+2. 학습된 weight 파일 : </br>
+3. 크랙 이미지 데이터 링크, h5 파일 링크, annotation file들 링크도 -> 구글 드라이브 링크로 </br>
+4. Annotation 툴 : https://github.com/tzutalin/labelImg </br>
 기본 설정에 기반한 내 친절한 설명이 들어가 있어야 함 -> 내 오픈소스 장점 어필 가능</br>
 </br>
 
-## Development Documentation
+## 개발 문서
 </br>
 파일들간 관계를 설명, 중요한 파일들 위주로 설명 13 ~ 15 참조, EX) 얘는 학습용, 얘는 진단용, 얘는 UI, 얘는 라이브러리 등등 큰 범주들을 쓴 후 각 부분들을 들어가서 자세히, 폴더 구조로 해보자! 이게 제일 좋을듯 / 설정 파일(유저가 직접 변경해서 사용해야 하는 경우)은 
 </br></br>
 
-## Consultation
-면담 결과를 표로 넣을것(객관적인 근거)
+## 면담을 받은 공공기관
+1. 한국건설기술연구원</br>
+2. 한국시설안전공단</br>
+3. 한국시설안전공단 시설성능연구소</br>
+4. 한국도로공사 도로교통연구원</br>
+5. 경기도건설본부 도로건설과 도로시설팀</br>
 
 <br><br>
 
@@ -109,14 +130,6 @@ d | d | d
 정기점검 | d | d | d | d | d | d | d |
 정밀 안전점검 | d | d | d | d | d | d | d |
 정밀 진단 | d | d | d | d | d | d | d |
-
-</br>
-2.	드론을 활용하여 균열을 탐지하고 균열의 폭과 위치를 알려주는 소프트웨어를 사용한다면, 교량을 정기점검 할 때 인력, 시간, 비용을 어느 정도로 절감할 수 있을까요?
-1)	굴절차는 1회 대여에 대략 100만원 이상이 필요합니다. 뿐만 아니라 사용시에 교량 상부에서 따로 신호통제를 필요로 하기 때문에, 8명 정도의 추가 인력이 필요합니다. 드론을 사용하면 굴절차 대여, 신호통제의 문제가 생기지 않기 때문에, 이런 면에서는 드론이 장점을 가진다고 할 수 있습니다.
-2)	세 가지 종류의 안전 진단 중, 육안 점검만을 실시하는 정기점검을 커버할 수 있지 않을까 생각합니다. 다만 정기점검시에도 균열뿐만 아니라 다양한 이상 징후들 역시 관찰하므로, 균열만을 탐지하는 것은 제한적인 솔루션이 될 것입니다.
-</br>
--	드론과 SW를 활용하면, 이상징후의 시간에 따른 내역이 데이터로 관리가 된다는 점이 좋습니다. 
-</br>
 
 </br>
 
