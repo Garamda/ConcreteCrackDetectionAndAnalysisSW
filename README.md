@@ -40,8 +40,21 @@
 </br>
 
 ## 사용 기술
-1. 균열 탐지 : Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용하였습니다. </br>
-2. 균열 폭 측정 : 
+1. 균열 탐지 : Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용하였습니다. 다른 Image Detection 딥러닝 알고리즘에 비해 속도와 탐지 성능 면에서 가장 바람직한 trade-off 관계를 보입니다. 즉, 속도는 빠르면서 높은 수준의 탐지 성능을 보입니다. Faster-RCNN 보다는 빠르며 YOLO 보다는 정확합니다. </br>
+여기에 다양한 균열 이미지 데이터를 학습시켰습니다. Utah 주립 대학교에서 수집한 교량, 도보, 벽의 균열 이미지와, 중동 공과대학교(METU)에서 수집한 학교 건물의 균열 이미지를 사용하였습니다. 이 데이터 세트들은 0.06mm의 미세균열부터 25mm에 이르는 대형 균열까지, 균열 폭의 스펙트럼이 매우 넓어 실제 안전 진단 현장에서 발견할 수 있는 모든 종류의 균열을 반영합니다. 이처럼 다양한 크기, 텍스쳐, 노이즈를 반영한 총 15000여장의 균열 이미지 데이터를 학습하였습니다.
+</br></br>
+2. 균열 폭 측정
+</br>
+1) Image Binarization
+</br>
+이미지 내에서 균열인 부분과 균열이 아닌 부분을 분리하기 위해 이미지를 흑/백의 픽셀로 나누는 작업입니다.
+2) Skeletonize
+</br>
+균열의 중심 뼈대를 추출합니다. 균열의 진행 방향을 알 수 있어, 균열의 폭을 구하는 데 활용됩니다.
+</br>
+3) Edge Detection
+</br>
+균열의 외곽선을 추출합니다. 균열의 폭을 구하는 데 활용됩니다.
 
 ## SPARK의 장점
 1. 안전 진단의 자동화
