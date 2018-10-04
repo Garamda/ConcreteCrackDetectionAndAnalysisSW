@@ -1,7 +1,3 @@
-# 1. »çÀü¿¡ ÇĞ½À½ÃÅ² ±Õ¿­ Å½Áö µö·¯´× weight¿Í Single Shot Multibox Detector modelÀ» ºÒ·¯¿É´Ï´Ù. 
-
-# 1. Upload the pre-trained deep learning weight and Single Shot Multibox Detector model for crack detection.
-
 from keras import backend as K
 from keras.models import load_model
 from keras.preprocessing import image
@@ -11,6 +7,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import cv2
 import time
+import os
 
 from models.keras_ssd300 import ssd_300
 from keras_loss_function.keras_ssd_loss import SSDLoss
@@ -33,10 +30,8 @@ img_width = 300
 
 K.clear_session() 
 
-# º¯¼ö °ªÀº Single Shot Multibox DetectorÀÇ ¿ø·¡ ¼öÄ¡¸¦ º¯°æÇÏÁö ¾Ê°í »ç¿ëÇÏ¿´½À´Ï´Ù.
-# The original value of parameters of 'Single Shot Multibox Detector' was used without any changes.
 model = ssd_300(image_size=(img_height, img_width, 3),
-                n_classes=2,
+                n_classes=1,
                 mode='inference',
                 l2_regularization=0.0005,
                 scales=[0.1, 0.2, 0.37, 0.54, 0.71, 0.88, 1.05], 
@@ -59,11 +54,12 @@ model = ssd_300(image_size=(img_height, img_width, 3),
                 top_k=200,
                 nms_max_output_size=400)
 
-# ÇĞ½ÀµÈ weight¸¦ ºÒ·¯¿À´Â °æ·Î¸¦ ÀÔ·ÂÇÕ´Ï´Ù.
-# Input your own path for pre-trained weight.
-#----------------------¼­¹ö °æ·Î·Î º¯°æ---------------------------
-weights_path = 'C:\\Users\\user\\keras\\ssd_keras\\ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.h5'
+#í•™ìŠµëœ weightì˜ ê²½ë¡œë¥¼ ì§€ì •
+# ----------------------------
+weights_path = '/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/ssd300_pascal_07+12_epoch-04_loss-3.0387_val_loss-3.5244_weight.h5'
 
+# weights_path = 'C:\\Users\\rlaal\\Desktop\\ssd300_pascal_07+12_epoch-04_loss-3.0387_val_loss-3.5244_weight.h5'
+# ----------------------------done
 model.load_weights(weights_path, by_name=True)
 
 adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
@@ -72,57 +68,73 @@ ssd_loss = SSDLoss(neg_pos_ratio=3, alpha=1.0)
 
 model.compile(optimizer=adam, loss=ssd_loss.compute_loss)
 
-# 2. µå·ĞÀÌ ÃÔ¿µÇÑ ÄÜÅ©¸®Æ® ¿Üº® ¿µ»ó¿¡¼­ ÇÁ·¹ÀÓÀ» ÃßÃâÇÕ´Ï´Ù(4fps).
-#    ÀÌ ÇÁ·¹ÀÓ ÀÌ¹ÌÁöµéÀ» ±Õ¿­ Å½Áö µö·¯´× ¿£Áø¿¡ ÀÔ·ÂÇÏ¿© inference¸¦ ÇÕ´Ï´Ù.
-#    InferenceÀÇ °á°ú °ªÀ¸·Î ±Õ¿­ÀÇ À§Ä¡¸¦ bounding boxÀÇ ÇüÅÂ·Î reportÇÕ´Ï´Ù.
+# ì˜ìƒì˜ ê²½ë¡œë¥¼ ì§€ì •í•˜ê³  í”„ë ˆì„ ìº¡ì³
+# ë‚˜ì¤‘ì—ëŠ” ë¹„ë””ì˜¤ ìº¡ì³ë¥¼ í•¨ê³¼ ë™ì‹œì— input_imagesë¦¬ìŠ¤íŠ¸ì— ê³§ë°”ë¡œ ë„£ì–´ë²„ë ¤ì„œ, ë¶ˆí•„ìš”í•œ ì´ë¯¸ì§€ ì…ì¶œë ¥ ê³¼ì •ì„ ì¤„ì´ì
+# 1ì´ˆì— 4í”„ë ˆì„ ìº¡ì³ë¡œ ë°”ê¿ˆ (6í”„ë ˆì„ë§ˆë‹¤ ì €ì¥)
 
-# 2. Extract frames out of the video which recorded the concrete surface shoot by drone(4fps).
-#    Input the frame images into the deep learning engine for inference.
-#    The positional information will be reported as a bounding box, as a result of the inference.
+# from wand.drawing import Drawing
+# from wand.image import Image
+# from wand.color import Color
+# import os
 
+# We will get video name from node.js server this is demo version
 
-# µå·ĞÀ¸·Î ÃÔ¿µÇÑ ¿µ»óÀÇ °æ·Î¸¦ ÀÔ·ÂÇÕ´Ï´Ù.
-# Input the path of the video shoot by drone.
-#----------------------¼­¹ö °æ·Î·Î º¯°æ---------------------------
-vidcap = cv2.VideoCapture('C:\\Users\\user\Desktop\\video5.mp4')
-success,imagefile = vidcap.read()
+# --------------------
+vidcap = cv2.VideoCapture('UI\\video.mp4')
+# vidcap = cv2.VideoCapture('C:\\Users\\rlaal\\Desktop\\video.mp4')
+# -----------------done
+success, imagefile = vidcap.read()
 count = 0
+
+# -----------------make directory
+newimagepath = "images\\video"
+
+if not os.path.exists(newimagepath):
+    os.makedirs(newimagepath)
+newframepath = "images\\video_crack"
+
+if not os.path.exists(newframepath):
+    os.makedirs(newframepath)
+
+newinfopath = "images\\video_info"
+
+if not os.path.exists(newinfopath):
+    os.makedirs(newinfopath)
+# ----------------done
+
 while success:
-    if(count%6==0):
-# ÃßÃâµÈ ÇÁ·¹ÀÓ ÀÌ¹ÌÁöµéÀ» ÀúÀåÇÒ °æ·Î¸¦ ÀÔ·ÂÇÕ´Ï´Ù.
-# Input the path to save the extracted frame images.
-#----------------------¼­¹ö °æ·Î·Î º¯°æ---------------------------
-        cv2.imwrite("C:\\Users\\user\Desktop\\frames\\frame%d.jpg" % count, imagefile)    
-    success,imagefile = vidcap.read()
+
+    if (count % 6 == 0):
+        # í”„ë ˆì„ ìº¡ì³ë¥¼ ì €ì¥í•  ê²½ë¡œ
+        # --------------------
+        imagepath = "images\\video\\%d.jpg" % count, imagefile
+        cv2.imwrite(imagepath)
+        # cv2.imwrite("C:\\Users\\rlaal\\Desktop\\frame\\frame%d.jpg"% count, imagefile)
+        # -------------------done
+    success, imagefile = vidcap.read()
     count += 1
 
-orig_images = [] 
-input_images = [] 
+orig_images = []
+input_images = []
 
-#!!! (Áß¿ä) ¿µ»óÀÇ Àç»ı ½Ã°£À» play_time_secs¿¡ ÀÔ·ÂÇÕ´Ï´Ù. ÃÊ´ÜÀ§ÀÔ´Ï´Ù.
-#!!! (Important) Input the play time of the video into 'play_time_secs' variable, in seconds.
-#--------------------¿µ»óÀ» UI¿¡¼­ ÀÔ·ÂÇÏ¸é, ¿µ»ó Àç»ı ½Ã°£ÀÌ ÀÚµ¿À¸·Î º¯¼ö¿¡ ÀÔ·ÂµÇ°Ô ¹Ù²ÙÀÚ!!!!!------------------- 
-play_time_secs = 13
-frames_count = 24*play_time_secs
-
-for i in range(0,frames_count):
-    if(i%6==0):
-# ÀúÀåÇÑ ÇÁ·¹ÀÓ ÀÌ¹ÌÁöµéÀ» ´Ù½Ã ºÒ·¯¿Ã ¼ö ÀÖµµ·Ï µ¿ÀÏÇÑ °æ·Î¸¦ ÀÔ·ÂÇÕ´Ï´Ù.
-# Input the same path used before to load the saved frame images.
-#----------------------¼­¹ö °æ·Î·Î º¯°æ---------------------------
-        img_path = 'C:\\Users\\user\Desktop\\frames\\frame%d.jpg'%i
+# rangeëŠ” ì¶”í›„ ì˜ìƒ í”Œë ˆì´ íƒ€ì„ ì •ë³´ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ ë³€ê²½
+for i in range(0, 320):
+    if (i % 6 == 0):
+        # í”„ë ˆì„ ìº¡ì³ë¥¼ ë¶ˆëŸ¬ì˜¤ëŠ” ê²½ë¡œ
+        # ---------------------------
+        img_path = 'images\\video\\%d.jpg' % i
+        # img_path = 'C:\\Users\\rlaal\\Desktop\\frame\\frame%d.jpg'%i
+        # ----------------------------done
+        # print(img_path)
         orig_images.append(imread(img_path))
         img = image.load_img(img_path, target_size=(img_height, img_width))
         img = image.img_to_array(img)
         img = np.array(img)
         input_images.append(img)
-        
+
 input_images = np.array(input_images)
 orig_images = np.array(orig_images)
 
-# !!! (Áß¿ä) ÇÑ ¹ø¿¡ Ã³¸®µÇ´Â ÇÁ·¹ÀÓ ÀÌ¹ÌÁöÀÇ °¹¼ö¸¦ ÀÔ·ÂÇÕ´Ï´Ù. º¸À¯ GPU¿¡ µû¶ó ÁÙ¿©¾ß ÇÒ ¼ö ÀÖ½À´Ï´Ù.
-# !!! (Important) Input the number of -------------------
-#--------------------------¿©±â º¯¼ö ¾î¶»°Ô Ã³¸®ÇÒ±î?---------------------------
 num_of_frames = 16
 counting = 0
 saving_bounding_boxes = []
@@ -130,31 +142,50 @@ saving_bounding_boxes = []
 print("Predicted boxes:\n")
 print('   class   conf xmin   ymin   xmax   ymax')
 
+# rangeëŠ” ì¶”í›„ ë³€ìˆ˜ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ ë³€ê²½
 for i in range(0, 4):
-    y_pred = model.predict(input_images[i])
+    y_pred = model.predict(input_images[i * num_of_frames:i * num_of_frames + num_of_frames])
     confidence_threshold = 0.4
 
-    y_pred_thresh = [y_pred[k][y_pred[k,:,1] > confidence_threshold] for k in range(y_pred.shape[0])]
+    y_pred_thresh = [y_pred[k][y_pred[k, :, 1] > confidence_threshold] for k in range(y_pred.shape[0])]
     np.set_printoptions(precision=2, suppress=True, linewidth=90)
 
     for j in range(0, num_of_frames):
-        print('frame :',counting)
+        print('frame :', counting)
+        #   print(y_pred_thresh[j])
         for box in y_pred_thresh[j]:
+            # Transform the predicted bounding boxes for the 300x300 image to the original image dimensions.
             xmin = box[2] * orig_images[0].shape[1] / img_width
             ymin = box[3] * orig_images[0].shape[0] / img_height
             xmax = box[4] * orig_images[0].shape[1] / img_width
             ymax = box[5] * orig_images[0].shape[0] / img_height
-            print('xmin : ',xmin, '  ymin : ',ymin, '  xmax : ',xmax, '  ymax : ',ymax)
-            # ±Õ¿­ÀÌ Å½ÁöµÈ ÇÁ·¹ÀÓÀÇ bounding box À§Ä¡Á¤º¸¸¦ saving_bounding_boxes ¸®½ºÆ®¿¡ ÀúÀåÇÕ´Ï´Ù.
-            # Append the positional information of the bounding box of the detected frame at'saving_bounding_boxes' list.
-            saving_bounding_boxes.append([counting, xmin,ymin,xmax,ymax])
+            print('xmin : ', xmin, '  ymin : ', ymin, '  xmax : ', xmax, '  ymax : ', ymax)
+            # ê· ì—´ì´ íƒì§€ëœ í”„ë ˆì„ê³¼ b-box ì •ë³´ê°€ saving_bounding_boxes <- ì—¬ê¸°ì— ì €ì¥ë¨
+            saving_bounding_boxes.append([(counting), xmin, ymin, xmax, ymax])
+            # --------------------------------------
+            framepath = "images\\video_crack\\frame%d.jpg" % (count), imagefile
+            cv2.imwrite(framepath)
+            # add drawing rectangle
+            #   with Drawing() as draw:
+            #       draw.stroke_width = 4.0
+            #       draw.stroke_color = Color('red')
+            #       draw.fill_color = Color('transparent')
+            #       xMin = int(xmin)
+            #       xMax = int(xmax)
+            #       yMin = int(ymin)
+            #       yMax = int(ymax)
+            #       draw.rectangle(left=xMin, top=yMin, right=xMax, bottom=yMax)
+            #       with Image(filename="images\\video_crack\\frame%d.jpg"% (count)) as image:
+            #           draw(image)
+            #           boximg_path = 'images\\video\\%d.jpg'% count
+            #           image.save(filename=boximg_path)
+            # cv2.imwrite("C:\\Users\\rlaal\\Desktop\\detected\\frame%d.jpg"% (count), imagefile)
+            # ----------------------------------------done
+
         counting += 6
-        if(counting>frames_count): break;
+        if (counting > 320): break;
 
-
-
-# 3. ±Õ¿­Å½Áö µö·¯´× ¿£ÁøÀÌ ¸®Æ÷Æ® ÇÑ ±Õ¿­ À§Ä¡¿¡ ¸Â°Ô ÇÁ·¹ÀÓ ÀÌ¹ÌÁö¸¦ Àß¶ó³À´Ï´Ù.
-# 3. Crop the frame image using the positional information of the crack reported by crack detection deep learning engine.
+print(saving_bounding_boxes)
 
 from skimage import io
 
@@ -174,29 +205,16 @@ for i in range(0, len(saving_bounding_boxes)):
     print(xmin,ymin,xmax,ymax)
     cropped_frame = orig_images[frame_count][ymin:ymax, xmin:xmax, :]
     cropped_frame = cropped_frame.astype('uint8')
-# Àß¶ó³½ ÇÁ·¹ÀÓ ÀÌ¹ÌÁö¸¦ ÀúÀåÇÒ °æ·Î¸¦ ÀÔ·ÂÇÕ´Ï´Ù.
-# Input the path of the cropped images.
-#--------------------------°æ·Î¸¦ ¼­¹ö¿¡ ¸Â°Ô º¯°æ--------------------------------
-    img_path = '../../Desktop/detected_crack/%d.jpg'%frame_count
+    # -----------------------------
+    img_path = 'cropped_frames/%d.jpg'%frame_count
+    # img_path = '../../Desktop/test/%d.jpg'%frame_count
+    # -----------------------done
     print(img_path)
     cropped_frames.append(cropped_frame)
     io.imsave(img_path, cropped_frame)
 
-# 4. ±Õ¿­ Å½Áö µö·¯´× ¿£ÁøÀÌ Àß¶ó³½ ÇÁ·¹ÀÓ ÀÌ¹ÌÁö¿¡ ÀüÃ³¸®¸¦ ÇÕ´Ï´Ù.
-#    ÀüÃ³¸®´Â ÃÑ 3´Ü°è·Î ±¸¼ºµË´Ï´Ù.
-#   1) Image Binarization : ±Õ¿­ÀÎ ºÎºĞ°ú ±Õ¿­ÀÌ ¾Æ´Ñ ºÎºĞÀ» ºĞ¸®ÇÕ´Ï´Ù.
-#   2) Skeletonize : ±Õ¿­ÀÇ »À´ë¸¦ ÃßÃâÇÕ´Ï´Ù.
-#   3) Edge detection : ±Õ¿­ÀÇ ¿Ü°û¼±À» ÃßÃâÇÕ´Ï´Ù.
-
-#   ÀÌ ´Ü°è¿¡¼­´Â Image BinarizationÀ» ÁøÇàÇÕ´Ï´Ù.
-
-# 4. Preprocess the frame images cropped by crack detection deep learning engine.
-#    The preprocess consists of 3 stages.
-#   1) Image Binarization : seperate crack section and the noncrack section.
-#   2) Skeletonize : extract the central skeleton of the crack.
-#   3) Edge detection : extract the edge of the crack.
-
-#   At this stage, Image Binarization will be done.
+# 1. Image binarization(Sauvola's method) using Pw and Pl, respectively
+# ì˜¤ë˜ ê±¸ë¦¬ëŠ” ë¬¸ì œê°€ ìˆìŒ
 
 import time
 import matplotlib
@@ -212,33 +230,31 @@ from PIL import Image
 sauvola_frames_Pw_bw = []
 sauvola_frames_Pw = []
 
-for i in range(0,len(cropped_frames)):
+# Upload the image
+for i in range(0, len(cropped_frames)):
     img = cropped_frames[i]
     img_gray = rgb2gray(img)
 
-    # window size¿Í k°ªÀº 'Concrete Crack Identification Using a UAV Incorporating Hybrid Image Processing' ³í¹®ÀÌ Á¦½ÃÇÑ °ªÀ»
-    # ±×´ë·Î »ç¿ëÇÏ¿´½À´Ï´Ù.
-    
-    # window size and k value were used without any changes from the
-    # 'Concrete Crack Identification Using a UAV Incorporating Hybrid Image Processing' thesis.
+    # ë…¼ë¬¸ì—ì„  ê°ê° 70,180ì´ì—ˆìœ¼ë‚˜ ì—¬ê¸°ì„  í™€ìˆ˜ inputë§Œ ê°€ëŠ¥
     window_size_Pw = 71
     thresh_sauvola_Pw = threshold_sauvola(img_gray, window_size=window_size_Pw, k=0.42)
 
+    # Below are the converted images through Sauvola's method.
+    # _bw will contain 0 or 1, not true or false. bw means black or white.
     binary_sauvola_Pw = img_gray > thresh_sauvola_Pw
     binary_sauvola_Pw_bw = img_gray > thresh_sauvola_Pw
 
     binary_sauvola_Pw_bw.dtype = 'uint8'
 
     binary_sauvola_Pw_bw *= 255
-    
+
     sauvola_frames_Pw_bw.append(binary_sauvola_Pw_bw)
     sauvola_frames_Pw.append(binary_sauvola_Pw)
-    
-#------------------------------¼­¹ö¿¡ ¸Â°Ô °æ·Î º¯°æ------------------------------------
-    img_path_Pw = '../../Desktop/Sauvola/Sauvola_Pw_%d.jpg'%i
-    
+    # ----------------------------------------
+    img_path_Pw = 'Sauvola/Sauvola_Pw_%d.jpg' % i
+    #   img_path_Pw = '../../Desktop/Sauvola/Sauvola_Pw_%d.jpg'%i
+    # -------------------------------------------done
     io.imsave(img_path_Pw, binary_sauvola_Pw_bw)
-
 
 # 2. Extract the skeletons of each images
 
@@ -247,77 +263,69 @@ from skimage.util import invert
 
 skeleton_frames_Pw = []
 
-for i in range(0,len(cropped_frames)):
-# Invert the binarized images
+for i in range(0, len(cropped_frames)):
+    # Invert the binarized images
     img_Pw = invert(sauvola_frames_Pw[i])
 
     # Below are skeletonized images
     skeleton_Pw = skeletonize(img_Pw)
 
+    # Convert true/false to 1/0 to save it as image
     skeleton_Pw.dtype = 'uint8'
 
     skeleton_Pw *= 255
 
     skeleton_frames_Pw.append(skeleton_Pw)
-    
-    img_path_Pw = "../../Desktop/Skeleton/skeleton_Pw_%d.jpg"%i
+    # ---------------------------
+    img_path_Pw = "Skeleton/skeleton_Pw_%d.jpg" % i
+    # img_path_Pw = "../../Desktop/Skeleton/skeleton_Pw_%d.jpg"%i
+    # ---------------------------done
     io.imsave(img_path_Pw, skeleton_Pw)
-    
-
 
 # 3. Detect the edges of each images
-### edge detection ÇÒ ¶§, ÁÁÀº parameter¸¦ Ã£¾Æ¾ß ÇÑ´Ù. Áö±İÀº edge°¡ ³Ê¹« µÎ²¨¿ò (overestimationµÊ) ###
+### edge detection í•  ë•Œ, ì¢‹ì€ parameterë¥¼ ì°¾ì•„ì•¼ í•œë‹¤. ì§€ê¸ˆì€ edgeê°€ ë„ˆë¬´ ë‘êº¼ì›€ (overestimationë¨) ###
 import numpy as np
 from scipy import ndimage as ndi
 from skimage import feature
 
 edges_frames_Pw = []
-edges_frames_Pl = []
 
 for i in range(0,len(cropped_frames)):
     # Compute the Canny filter for two values of sigma
     # canny(image, sigma=1.0, low_threshold=None, high_threshold=None, mask=None, use_quantiles=False)
-    # sigma°¡ 1ÀÌ¾úÀ¸³ª, 0.1·Î Á¶Á¤ÇÏ¿© ½ÇÁ¦ ±Õ¿­ edge¿Í °ÅÀÇ °°°Ô ¸¸µê.
-    # Á¤È®µµ¿¡¼­ ¹®Á¦°¡ »ı±ä´Ù¸é 1. skeletonÀÇ ¹æÇâ ¼³Á¤ ¹æ¹ıÀ» ¹Ù²Ù´ø°¡, 2. ¿©±â¼­ ½Ã±×¸¶ °ªÀ» »ìÂ¦ ´Ã¸®°Å³ª ÁÙ¿©°¡¸é¼­ Á¤È®µµ¸¦ Å×½ºÆ® ÇØº¼ °Í
+    # sigmaê°€ 1ì´ì—ˆìœ¼ë‚˜, 0.1ë¡œ ì¡°ì •í•˜ì—¬ ì‹¤ì œ ê· ì—´ edgeì™€ ê±°ì˜ ê°™ê²Œ ë§Œë“¦.
+    # ì •í™•ë„ì—ì„œ ë¬¸ì œê°€ ìƒê¸´ë‹¤ë©´ 1. skeletonì˜ ë°©í–¥ ì„¤ì • ë°©ë²•ì„ ë°”ê¾¸ë˜ê°€, 2. ì—¬ê¸°ì„œ ì‹œê·¸ë§ˆ ê°’ì„ ì‚´ì§ ëŠ˜ë¦¬ê±°ë‚˜ ì¤„ì—¬ê°€ë©´ì„œ ì •í™•ë„ë¥¼ í…ŒìŠ¤íŠ¸ í•´ë³¼ ê²ƒ
     edges_Pw = feature.canny(sauvola_frames_Pw[i], 0.09)
-    #edges_Pl = feature.canny(sauvola_frames_Pl[i], 0.09)
 
     edges_Pw.dtype = 'uint8'
-    #edges_Pl.dtype = 'uint8'
 
     edges_Pw *= 255
-    #edges_Pl *= 255
 
     edges_frames_Pw.append(edges_Pw)
-    #edges_frames_Pl.append(edges_Pl)
-    
-    img_path_Pw = "../../Desktop/edges/edges_Pw_%d.jpg"%i
-    #img_path_Pl = "../../Desktop/edges/edges_Pl_%d.jpg"%i
-    
+    #----------------------------
+    img_path_Pw = "edges/edges_Pw_%d.jpg"%i
+    # img_path_Pw = "../../Desktop/edges/edges_Pw_%d.jpg"%i
+    #----------------------------done
     io.imsave(img_path_Pw, edges_Pw)
-    #io.imsave(img_path_Pl, edges_Pl)
 
-
-#Crack¸¸ÀÌ detectionµÇ¾î¼­ ³Ñ¾î¿Ô´Ù´Â °¡Á¤ÀÌ ÀÖ¾î¾ß ÇÔ. ¾Æ´Ï¸é ¿ÜºÎ ¹è°æ ÀÌ¹ÌÁöµµ ±Õ¿­ °è»ê¿¡ Æ÷ÇÔ µÊ
+# Crackë§Œì´ detectionë˜ì–´ì„œ ë„˜ì–´ì™”ë‹¤ëŠ” ê°€ì •ì´ ìˆì–´ì•¼ í•¨. ì•„ë‹ˆë©´ ì™¸ë¶€ ë°°ê²½ ì´ë¯¸ì§€ë„ ê· ì—´ ê³„ì‚°ì— í¬í•¨ ë¨
 
 import queue
 import math
 
-#5ÇÈ¼¿ÀÌ ±âÁØ or above
-dx_dir_right = [-5,-5,-5,-4,-3,-2,-1,0,1,2,3,4,5,5]
-dy_dir_right = [0,1,2,3,4,5,5,5,5,5,4,3,2,1]
+# 5í”½ì…€ì´ ê¸°ì¤€ or above
+dx_dir_right = [-5, -5, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 5]
+dy_dir_right = [0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 4, 3, 2, 1]
 
-dx_dir_left = [5,5,5,4,3,2,1,0,-1,-2,-3,-4,-5,-5]
-dy_dir_left = [0,-1,-2,-3,-4,-5,-5,-5,-5,-5,-4,-3,-2,-1]
+dx_dir_left = [5, 5, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -5]
+dy_dir_left = [0, -1, -2, -3, -4, -5, -5, -5, -5, -5, -4, -3, -2, -1]
 
-dx_bfs = [-1,-1,0,1,1,1,0,-1]
-dy_bfs = [0,1,1,1,0,-1,-1,-1]
+dx_bfs = [-1, -1, 0, 1, 1, 1, 0, -1]
+dy_bfs = [0, 1, 1, 1, 0, -1, -1, -1]
 
-start_time = time.time() 
-
-for k in range(0,len(skeleton_frames_Pw)):
-    print('--------------''µ¿¿µ»ó ³» Àç»ı ½Ã°£ : ',k*0.25,'ÃÊ','-----------------')
-    start = [0,0]
+for k in range(0, len(skeleton_frames_Pw)):
+    print('--------------', k, '-----------------')
+    start = [0, 0]
     next = []
     q = queue.Queue()
     q.put(start)
@@ -325,175 +333,182 @@ for k in range(0,len(skeleton_frames_Pw)):
     len_x = skeleton_frames_Pw[k].shape[0]
     len_y = skeleton_frames_Pw[k].shape[1]
 
-    visit = np.zeros((len_x,len_y))
+    visit = np.zeros((len_x, len_y))
     count = 0
     crack_width_list = []
 
-    while(q.empty() == 0):
+    while (q.empty() == 0):
         next = q.get()
         x = next[0]
         y = next[1]
         right_x = right_y = left_x = left_y = -1
 
-
-        if(skeleton_frames_Pw[k][x][y] == 255):
+        if (skeleton_frames_Pw[k][x][y] == 255):
             for i in range(0, len(dx_dir_right)):
                 right_x = x + dx_dir_right[i]
                 right_y = y + dy_dir_right[i]
-                if(right_x<0 or right_y<0 or right_x>=len_x or right_y>=len_y): 
+                if (right_x < 0 or right_y < 0 or right_x >= len_x or right_y >= len_y):
                     right_x = right_y = -1
                     continue;
-                if(skeleton_frames_Pw[k][right_x][right_y] == 255): break;
-                if(i==13): right_x = right_y = -1
+                if (skeleton_frames_Pw[k][right_x][right_y] == 255): break;
+                if (i == 13): right_x = right_y = -1
 
-            if(right_x == -1): 
+            if (right_x == -1):
                 right_x = x
                 right_y = y
 
             for i in range(0, len(dx_dir_left)):
                 left_x = x + dx_dir_left[i]
                 left_y = y + dy_dir_left[i]
-                if(left_x <0 or left_y<0 or left_x >=len_x or left_y>=len_y): 
+                if (left_x < 0 or left_y < 0 or left_x >= len_x or left_y >= len_y):
                     left_x = left_y = -1
                     continue;
-                if(skeleton_frames_Pw[k][left_x][left_y] == 255): break;
-                if(i==13): left_x = left_y = -1
+                if (skeleton_frames_Pw[k][left_x][left_y] == 255): break;
+                if (i == 13): left_x = left_y = -1
 
-            if(left_x == -1): 
+            if (left_x == -1):
                 left_x = x
                 left_y = y
 
             base = right_y - left_y
             height = right_x - left_x
-            hypotenuse = math.sqrt(base*base + height*height)
+            hypotenuse = math.sqrt(base * base + height * height)
 
-            if(base==0 and height != 0): theta = 90.0
-            elif(base==0 and height == 0): continue
-            else: theta = math.degrees(math.acos((base * base + hypotenuse * hypotenuse - height * height)/(2.0 * base * hypotenuse)))
-
-
+            if (base == 0 and height != 0):
+                theta = 90.0
+            elif (base == 0 and height == 0):
+                continue
+            else:
+                theta = math.degrees(
+                    math.acos((base * base + hypotenuse * hypotenuse - height * height) / (2.0 * base * hypotenuse)))
 
             theta += 90
             dist = 0
 
-            for i in range(0,2):
+            for i in range(0, 2):
 
+                if (theta > 360):
+                    theta -= 360
+                elif (theta < 0):
+                    theta += 360
+                # print(theta)
+                # print('x : ',x,'y : ',y)
+                pix_x = x
+                pix_y = y
 
-                if(theta>360): theta -= 360
-                elif(theta<0): theta += 360    
-                #print(theta)
-                #print('x : ',x,'y : ',y)
-                pix_x=x
-                pix_y=y
+                # thetaì—ëŸ¬ëŠ” ë‚˜ì¤‘ì— ê³ ì¹˜ê³ 
+                # ëª¨ë“  í”„ë ˆì„ì„ ì²˜ë¦¬í•˜ê¸° ìœ„í•œ ë£¨í”„ ë¨¼ì € ëŒë¦´ê²ƒ
+                # ê²°ê³¼ ê°’ì„ UIì™€ ì—°ë™í•˜ì
 
-                #theta¿¡·¯´Â ³ªÁß¿¡ °íÄ¡°í
-                #¸ğµç ÇÁ·¹ÀÓÀ» Ã³¸®ÇÏ±â À§ÇÑ ·çÇÁ ¸ÕÀú µ¹¸±°Í
-                #°á°ú °ªÀ» UI¿Í ¿¬µ¿ÇÏÀÚ
-
-                if(theta>0 and theta<90):
+                if (theta > 0 and theta < 90):
                     ratio = abs(math.tan(theta))
-                    while(1):
-                        if((x - pix_x + 1)/(pix_y - y + 1)> ratio): pix_y+=1
-                        else: pix_x-=1
+                    while (1):
+                        if ((x - pix_x + 1) / (pix_y - y + 1) > ratio):
+                            pix_y += 1
+                        else:
+                            pix_x -= 1
 
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta>90 and theta<180):
+                elif (theta > 90 and theta < 180):
                     ratio = abs(math.tan(theta))
-                    while(1):
-                        if((x - pix_x + 1)/(y - pix_y + 1)> ratio): pix_y-=1
-                        else: pix_x-=1
+                    while (1):
+                        if ((x - pix_x + 1) / (y - pix_y + 1) > ratio):
+                            pix_y -= 1
+                        else:
+                            pix_x -= 1
 
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta>180 and theta<270):
+                elif (theta > 180 and theta < 270):
                     ratio = abs(math.tan(theta))
-                    while(1):
-                        if((pix_x - x + 1)/(y - pix_y+ 1)> ratio): pix_y-=1
-                        else: pix_x+=1
+                    while (1):
+                        if ((pix_x - x + 1) / (y - pix_y + 1) > ratio):
+                            pix_y -= 1
+                        else:
+                            pix_x += 1
 
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;     
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta>270 and theta<360):
+                elif (theta > 270 and theta < 360):
                     ratio = abs(math.tan(theta))
-                    while(1):
-                        if((pix_x - x + 1)/(pix_y - y + 1)> ratio): pix_y+=1
-                        else: pix_x+=1
+                    while (1):
+                        if ((pix_x - x + 1) / (pix_y - y + 1) > ratio):
+                            pix_y += 1
+                        else:
+                            pix_x += 1
 
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta == 0.0 or 360.0):
-                     while(1):
-                        pix_y+=1
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                elif (theta == 0.0 or 360.0):
+                    while (1):
+                        pix_y += 1
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta == 90.0):
-                    while(1):
-                        pix_x-=1
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                elif (theta == 90.0):
+                    while (1):
+                        pix_x -= 1
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta == 180.0):
-                    while(1):
-                        pix_y-=1
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                elif (theta == 180.0):
+                    while (1):
+                        pix_y -= 1
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                elif(theta == 270.0):
-                     while(1):
-                        pix_x+=1
-                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y):
+                elif (theta == 270.0):
+                    while (1):
+                        pix_x += 1
+                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;            
+                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
 
-                dist += math.sqrt((y-pix_y)**2 + (x-pix_x)**2)
-                theta += 180        
+                dist += math.sqrt((y - pix_y) ** 2 + (x - pix_x) ** 2)
+                theta += 180
 
-                #print('pix_x : ',pix_x,'pix_y : ',pix_y,'dist : ', dist,'\n')
+                # print('pix_x : ',pix_x,'pix_y : ',pix_y,'dist : ', dist,'\n')
 
             crack_width_list.append(dist)
-        
-            #ÇØ´ç À§Ä¡¿Í ±Õ¿­ ÆøÀ» Èû²² ÀúÀåÇÏ´Â »õ·Î¿î ¸®½ºÆ® »ç¿ëÇÏ±â
-        for i in range(0,8):
+
+            # í•´ë‹¹ ìœ„ì¹˜ì™€ ê· ì—´ í­ì„ í˜ê»˜ ì €ì¥í•˜ëŠ” ìƒˆë¡œìš´ ë¦¬ìŠ¤íŠ¸ ì‚¬ìš©í•˜ê¸°
+        for i in range(0, 8):
             next_x = x + dx_bfs[i]
             next_y = y + dy_bfs[i]
 
-            if(next_x<0 or next_y<0 or next_x>=len_x or next_y>=len_y): continue;
-            if(visit[next_x][next_y] == 0): 
-                q.put([next_x,next_y])
+            if (next_x < 0 or next_y < 0 or next_x >= len_x or next_y >= len_y): continue;
+            if (visit[next_x][next_y] == 0):
+                q.put([next_x, next_y])
                 visit[next_x][next_y] = 1
-    
-    print('³ôÀÌ 10m ÁöÁ¡, ','ÁÂÃø ',k*0.5,'m ÁöÁ¡')
-    print('±Õ¿­ Æø : ',max(crack_width_list)/100,'mm')
-    print('À§Çè±º : »ó','\n')
-        
-print("--- %s seconds ---" %(time.time() - start_time))
+
+    print(max(crack_width_list))
+
 
