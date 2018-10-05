@@ -53,12 +53,10 @@ model = ssd_300(image_size=(img_height, img_width, 3),
                 top_k=200,
                 nms_max_output_size=400)
 
-#학습된 weight의 경로를 지정
-# ----------------------------
+# 학습된 weight의 경로를 지정
 weights_path = '/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/ssd300_pascal_07+12_epoch-04_loss-3.0387_val_loss-3.5244_weight.h5'
 
-# weights_path = 'C:\\Users\\rlaal\\Desktop\\ssd300_pascal_07+12_epoch-04_loss-3.0387_val_loss-3.5244_weight.h5'
-# ----------------------------done
+
 model.load_weights(weights_path, by_name=True)
 
 adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
@@ -78,38 +76,32 @@ model.compile(optimizer=adam, loss=ssd_loss.compute_loss)
 
 # We will get video name from node.js server this is demo version
 
-# --------------------
-vidcap = cv2.VideoCapture('UI/video.mp4')
-# vidcap = cv2.VideoCapture('C:\\Users\\rlaal\\Desktop\\video.mp4')
-# -----------------done
+filename = "video"
+vidcap = cv2.VideoCapture('~/SPARK/UI/'+filename+'.mp4')
 success, imagefile = vidcap.read()
 count = 0
 
-# -----------------make directory
-newimagepath = "images/video"
+# make directory
+newimagepath = "~/SPARK/SPARK/public/images/"+filename
 
 if not os.path.exists(newimagepath):
     os.makedirs(newimagepath)
-newframepath = "images/video_crack"
+newframepath = "~/SPARK/SPARK/public/images/"+filename+"_crack"
 
 if not os.path.exists(newframepath):
     os.makedirs(newframepath)
 
-newinfopath = "images/video_info"
+newinfopath = "~/SPARK/SPARK/public/images/"+filename+"_info"
 
 if not os.path.exists(newinfopath):
     os.makedirs(newinfopath)
-# ----------------done
+
 
 while success:
 
     if (count % 6 == 0):
         # 프레임 캡쳐를 저장할 경로
-        # --------------------
-        # imagepath = "images/video/%d.jpg" % count, imagefile
-        cv2.imwrite("images/video/%d.jpg" % count, imagefile)
-        # cv2.imwrite("C:\\Users\\rlaal\\Desktop\\frame\\frame%d.jpg"% count, imagefile)
-        # -------------------done
+        cv2.imwrite("~/SPARK/SPARK/public/images/"+filename+"/%d.jpg" % count, imagefile)
     success, imagefile = vidcap.read()
     count += 1
 
@@ -125,8 +117,8 @@ for i in range(0, 320):
         # img_path = 'C:\\Users\\rlaal\\Desktop\\frame\\frame%d.jpg'%i
         # ----------------------------done
         # print(img_path)
-        orig_images.append(imread('images/video/%d.jpg' % i))
-        img = image.load_img('images/video/%d.jpg' % i, target_size=(img_height, img_width))
+        orig_images.append(imread('~/SPARK/SPARK/public/images/'+filename+'/%d.jpg' % i))
+        img = image.load_img('~/SPARK/SPARK/public/images/'+filename+'/%d.jpg' % i, target_size=(img_height, img_width))
         img = image.img_to_array(img)
         img = np.array(img)
         input_images.append(img)
@@ -163,7 +155,7 @@ for i in range(0, 4):
             saving_bounding_boxes.append([(counting), xmin, ymin, xmax, ymax])
             # --------------------------------------
             #framepath = "images/video_crack/frame%d.jpg" % (count), imagefile
-            cv2.imwrite("images/video_crack/frame%d.jpg" % (count), imagefile)
+            cv2.imwrite("~/SPARK/SPARK/public/images/"+filename+"_crack/frame%d.jpg" % (counting), imagefile)
             # add drawing rectangle
             #   with Drawing() as draw:
             #       draw.stroke_width = 4.0
@@ -205,7 +197,11 @@ for i in range(0, len(saving_bounding_boxes)):
     cropped_frame = orig_images[frame_count][ymin:ymax, xmin:xmax, :]
     cropped_frame = cropped_frame.astype('uint8')
     # -----------------------------
-    img_path = 'cropped_frames/%d.jpg'%frame_count
+    newcroppedpath = "~/SPARK/SPARK/public/cropped_frames/" + filename
+
+    if not os.path.exists(newcroppedpath):
+        os.makedirs(newcroppedpath)
+    img_path = newcroppedpath+'/%d.jpg' % frame_count
     # img_path = '../../Desktop/test/%d.jpg'%frame_count
     # -----------------------done
     print(img_path)
@@ -250,7 +246,11 @@ for i in range(0, len(cropped_frames)):
     sauvola_frames_Pw_bw.append(binary_sauvola_Pw_bw)
     sauvola_frames_Pw.append(binary_sauvola_Pw)
     # ----------------------------------------
-    img_path_Pw = 'Sauvola/Sauvola_Pw_%d.jpg' % i
+    newSauvolapath = "~/SPARK/SPARK/public/Sauvola/" + filename
+
+    if not os.path.exists(newSauvolapath):
+        os.makedirs(newSauvolapath)
+    img_path_Pw = newSauvolapath+'/Sauvola_Pw_%d.jpg' % i
     #   img_path_Pw = '../../Desktop/Sauvola/Sauvola_Pw_%d.jpg'%i
     # -------------------------------------------done
     io.imsave(img_path_Pw, binary_sauvola_Pw_bw)
@@ -276,7 +276,11 @@ for i in range(0, len(cropped_frames)):
 
     skeleton_frames_Pw.append(skeleton_Pw)
     # ---------------------------
-    img_path_Pw = "Skeleton/skeleton_Pw_%d.jpg" % i
+    newSkeletonpath = "~/SPARK/SPARK/public/Skeleton/" + filename
+
+    if not os.path.exists(newSkeletonpath):
+        os.makedirs(newSkeletonpath)
+    img_path_Pw = newSkeletonpath+"/skeleton_Pw_%d.jpg" % i
     # img_path_Pw = "../../Desktop/Skeleton/skeleton_Pw_%d.jpg"%i
     # ---------------------------done
     io.imsave(img_path_Pw, skeleton_Pw)
@@ -301,10 +305,14 @@ for i in range(0,len(cropped_frames)):
     edges_Pw *= 255
 
     edges_frames_Pw.append(edges_Pw)
-    #----------------------------
-    img_path_Pw = "edges/edges_Pw_%d.jpg"%i
+    # ----------------------------
+    newedgespath = "~/SPARK/SPARK/public/edges/" + filename
+
+    if not os.path.exists(newedgespath):
+        os.makedirs(newedgespath)
+    img_path_Pw = newedgespath+"/edges_Pw_%d.jpg"%i
     # img_path_Pw = "../../Desktop/edges/edges_Pw_%d.jpg"%i
-    #----------------------------done
+    # ----------------------------done
     io.imsave(img_path_Pw, edges_Pw)
 
 # Crack만이 detection되어서 넘어왔다는 가정이 있어야 함. 아니면 외부 배경 이미지도 균열 계산에 포함 됨
