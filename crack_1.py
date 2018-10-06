@@ -208,144 +208,144 @@ for i in range(0, 4):
 
 print(saving_bounding_boxes)
 
-from skimage import io
+# from skimage import io
 
-cropped_frames = []
-
-for i in range(0, len(saving_bounding_boxes)):
-    frame_count = saving_bounding_boxes[i][0]//6
-    frame = orig_images[frame_count]
-    if(saving_bounding_boxes[i][1] < 0):
-        saving_bounding_boxes[i][1] = 0
-    xmin = int(saving_bounding_boxes[i][1])
-    if(saving_bounding_boxes[i][2] < 0):
-        saving_bounding_boxes[i][2] = 0
-    ymin = int(saving_bounding_boxes[i][2])
-    xmax = int(saving_bounding_boxes[i][3])
-    ymax = int(saving_bounding_boxes[i][4])
-    print(xmin,ymin,xmax,ymax)
-    cropped_frame = orig_images[frame_count][ymin:ymax, xmin:xmax, :]
-    cropped_frame = cropped_frame.astype('uint8')
-    # -----------------------------
-    #newcroppedpath = "/home/starever222/SPARK/SPARK/public/cropped_frames/" + filename
-
-    #if not os.path.exists(newcroppedpath):
-    #    os.chmod(0777)
-    #    os.makedirs(newcroppedpath)
-    img_path = newcroppedpath+'/%d.jpg' % frame_count
-    # img_path = '../../Desktop/test/%d.jpg'%frame_count
-    # -----------------------done
-    cropped_frames.append(cropped_frame)
-    io.imsave(img_path, cropped_frame)
+# cropped_frames = []
+#
+# for i in range(0, len(saving_bounding_boxes)):
+#     frame_count = saving_bounding_boxes[i][0]//6
+#     frame = orig_images[frame_count]
+#     if(saving_bounding_boxes[i][1] < 0):
+#         saving_bounding_boxes[i][1] = 0
+#     xmin = int(saving_bounding_boxes[i][1])
+#     if(saving_bounding_boxes[i][2] < 0):
+#         saving_bounding_boxes[i][2] = 0
+#     ymin = int(saving_bounding_boxes[i][2])
+#     xmax = int(saving_bounding_boxes[i][3])
+#     ymax = int(saving_bounding_boxes[i][4])
+#     print(xmin,ymin,xmax,ymax)
+#     cropped_frame = orig_images[frame_count][ymin:ymax, xmin:xmax, :]
+#     cropped_frame = cropped_frame.astype('uint8')
+#     # -----------------------------
+#     #newcroppedpath = "/home/starever222/SPARK/SPARK/public/cropped_frames/" + filename
+#
+#     #if not os.path.exists(newcroppedpath):
+#     #    os.chmod(0777)
+#     #    os.makedirs(newcroppedpath)
+#     img_path = newcroppedpath+'/%d.jpg' % frame_count
+#     # img_path = '../../Desktop/test/%d.jpg'%frame_count
+#     # -----------------------done
+#     cropped_frames.append(cropped_frame)
+#     io.imsave(img_path, cropped_frame)
 
 # 1. Image binarization(Sauvola's method) using Pw and Pl, respectively
 # 오래 걸리는 문제가 있음
 
-import time
-import matplotlib
-import matplotlib.pyplot as plt
-import cv2
-from skimage import io
-from skimage import data
-from skimage.color import rgb2gray
-from skimage.data import page
-from skimage.filters import (threshold_sauvola)
-from PIL import Image
+# import time
+# import matplotlib
+# import matplotlib.pyplot as plt
+# import cv2
+# from skimage import io
+# from skimage import data
+# from skimage.color import rgb2gray
+# from skimage.data import page
+# from skimage.filters import (threshold_sauvola)
+# from PIL import Image
 
-sauvola_frames_Pw_bw = []
-sauvola_frames_Pw = []
-
-# Upload the image
-for i in range(0, len(cropped_frames)):
-    img = cropped_frames[i]
-    img_gray = rgb2gray(img)
-
-    # 논문에선 각각 70,180이었으나 여기선 홀수 input만 가능
-    window_size_Pw = 71
-    thresh_sauvola_Pw = threshold_sauvola(img_gray, window_size=window_size_Pw, k=0.42)
-
-    # Below are the converted images through Sauvola's method.
-    # _bw will contain 0 or 1, not true or false. bw means black or white.
-    binary_sauvola_Pw = img_gray > thresh_sauvola_Pw
-    binary_sauvola_Pw_bw = img_gray > thresh_sauvola_Pw
-
-    binary_sauvola_Pw_bw.dtype = 'uint8'
-
-    binary_sauvola_Pw_bw *= 255
-
-    sauvola_frames_Pw_bw.append(binary_sauvola_Pw_bw)
-    sauvola_frames_Pw.append(binary_sauvola_Pw)
-    # ----------------------------------------
-    # newSauvolapath = "/home/starever222/SPARK/SPARK/public/Sauvola/" + filename
-
-    # if not os.path.exists(newSauvolapath):
-    #    os.makedirs(newSauvolapath)
-    img_path_Pw = newSauvolapath+'/Sauvola_Pw_%d.jpg' % i
-    #   img_path_Pw = '../../Desktop/Sauvola/Sauvola_Pw_%d.jpg'%i
-    # -------------------------------------------done
-    io.imsave(img_path_Pw, binary_sauvola_Pw_bw)
+# sauvola_frames_Pw_bw = []
+# sauvola_frames_Pw = []
+#
+# # Upload the image
+# for i in range(0, len(cropped_frames)):
+#     img = cropped_frames[i]
+#     img_gray = rgb2gray(img)
+#
+#     # 논문에선 각각 70,180이었으나 여기선 홀수 input만 가능
+#     window_size_Pw = 71
+#     thresh_sauvola_Pw = threshold_sauvola(img_gray, window_size=window_size_Pw, k=0.42)
+#
+#     # Below are the converted images through Sauvola's method.
+#     # _bw will contain 0 or 1, not true or false. bw means black or white.
+#     binary_sauvola_Pw = img_gray > thresh_sauvola_Pw
+#     binary_sauvola_Pw_bw = img_gray > thresh_sauvola_Pw
+#
+#     binary_sauvola_Pw_bw.dtype = 'uint8'
+#
+#     binary_sauvola_Pw_bw *= 255
+#
+#     sauvola_frames_Pw_bw.append(binary_sauvola_Pw_bw)
+#     sauvola_frames_Pw.append(binary_sauvola_Pw)
+#     # ----------------------------------------
+#     # newSauvolapath = "/home/starever222/SPARK/SPARK/public/Sauvola/" + filename
+#
+#     # if not os.path.exists(newSauvolapath):
+#     #    os.makedirs(newSauvolapath)
+#     img_path_Pw = newSauvolapath+'/Sauvola_Pw_%d.jpg' % i
+#     #   img_path_Pw = '../../Desktop/Sauvola/Sauvola_Pw_%d.jpg'%i
+#     # -------------------------------------------done
+#     io.imsave(img_path_Pw, binary_sauvola_Pw_bw)
 
 # 2. Extract the skeletons of each images
 
-from skimage.morphology import skeletonize
-from skimage.util import invert
+# from skimage.morphology import skeletonize
+# from skimage.util import invert
 
-skeleton_frames_Pw = []
-
-for i in range(0, len(cropped_frames)):
-    # Invert the binarized images
-    img_Pw = invert(sauvola_frames_Pw[i])
-
-    # Below are skeletonized images
-    skeleton_Pw = skeletonize(img_Pw)
-
-    # Convert true/false to 1/0 to save it as image
-    skeleton_Pw.dtype = 'uint8'
-
-    skeleton_Pw *= 255
-
-    skeleton_frames_Pw.append(skeleton_Pw)
-    # ---------------------------
-    #newSkeletonpath = "/home/starever222/SPARK/SPARK/public/Skeleton/" + filename
-
-    #if not os.path.exists(newSkeletonpath):
-    #    os.chmod(0777)
-    #    os.makedirs(newSkeletonpath, 0777)
-    img_path_Pw = newSkeletonpath+"/skeleton_Pw_%d.jpg" % i
-    # img_path_Pw = "../../Desktop/Skeleton/skeleton_Pw_%d.jpg"%i
-    # ---------------------------done
-    io.imsave(img_path_Pw, skeleton_Pw)
+# skeleton_frames_Pw = []
+#
+# for i in range(0, len(cropped_frames)):
+#     # Invert the binarized images
+#     img_Pw = invert(sauvola_frames_Pw[i])
+#
+#     # Below are skeletonized images
+#     skeleton_Pw = skeletonize(img_Pw)
+#
+#     # Convert true/false to 1/0 to save it as image
+#     skeleton_Pw.dtype = 'uint8'
+#
+#     skeleton_Pw *= 255
+#
+#     skeleton_frames_Pw.append(skeleton_Pw)
+#     # ---------------------------
+#     #newSkeletonpath = "/home/starever222/SPARK/SPARK/public/Skeleton/" + filename
+#
+#     #if not os.path.exists(newSkeletonpath):
+#     #    os.chmod(0777)
+#     #    os.makedirs(newSkeletonpath, 0777)
+#     img_path_Pw = newSkeletonpath+"/skeleton_Pw_%d.jpg" % i
+#     # img_path_Pw = "../../Desktop/Skeleton/skeleton_Pw_%d.jpg"%i
+#     # ---------------------------done
+#     io.imsave(img_path_Pw, skeleton_Pw)
 
 # 3. Detect the edges of each images
 ### edge detection 할 때, 좋은 parameter를 찾아야 한다. 지금은 edge가 너무 두꺼움 (overestimation됨) ###
-import numpy as np
-from scipy import ndimage as ndi
-from skimage import feature
+# import numpy as np
+# from scipy import ndimage as ndi
+# from skimage import feature
 
-edges_frames_Pw = []
-
-for i in range(0,len(cropped_frames)):
-    # Compute the Canny filter for two values of sigma
-    # canny(image, sigma=1.0, low_threshold=None, high_threshold=None, mask=None, use_quantiles=False)
-    # sigma가 1이었으나, 0.1로 조정하여 실제 균열 edge와 거의 같게 만듦.
-    # 정확도에서 문제가 생긴다면 1. skeleton의 방향 설정 방법을 바꾸던가, 2. 여기서 시그마 값을 살짝 늘리거나 줄여가면서 정확도를 테스트 해볼 것
-    edges_Pw = feature.canny(sauvola_frames_Pw[i], 0.09)
-
-    edges_Pw.dtype = 'uint8'
-
-    edges_Pw *= 255
-
-    edges_frames_Pw.append(edges_Pw)
-    # ----------------------------
-    # newedgespath = "/home/starever222/SPARK/SPARK/public/edges/" + filename
-
-    # if not os.path.exists(newedgespath):
-    #     os.chmod(newedgespath, 0777)
-    #    os.makedirs(newedgespath)
-    img_path_Pw = newedgespath+"/edges_Pw_%d.jpg"%i
-    # img_path_Pw = "../../Desktop/edges/edges_Pw_%d.jpg"%i
-    # ----------------------------done
-    io.imsave(img_path_Pw, edges_Pw)
+# edges_frames_Pw = []
+#
+# for i in range(0,len(cropped_frames)):
+#     # Compute the Canny filter for two values of sigma
+#     # canny(image, sigma=1.0, low_threshold=None, high_threshold=None, mask=None, use_quantiles=False)
+#     # sigma가 1이었으나, 0.1로 조정하여 실제 균열 edge와 거의 같게 만듦.
+#     # 정확도에서 문제가 생긴다면 1. skeleton의 방향 설정 방법을 바꾸던가, 2. 여기서 시그마 값을 살짝 늘리거나 줄여가면서 정확도를 테스트 해볼 것
+#     edges_Pw = feature.canny(sauvola_frames_Pw[i], 0.09)
+#
+#     edges_Pw.dtype = 'uint8'
+#
+#     edges_Pw *= 255
+#
+#     edges_frames_Pw.append(edges_Pw)
+#     # ----------------------------
+#     # newedgespath = "/home/starever222/SPARK/SPARK/public/edges/" + filename
+#
+#     # if not os.path.exists(newedgespath):
+#     #     os.chmod(newedgespath, 0777)
+#     #    os.makedirs(newedgespath)
+#     img_path_Pw = newedgespath+"/edges_Pw_%d.jpg"%i
+#     # img_path_Pw = "../../Desktop/edges/edges_Pw_%d.jpg"%i
+#     # ----------------------------done
+#     io.imsave(img_path_Pw, edges_Pw)
 
 # Crack만이 detection되어서 넘어왔다는 가정이 있어야 함. 아니면 외부 배경 이미지도 균열 계산에 포함 됨
 
