@@ -82,6 +82,7 @@ router.get('/video/:name', function(req, res){
 	var filename = req.params.name;
 	console.log(filename);
 	var videolist = fs.readdirSync(videoDir);
+	console.log(videolist[])
 
 	//전체 이미지 이름 리스트
 	var imglist = fs.readdirSync('./public/images/'+filename+'/');
@@ -106,9 +107,13 @@ router.get('/video/:name', function(req, res){
   });
 
 router.post('/upload', upload.single('userfile'), function(req, res){
-  //res.send('Uploaded! : '+req.file); // object를 리턴함
-  console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
-  res.redirect('/');
+	//res.send('Uploaded! : '+req.file); // object를 리턴함
+	console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
+	/*PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', null, function (err, results) {
+		if (err) throw err;
+		console.log('result: %j', results);
+	});*/
+	res.redirect('/video/'+req.file.name.split('.')[0]);
 });
 
 module.exports = router;
