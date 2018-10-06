@@ -69,10 +69,10 @@ model.compile(optimizer=adam, loss=ssd_loss.compute_loss)
 # 나중에는 비디오 캡쳐를 함과 동시에 input_images리스트에 곧바로 넣어버려서, 불필요한 이미지 입출력 과정을 줄이자
 # 1초에 4프레임 캡쳐로 바꿈 (6프레임마다 저장)
 
-#from wand.drawing import Drawing
-#from wand.image import Image
-#from wand.color import Color
-#import os
+from wand.drawing import Drawing
+from wand.image import Image
+from wand.color import Color
+import os
 
 # We will get video name from node.js server this is demo version
 
@@ -189,21 +189,21 @@ for i in range(0, 4):
             #framepath = "images/video_crack/frame%d.jpg" % (count), imagefile
             cv2.imwrite("/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack/%d.jpg" % (counting), imagefile)
             #add drawing rectangle
-            #    with Drawing() as draw:
-            #       draw.stroke_width = 4.0
-            #       draw.stroke_color = Color('red')
-            #       draw.fill_color = Color('transparent')
-            #       xMin = int(xmin)
-            #       xMax = int(xmax)
-            #        yMin = int(ymin)
-            #        yMax = int(ymax)
-            #        draw.rectangle(left=xMin, top=yMin, right=xMax, bottom=yMax)
-            #        with Image(filename="/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack/frame%d.jpg"% (count)) as image:
-            #            draw(image)
-            #            boximg_path = "/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg"% count
-            #            image.save(filename=boximg_path)
-            #cv2.imwrite("C:\\Users\\rlaal\\Desktop\\detected\\frame%d.jpg"% (count), imagefile)
-            # ----------------------------------------done
+            with Drawing() as draw:
+                draw.stroke_width = 4.0
+                draw.stroke_color = Color('red')
+                draw.fill_color = Color('transparent')
+                xMin = int(xmin)
+                xMax = int(xmax)
+                yMin = int(ymin)
+                yMax = int(ymax)
+                draw.rectangle(left=xMin, top=yMin, right=xMax, bottom=yMax)
+                with Image(filename="/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack/frame%d.jpg"% (count)) as image:
+                    draw(image)
+                    boximg_path = "/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg"% count
+                    image.save(filename=boximg_path)
+                    #cv2.imwrite("C:\\Users\\rlaal\\Desktop\\detected\\frame%d.jpg"% (count), imagefile)
+                    # ----------------------------------------done
 
         counting += 6
         if (counting > 320): break;
