@@ -108,9 +108,17 @@ router.get('/video/:name', function(req, res){
 
 router.post('/upload', upload.single('userfile'), function(req, res){
 	//res.send('Uploaded! : '+req.file); // object를 리턴함
+	let options = {
+		mode: 'text',
+		pythonPath: '',
+		pythonOptions: ['-u'], // get print results in real-time
+		scriptPath: '',
+		args: [req.file.filename.split('.')[0]]
+	};
+	
 	req.setTimeout(0); // no timeout
 	console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
-	PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', null, function (err, results) {
+	PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', options, function (err, results) {
 		if (err) throw err;
 		console.log('result: %j', results);
 		res.redirect('/video/'+req.file.filename.split('.')[0]);
