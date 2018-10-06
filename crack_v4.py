@@ -73,10 +73,11 @@ from wand.drawing import Drawing
 from wand.image import Image
 from wand.color import Color
 import os
+import sys
 
 # We will get video name from node.js server this is demo version
 
-filename = "video"
+filename = sys.argv[1]
 video_path = '/home/starever222/SPARK/SPARK/public/videos/'+filename+'.mp4'
 vidcap = cv2.VideoCapture(video_path)
 success, imagefile = vidcap.read()
