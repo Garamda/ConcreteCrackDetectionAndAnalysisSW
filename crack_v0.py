@@ -77,7 +77,7 @@ model.compile(optimizer=adam, loss=ssd_loss.compute_loss)
 # We will get video name from node.js server this is demo version
 
 filename = "video"
-vidcap = cv2.VideoCapture('~/SPARK/SPARK/public/'+filename+'.mp4')
+vidcap = cv2.VideoCapture('~/SPARK/SPARK/public/videos/'+filename+'.mp4')
 success, imagefile = vidcap.read()
 count = 0
 
