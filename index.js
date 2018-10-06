@@ -62,6 +62,7 @@ router.get('/', function(req, res, next) {
 	var videolist = fs.readdirSync(videoDir);
 	console.log(videolist);
 	//videolist = filelist;
+	videolist = (videolist.length>0)?videolist:['NO VIDEO'];
 	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
 	res.render('./index', {
 		title: init_title,
