@@ -187,7 +187,7 @@ for i in range(0, 4):
             saving_bounding_boxes.append([(counting), xmin, ymin, xmax, ymax])
             # --------------------------------------
             #framepath = "images/video_crack/frame%d.jpg" % (count), imagefile
-            cv2.imwrite("/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack/frame%d.jpg" % (counting), imagefile)
+            cv2.imwrite("/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack/%d.jpg" % (counting), imagefile)
             #add drawing rectangle
             #    with Drawing() as draw:
             #       draw.stroke_width = 4.0
