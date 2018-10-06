@@ -176,7 +176,7 @@
 						</div>
 						
 					</div>
-					<form action="upload" method="post" enctype="multipart/form-data">
+					<form action="/upload" method="post" enctype="multipart/form-data">
 			        	<input type="file" name="userfile">
 			        	<input type="submit" value="파일 업로드하기">
 					</form>
@@ -219,11 +219,11 @@
 				$("#thumbnail").append('<video width="100" height="100" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video>');
 				$("#playlist").append("<a href='../video/"+ video_list[i].split(".")[0]  + "'><button id='videobox'>" + video_list[i] + "</button></a>");
 			}
-			for(var i = 0; i < {{imglistsize}}; i++){
-				var img_list = "{{imgList}}".split(",");
-				img_list = img_list.sort();
-				$("#imagearea").append('<div id="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><a href="#openModal'+(i+1)+'"><img id="imgview" src="/images/{{title}}/'+(i + 1)+'.jpg" style="width:130px;height:130px;position:static"></a><div id="imgname" style="width:130px; height:30px background-color: #111000">'+(i+1)+'</div></div>');
-				$("#imagearea").append('<div id="openModal'+(i+1)+'" class="modalDialog" style="margin-top:200px;width: 800px;height:auto;"><div><a href="#close" title="Close" class="close">X</a> <div><img src="/images/{{title}}/'+(i + 1)+'.jpg" style="margin-left:200px;width:600px;height:600px;background-color:#000000"></div>');
+			for(var i = 0; i < {{framelistsize}}; i++){
+				var frame_list = "{{frameList}}".split(",");
+				frame_list = frame_list.sort();
+				$("#imagearea").append('<div id="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><a href="#openModal'+(i+1)+'"><img id="imgview" src="/images/{{title}}/'+frame_list[i]+'" style="width:130px;height:130px;position:static"></a><div id="imgname" style="width:130px; height:30px background-color: #111000">'+frame_list[i]+'</div></div>');
+				$("#imagearea").append('<div id="openModal'+(i+1)+'" class="modalDialog" style="margin-top:200px;width: 800px;height:auto;"><div><a href="#close" title="Close" class="close">X</a> <div><img src="/images/{{title}}/'+frame_list[i]+'" style="margin-left:200px;width:600px;height:600px;background-color:#000000"></div>');
 				var modal = document.getElementById('myModal');
 
 				// Get the image and insert it inside the modal - use its "alt" text as a caption

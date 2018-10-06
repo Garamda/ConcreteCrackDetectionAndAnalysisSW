@@ -62,13 +62,16 @@ router.get('/', function(req, res, next) {
 	var videolist = fs.readdirSync(videoDir);
 	console.log(videolist);
 	//videolist = filelist;
-	videolist = (videolist.length>0)?videolist:['NO VIDEO'];
+	videolist = (videolist.length>0)?videolist:[];
 	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
+	console.log(init_title);
+	console.log(videolist.length);
+	if(videolist.length!=0)
+		res.redirect('/video/'+videolist[0].split('.')[0]);
 	res.render('./index', {
 		title: init_title,
 		videoList: videolist,
 		listsize: videolist.length,
-		imglistsize: 0
 	});
 });
 // videoname을 이용한 python파일 실행 및 이미지,텍스트 정보 send
@@ -90,7 +93,7 @@ router.get('/video/:name', function(req, res){
 	
 	// console.log(videolist);
 	console.log(videolist);
-	console.log(imglist);
+	console.log(framelist);
 	res.render('./index', {
 		title: filename,
 		videoList: videolist,
@@ -98,18 +101,21 @@ router.get('/video/:name', function(req, res){
 		imgList: imglist,
 		imglistsize: imglist.length,
 		frameList: framelist,
+		framelistsize: framelist.length,
 		textList: textlist
 	});
   });
 
 router.post('/upload', upload.single('userfile'), function(req, res){
 	//res.send('Uploaded! : '+req.file); // object를 리턴함
+	req.setTimeout(0); // no timeout
 	console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 	PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', null, function (err, results) {
 		if (err) throw err;
 		console.log('result: %j', results);
+		res.redirect('/video/'+req.file.filename.split('.')[0]);
 	});
-	res.redirect('/');
+	//res.redirect('/video/'+req.file.filename.split('.')[0]);
 });
 
 module.exports = router;
