@@ -355,22 +355,35 @@ for i in range(0,len(cropped_frames)):
 
 # Crack만이 detection되어서 넘어왔다는 가정이 있어야 함. 아니면 외부 배경 이미지도 균열 계산에 포함 됨
 
+# 7. 균열의 폭을 계산합니다. 
+# 1) 균열의 Skeleton으로부터 균열의 진행 방향을 파악합니다.
+# 2) 균열의 진행 방향에 수직인 직선을 긋습니다.
+# 3) 이 수직선과 균열의 Edge가 만나는데, 이 거리가 곧 균열의 폭입니다.
+
+# 7. Calculate the width of the crack.
+# 1) Analyze the direction of the crack from the skeleton.
+# 2) Draw a perpendicular line of the direction
+# 3) The perpendicular line meets the edge. This distance is the width of the crack.
+
 import queue
 import math
 
-# 5픽셀이 기준 or above
-dx_dir_right = [-5, -5, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 5]
-dy_dir_right = [0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 4, 3, 2, 1]
+dx_dir_right = [-5,-5,-5,-4,-3,-2,-1,0,1,2,3,4,5,5]
+dy_dir_right = [0,1,2,3,4,5,5,5,5,5,4,3,2,1]
 
-dx_dir_left = [5, 5, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5, -5]
-dy_dir_left = [0, -1, -2, -3, -4, -5, -5, -5, -5, -5, -4, -3, -2, -1]
+dx_dir_left = [5,5,5,4,3,2,1,0,-1,-2,-3,-4,-5,-5]
+dy_dir_left = [0,-1,-2,-3,-4,-5,-5,-5,-5,-5,-4,-3,-2,-1]
 
-dx_bfs = [-1, -1, 0, 1, 1, 1, 0, -1]
-dy_bfs = [0, 1, 1, 1, 0, -1, -1, -1]
+dx_bfs = [-1,-1,0,1,1,1,0,-1]
+dy_bfs = [0,1,1,1,0,-1,-1,-1]
 
-for k in range(0, len(skeleton_frames_Pw)):
-    print('--------------', k, '-----------------')
-    start = [0, 0]
+save_result = []
+
+# BFS를 통해 Skeleton을 찾습니다.
+# Searching the skeleton through BFS.
+for k in range(0,len(skeleton_frames_Pw)):
+    print('--------------''동영상 내 재생 시간 : ',(saving_bounding_boxes[k][0]//6)*0.25,'초','-----------------')
+    start = [0,0]
     next = []
     q = queue.Queue()
     q.put(start)
@@ -378,182 +391,165 @@ for k in range(0, len(skeleton_frames_Pw)):
     len_x = skeleton_frames_Pw[k].shape[0]
     len_y = skeleton_frames_Pw[k].shape[1]
 
-    visit = np.zeros((len_x, len_y))
-    count = 0
+    visit = np.zeros((len_x,len_y))
     crack_width_list = []
 
-    while (q.empty() == 0):
+    while(q.empty() == 0):
         next = q.get()
         x = next[0]
         y = next[1]
         right_x = right_y = left_x = left_y = -1
 
-        if (skeleton_frames_Pw[k][x][y] == 255):
+        if(skeleton_frames_Pw[k][x][y] == 255):
+            # Skeleton을 바탕으로 균열의 진행 방향을 구합니다.
+            # Estimating the direction of the crack from skeleton
             for i in range(0, len(dx_dir_right)):
                 right_x = x + dx_dir_right[i]
                 right_y = y + dy_dir_right[i]
-                if (right_x < 0 or right_y < 0 or right_x >= len_x or right_y >= len_y):
+                if(right_x<0 or right_y<0 or right_x>=len_x or right_y>=len_y): 
                     right_x = right_y = -1
                     continue;
-                if (skeleton_frames_Pw[k][right_x][right_y] == 255): break;
-                if (i == 13): right_x = right_y = -1
+                if(skeleton_frames_Pw[k][right_x][right_y] == 255): break;
+                if(i==13): right_x = right_y = -1
 
-            if (right_x == -1):
+            if(right_x == -1): 
                 right_x = x
                 right_y = y
 
             for i in range(0, len(dx_dir_left)):
                 left_x = x + dx_dir_left[i]
                 left_y = y + dy_dir_left[i]
-                if (left_x < 0 or left_y < 0 or left_x >= len_x or left_y >= len_y):
+                if(left_x <0 or left_y<0 or left_x >=len_x or left_y>=len_y): 
                     left_x = left_y = -1
                     continue;
-                if (skeleton_frames_Pw[k][left_x][left_y] == 255): break;
-                if (i == 13): left_x = left_y = -1
+                if(skeleton_frames_Pw[k][left_x][left_y] == 255): break;
+                if(i==13): left_x = left_y = -1
 
-            if (left_x == -1):
+            if(left_x == -1): 
                 left_x = x
                 left_y = y
 
             base = right_y - left_y
             height = right_x - left_x
-            hypotenuse = math.sqrt(base * base + height * height)
+            hypotenuse = math.sqrt(base*base + height*height)
 
-            if (base == 0 and height != 0):
-                theta = 90.0
-            elif (base == 0 and height == 0):
-                continue
-            else:
-                theta = math.degrees(
-                    math.acos((base * base + hypotenuse * hypotenuse - height * height) / (2.0 * base * hypotenuse)))
+            if(base==0 and height != 0): theta = 90.0
+            elif(base==0 and height == 0): continue
+            else: theta = math.degrees(math.acos((base * base + hypotenuse * hypotenuse - height * height)/(2.0 * base * hypotenuse)))
 
             theta += 90
             dist = 0
-
-            for i in range(0, 2):
-
-                if (theta > 360):
-                    theta -= 360
-                elif (theta < 0):
-                    theta += 360
-                # print(theta)
-                # print('x : ',x,'y : ',y)
+            
+            # 균열 진행 방향의 수직선과 Edge가 만나면, 그 거리를 구합니다.
+            # Calculate the distance if the perpendicular line meets the edge of the crack.
+            for i in range(0,2):
+                
                 pix_x = x
                 pix_y = y
-
-                # theta에러는 나중에 고치고
-                # 모든 프레임을 처리하기 위한 루프 먼저 돌릴것
-                # 결과 값을 UI와 연동하자
-
-                if (theta > 0 and theta < 90):
-                    ratio = abs(math.tan(theta))
-                    while (1):
-                        if ((x - pix_x + 1) / (pix_y - y + 1) > ratio):
-                            pix_y += 1
-                        else:
-                            pix_x -= 1
-
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
+                if(theta>360): theta -= 360
+                elif(theta<0): theta += 360    
+                
+                if(theta == 0.0 or theta == 360.0):
+                    while(1):
+                        pix_y+=1
+                        if(pix_y>=len_y):
                             pix_x = x
                             pix_y = y
                             break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
 
-                elif (theta > 90 and theta < 180):
-                    ratio = abs(math.tan(theta))
-                    while (1):
-                        if ((x - pix_x + 1) / (y - pix_y + 1) > ratio):
-                            pix_y -= 1
-                        else:
-                            pix_x -= 1
-
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
+                elif(theta == 90.0):
+                    while(1):
+                        pix_x-=1
+                        if(pix_x<0):
                             pix_x = x
                             pix_y = y
                             break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
 
-                elif (theta > 180 and theta < 270):
-                    ratio = abs(math.tan(theta))
-                    while (1):
-                        if ((pix_x - x + 1) / (y - pix_y + 1) > ratio):
-                            pix_y -= 1
-                        else:
-                            pix_x += 1
-
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
+                elif(theta == 180.0):
+                    while(1):
+                        pix_y-=1
+                        if(pix_y<0):
                             pix_x = x
                             pix_y = y
                             break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
 
-                elif (theta > 270 and theta < 360):
-                    ratio = abs(math.tan(theta))
-                    while (1):
-                        if ((pix_x - x + 1) / (pix_y - y + 1) > ratio):
-                            pix_y += 1
-                        else:
-                            pix_x += 1
-
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
+                elif(theta == 270.0):
+                    while(1):
+                        pix_x+=1
+                        if(pix_x>=len_x):
                             pix_x = x
                             pix_y = y
                             break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
-
-                elif (theta == 0.0 or 360.0):
-                    while (1):
-                        pix_y += 1
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
-                            pix_x = x
-                            pix_y = y
+                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
+                else:
+                    a = 1
+                    radian = math.radians(theta)
+                    while(1):        
+                        pix_x = x - round(a*math.sin(radian))
+                        pix_y = y + round(a*math.cos(radian))
+                        if(pix_x<0 or pix_y<0 or pix_x>=len_x or pix_y>=len_y): 
+                            pix_x=x
+                            pix_y=y
                             break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        if(edges_frames_Pw[k][pix_x][pix_y]==255): break;
 
-                elif (theta == 90.0):
-                    while (1):
-                        pix_x -= 1
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
-                            pix_x = x
-                            pix_y = y
-                            break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        if(theta>0 and theta<90):
+                            if(pix_y+1<len_y and edges_frames_Pw[k][pix_x][pix_y+1]==255): 
+                                pix_y+=1
+                                break;
+                            if(pix_x-1>=0 and edges_frames_Pw[k][pix_x-1][pix_y]==255): 
+                                pix_x-=1
+                                break;
 
-                elif (theta == 180.0):
-                    while (1):
-                        pix_y -= 1
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
-                            pix_x = x
-                            pix_y = y
-                            break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        elif(theta>90 and theta<180):
+                            if(pix_y-1>=0 and edges_frames_Pw[k][pix_x][pix_y-1]==255): 
+                                pix_y-=1
+                                break;
+                            if(pix_x-1>=0 and edges_frames_Pw[k][pix_x-1][pix_y]==255): 
+                                pix_x-=1
+                                break;
 
-                elif (theta == 270.0):
-                    while (1):
-                        pix_x += 1
-                        if (pix_x < 0 or pix_y < 0 or pix_x >= len_x or pix_y >= len_y):
-                            pix_x = x
-                            pix_y = y
-                            break;
-                        if (edges_frames_Pw[k][pix_x][pix_y] == 255): break;
+                        elif(theta>180 and theta<270):
+                            if(pix_y-1>=0 and edges_frames_Pw[k][pix_x][pix_y-1]==255): 
+                                pix_y-=1
+                                break;
+                            if(pix_x+1<len_x and edges_frames_Pw[k][pix_x+1][pix_y]==255): 
+                                pix_x+=1
+                                break;         
 
-                dist += math.sqrt((y - pix_y) ** 2 + (x - pix_x) ** 2)
-                theta += 180
+                        elif(theta>270 and theta<360): 
+                            if(pix_y+1<len_y and edges_frames_Pw[k][pix_x][pix_y+1]==255): 
+                                pix_y+=1
+                                break;
+                            if(pix_x+1<len_x and edges_frames_Pw[k][pix_x+1][pix_y]==255): 
+                                pix_x+=1
+                                break;
+                        a+=1
+        
+                dist += math.sqrt((y-pix_y)**2 + (x-pix_x)**2)
+                theta += 180        
 
-                # print('pix_x : ',pix_x,'pix_y : ',pix_y,'dist : ', dist,'\n')
-
+            # 균열의 폭을 저장하는 리스트입니다.
+            # The list which saves the width of the crack.
             crack_width_list.append(dist)
-
-            # 해당 위치와 균열 폭을 힘께 저장하는 새로운 리스트 사용하기
-        for i in range(0, 8):
+        
+        for i in range(0,8):
             next_x = x + dx_bfs[i]
             next_y = y + dy_bfs[i]
 
-            if (next_x < 0 or next_y < 0 or next_x >= len_x or next_y >= len_y): continue;
-            if (visit[next_x][next_y] == 0):
-                q.put([next_x, next_y])
+            if(next_x<0 or next_y<0 or next_x>=len_x or next_y>=len_y): continue;
+            if(visit[next_x][next_y] == 0): 
+                q.put([next_x,next_y])
                 visit[next_x][next_y] = 1
-
-    print(max(crack_width_list))
-
-
+                
+    crack_width_list.sort(reverse=True) 
+    save_result.append(crack_width_list[9])
+    print('균열 폭 : ',crack_width_list[9])
+    print('위험군 : ','\n')
+f = open("C:\\Users\\user\\Desktop\\output.txt", 'w')
+for z in range(0, len(skeleton_frames_Pw)):
+    f.write(str(save_result[z])+'\n')
+f.close()
