@@ -45,6 +45,11 @@ var multer = require('multer')
 let {PythonShell} = require('python-shell');
 //console.log(PythonShell);
 
+PythonShell.run('./engine/test.py', null, function (err, results) {
+  if (err) throw err;
+  console.log('result: %j', results);
+});
+
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, 'public/videos') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
@@ -62,10 +67,9 @@ router.get('/', function(req, res, next) {
 	var videolist = fs.readdirSync(videoDir);
 	console.log(videolist);
 	//videolist = filelist;
-	videolist = (videolist.length>0)?videolist:['NO VIDEO'];
-	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
+
 	res.render('./index', {
-		title: init_title,
+		title: videolist[0],
 		videoList: videolist,
 		listsize: videolist.length
 	});
@@ -78,6 +82,7 @@ router.get('/video/:name', function(req, res){
 	var filename = req.params.name;
 	console.log(filename);
 	var videolist = fs.readdirSync(videoDir);
+	console.log(videolist[])
 
 	//전체 이미지 이름 리스트
 	var imglist = fs.readdirSync('./public/images/'+filename+'/');
@@ -108,7 +113,7 @@ router.post('/upload', upload.single('userfile'), function(req, res){
 		if (err) throw err;
 		console.log('result: %j', results);
 	});*/
-	res.redirect('/video/'+req.file.name.split('.')[0]);
+	res.redirect('/video/'+req.file.name.split('.'));
 });
 
 module.exports = router;

@@ -119,18 +119,10 @@
 			    margin: 1% auto;
 			    padding: 5px;
 			}
-
-			   
-
 			#openModal img  {
 			    width: 800px;
-			    height:auto;
-			    
-
+			    height:auto; 
 			}
-
-
-
 
 			.close {
 			    background: #606061;
@@ -157,8 +149,9 @@
 	</head>
 	<body>
 		<div style="text-align:center">
-			<div class="headline" style="height:100px; position:static;">
-				<p><img src="../images/spark.png" width="1200px" height="150px"></p>
+			<div class="headline" style="text-
+			align:center;margin:0 auto;height:100px;">
+				<img src="../images/spark.png" style="float:left;position:absolute;width:1200px; height:150px;margin:0 auto;">
 			</div>
 			<div id="UploadBox">
 		        <!--<span id='UploadArea'>
@@ -218,7 +211,7 @@
 	<script type="text/javascript">
 		//console.log({{videoList}});
 		jQuery(function($){
-
+			
 			for(var i = 0; i < {{listsize}}; i++){
 				var video_list = "{{videoList}}".split(",");
 				
