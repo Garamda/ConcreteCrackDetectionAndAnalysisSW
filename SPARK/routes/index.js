@@ -90,10 +90,17 @@ router.get('/video/:name', function(req, res){
 	//균열 감지된 이미지 정보 이름 리스트
 	var textlist = fs.readdirSync('./public/images/'+filename+'_info/');
 	// var files = fs.readdirSync('C:\Users\rlaal\Desktop\frame');
+
+	//send 균열정보
+	var txtoptions = {encoding:'utf-8', flag:'r'};
+	
+	var buffer = fs.readFileSync('./public/images/'+filename+'_info/output.txt', txtoptions);
+	var info = buffer.split("\r\n");
 	
 	// console.log(videolist);
 	console.log(videolist);
 	console.log(framelist);
+	console.log(info);
 	res.render('./index', {
 		title: filename,
 		videoList: videolist,
@@ -102,7 +109,8 @@ router.get('/video/:name', function(req, res){
 		imglistsize: imglist.length,
 		frameList: framelist,
 		framelistsize: framelist.length,
-		textList: textlist
+		textList: textlist,
+		infomation: info
 	});
   });
 
