@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<head>
 		<script src="//code.jquery.com/jquery.min.js"></script>
-		<script src="js/jquery-1.8.2.js"></script>
+		<!--<script src="js/jquery-1.8.2.js"></script>-->
 		<style>
 			
 			#videobox {
@@ -151,7 +151,7 @@
 		<div style="text-align:center">
 			<div class="headline" style="text-
 			align:center;margin:0 auto;height:100px;">
-				<img src="../images/spark.png" style="float:left;position:absolute;width:1200px; height:150px;margin:0 auto;">
+				<img src="../images/spark.png" style="float:left;width:1800px; height:300px;margin:0 auto;">
 			</div>
 			<div id="UploadBox">
 		        <!--<span id='UploadArea'>
@@ -164,9 +164,7 @@
 		    </div>
 			<div id="wrapper" style="text-align:center;float:center;width:1800px;height:820px">
 				<div id="videoarea" style="margin-left:200px;margin-top:100px;float:left;width:440px;text-align:center;font-size:1.3em">
-					<video width="450" height="450" controls>
-						<source src="/videos/{{title}}.mp4" type="video/mp4">
-					</video>
+					<img id="imgvideo" style="width:450px;height:450px;">
 					<div style="overflow:scroll; margin:0 auto; text-align:center; font-size:14px; width:450px; height:250px" id="videos">
 						<div style="float:left; margin:0 auto; text-align:left; font-size:14px; width:100px" id="thumbnail">
 
@@ -200,7 +198,7 @@
 				<div id="infoarea" style="float:left;margin-left:80px;margin-top:80px; 10px;width:440px;height:710px;position:static">
 					
 					<div style="background:#fdf9f9;width:440px;height:710px">
-						<p style="line-height:2em;font-size:1.3em;">{{title}}[Crack Information]<br/></p>
+						<p style="line-height:2em;font-size:1.3em;">[Crack Information]<br/></p>
 						<p style="background:#fdf9f9"><span style="background:#fdf9f9">Predicted boxes: <span style="background:#fdf9f9;color:red">xmin: 3.14  ymin: 14.75 xmax: 830.31 ymax: 205.74</p>
 						<br/>
 					</div>
@@ -210,29 +208,49 @@
 	</body>
 	<script type="text/javascript">
 		//console.log({{videoList}});
+		var x = 0;
+		var img_count = {{imglistsize}};
 		jQuery(function($){
+			var frame_list = "{{frameList}}".split(",");
 			
+			function compareNumbers(a, b) {
+				    return a - b;
+			}
+			function getnameOfFilename(filename) {
+				    Filename = filename.split(".");
+				        var _fileExt = Filename[0];
+					    return _fileExt;
+			}
+			var listlen = {{framelistsize}};
+			var List = [];
+			for (var i = 0; i < listlen; i++){
+				    List.push(parseInt(getnameOfFilename(frame_list[i])));
+			}
+			var lists = List.sort(compareNumbers);
+			console.log(lists);
+
 			for(var i = 0; i < {{listsize}}; i++){
 				var video_list = "{{videoList}}".split(",");
-				
-				console.log("<button id='videobox'>"+ video_list[i] +"</button>");
+					
 				$("#thumbnail").append('<video width="100" height="100" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video>');
 				$("#playlist").append("<a href='../video/"+ video_list[i].split(".")[0]  + "'><button id='videobox'>" + video_list[i] + "</button></a>");
 			}
+			var stop = "stop";
 			for(var i = 0; i < {{framelistsize}}; i++){
-				var frame_list = "{{frameList}}".split(",");
-				frame_list = frame_list.sort();
-				$("#imagearea").append('<div id="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><a href="#openModal'+(i+1)+'"><img id="imgview" src="/images/{{title}}/'+frame_list[i]+'" style="width:130px;height:130px;position:static"></a><div id="imgname" style="width:130px; height:30px background-color: #111000">'+frame_list[i]+'</div></div>');
-				$("#imagearea").append('<div id="openModal'+(i+1)+'" class="modalDialog" style="margin-top:200px;width: 800px;height:auto;"><div><a href="#close" title="Close" class="close">X</a> <div><img src="/images/{{title}}/'+frame_list[i]+'" style="margin-left:200px;width:600px;height:600px;background-color:#000000"></div>');
+				//var frame_list = "{{frameList}}".split(",");
+				//frame_list = frame_list.sort();
+				console.log(lists[i]);
+				$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+lists[i]+','+stop+')" src="/images/{{title}}/'+lists[i]+'.jpg" style="width:130px;height:130px;position:static"><div id="imgname" style="width:130px; height:30px background-color: #111000">'+lists[i]/24+'sec'+'</div></div>');
+				$("#imagearea").append('<div id="openModal'+(i+1)+'" class="modalDialog" style="margin-top:200px;width: 800px;height:auto;"><div><a href="#close" title="Close" class="close">X</a> <div><img src="/images/{{title}}/'+lists[i]+'.jpg" style="margin-left:200px;width:600px;height:600px;background-color:#000000"></div>');
 				var modal = document.getElementById('myModal');
 
 				// Get the image and insert it inside the modal - use its "alt" text as a caption
 				var img = document.getElementById('imgbox');
 				var modalImg = document.getElementById("img"+(i+1));
-				img.onclick = function(){
+				/*img.onclick = function(){
 				    modal.style.display = "block";
 				    modalImg.src = this.src;
-				}
+				}*/
 
 				// Get the <span> element that closes the modal
 				var span = document.getElementsByClassName("close")[0];
@@ -241,10 +259,53 @@
 				span.onclick = function() { 
 				  modal.style.display = "none";
 				}
-
 			}
 		});
+		//var x = 0;
 
+		var img_list = "{{imgList}}".split(",");
+		function compareNumbers(a, b) {
+			return a - b;
+		}
+		function getnameOfFilename(filename) {
+			Filename = filename.split(".");
+	        var _fileExt = Filename[0];
+			return _fileExt;
+		}
+		var listlen = {{imglistsize}};
+		var List = [];
+		for (var i = 0; i < listlen; i++){
+			List.push(parseInt(getnameOfFilename(img_list[i])));
+		}
+		var lists = List.sort(compareNumbers);
+		console.log(lists);
+
+		function changeImage(start, status){
+			var img_list = "{{imgList}}".split(",");
+			var img = document.getElementById("imgvideo");
+			x = start / 6 - 1;
+			img.src = "/images/{{title}}/"+lists[x]+".jpg";
+
+			if(x >= img_count-1){
+				//x = 0;
+				return;
+			}
+			console.log(x);
+			if(status == 'run'){
+				setTimeout("changeImage((x+2) * 6, 'run')", 250);
+			}else{
+				console.log('sdfsdf');
+				img_count = 0;
+				return;
+			}
+		}
+		changeImage(6, 'run');
+		/*function changeStart(start){
+			console.log(start);
+			x = start / 6 - 1;
+			img_count = x;
+			console.log(x);
+		}*/
 
 	</script>
 </html>
