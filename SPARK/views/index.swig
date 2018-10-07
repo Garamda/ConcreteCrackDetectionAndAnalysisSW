@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<head>
 		<script src="//code.jquery.com/jquery.min.js"></script>
-		<!--<script src="js/jquery-1.8.2.js"></script>-->
+		<script src="js/jquery-1.8.2.js"></script>
 		<style>
 			
 			#videobox {
@@ -195,7 +195,7 @@
 					</div>-->
 				
 				</div>				
-				<div id="infoarea" style="float:left;margin-left:80px;margin-top:80px; 10px;width:440px;height:710px;position:static">
+				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:80px;margin-top:80px;width:440px;position:static">
 					
 					<div style="background:#fdf9f9;width:440px;height:710px">
 						<p style="line-height:2em;font-size:1.3em;">[Crack Information]<br/></p>
@@ -235,7 +235,7 @@
 				$("#thumbnail").append('<video width="100" height="100" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video>');
 				$("#playlist").append("<a href='../video/"+ video_list[i].split(".")[0]  + "'><button id='videobox'>" + video_list[i] + "</button></a>");
 			}
-			var stop = "stop";
+			var stop = "stop";											 
 			for(var i = 0; i < {{framelistsize}}; i++){
 				//var frame_list = "{{frameList}}".split(",");
 				//frame_list = frame_list.sort();
@@ -261,9 +261,11 @@
 				}
 			}
 			var infolist = "{{infomation}}".split(",");
-			var infolen = infolist.length
+			var infolen = infolist.length;
 			for(var i = 0; i < infolen; i++){
-				$("#info").append('<div style="margin: 10px;background-color:Yellow;color:red">'+infolist[i]+'</div>');
+				if(infolist[i] !==  ''){
+					$("#info").append('<div style="text-align: left; margin: 10px; background-color:Yellow; color:red">'+infolist[i]+'</div>');
+			    	}
 			}
 
 		});

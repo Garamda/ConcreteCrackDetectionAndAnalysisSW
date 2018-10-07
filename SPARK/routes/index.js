@@ -66,12 +66,16 @@ router.get('/', function(req, res, next) {
 	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
 	console.log(init_title);
 	console.log(videolist.length);
+	console.log(videolist);
+	var info = ["Not Selected"];
+	//console.log(videolist[0].split('.')[0]);
 	if(videolist.length!=0)
 		res.redirect('/video/'+videolist[0].split('.')[0]);
 	res.render('./index', {
 		title: init_title,
 		videoList: videolist,
 		listsize: videolist.length,
+		infomation: info
 	});
 });
 // videoname을 이용한 python파일 실행 및 이미지,텍스트 정보 send
@@ -95,7 +99,8 @@ router.get('/video/:name', function(req, res){
 	var txtoptions = {encoding:'utf-8', flag:'r'};
 	
 	var buffer = fs.readFileSync('./public/images/'+filename+'_info/output.txt', txtoptions);
-	var info = buffer.split("\r\n");
+	
+	var info = buffer.split("\n");
 	
 	// console.log(videolist);
 	console.log(videolist);
