@@ -64,19 +64,16 @@ router.get('/', function(req, res, next) {
 	//videolist = filelist;
 	videolist = (videolist.length>0)?videolist:[];
 	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
-	console.log(init_title);
-	console.log(videolist.length);
-	console.log(videolist);
-	var info = ["Not Selected"];
 	//console.log(videolist[0].split('.')[0]);
 	if(videolist.length!=0)
 		res.redirect('/video/'+videolist[0].split('.')[0]);
-	res.render('./index', {
-		title: init_title,
-		videoList: videolist,
-		listsize: videolist.length,
-		infomation: info
-	});
+	else{
+		res.render('./index', {
+			title: init_title,
+			videoList: videolist,
+			listsize: videolist.length
+		});
+	}
 });
 // videoname을 이용한 python파일 실행 및 이미지,텍스트 정보 send
 router.get('/video/:name', function(req, res){
