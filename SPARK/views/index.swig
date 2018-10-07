@@ -201,8 +201,10 @@
 					
 					<div style="background:#fdf9f9;width:440px;height:710px">
 						<p style="line-height:2em;font-size:1.3em;">{{title}}[Crack Information]<br/></p>
+						{#
 						<p style="background:#fdf9f9"><span style="background:#fdf9f9">Predicted boxes: <span style="background:#fdf9f9;color:red">xmin: 3.14  ymin: 14.75 xmax: 830.31 ymax: 205.74</p>
-						<br/>
+						#}
+						<div id="info"></div>
 					</div>
 				</div>
 			</div>
@@ -241,8 +243,13 @@
 				span.onclick = function() { 
 				  modal.style.display = "none";
 				}
-
 			}
+			var infolist = "{{infomation}}".split(",");
+			var infolen = infolist.length
+			for(var i = 0; i < infolen; i++){
+				$("#info").append('<div style="margin: 10px;background-color:Yellow;color:red">'+infolist[i]+'</div>');
+			}
+
 		});
 
 

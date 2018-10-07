@@ -549,7 +549,7 @@ for k in range(0,len(skeleton_frames_Pw)):
     save_result.append(crack_width_list[9])
     print('균열 폭 : ',crack_width_list[9])
     print('위험군 : ','\n')
-f = open("C:\\Users\\user\\Desktop\\output.txt", 'w')
+f = open("/home/starever222/SPARK/SPARK/public/images/"+filename+"_info/output.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    f.write(str(save_result[z])+'\n')
+    f.write('['+saving_bounding_boxes[z][0]+'] Crack width: '+str(save_result[z])+' Risk:/ \n')
 f.close()
