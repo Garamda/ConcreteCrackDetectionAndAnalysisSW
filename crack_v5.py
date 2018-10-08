@@ -378,6 +378,7 @@ dx_bfs = [-1,-1,0,1,1,1,0,-1]
 dy_bfs = [0,1,1,1,0,-1,-1,-1]
 
 save_result = []
+save_risk = []
 
 # BFS를 통해 Skeleton을 찾습니다.
 # Searching the skeleton through BFS.
@@ -546,28 +547,27 @@ for k in range(0,len(skeleton_frames_Pw)):
                 visit[next_x][next_y] = 1
                 
     crack_width_list.sort(reverse=True) 
-    save_result.append(crack_width_list[9])
-    print('균열 폭 : ',crack_width_list[9])
-    print('위험군 : ','\n')
-########## these are sample data please remove here when all the done
-risklevelsample = "상"
-gpssample_x = 31.212312312121
-gpssample_y = 923.123124123131
-###############################################################
+    if(len(crack_width_list)<10):
+        crack_width_list[len(crack_width_list)-1]
+    else: real_width = round(crack_width_list[9]*0.92, 2)
+    
+    save_result.append(real_width)
 
+    if(real_width >= 0.3):
+        save_risk.append('상')
+        print('위험군 : 상\n')
+    elif(real_width<0.3 or real_width>=0.2): 
+        save_risk.append('중')
+        print('위험군 : 중\n')
+    else: 
+        save_risk.append('하')
+        print('위험군 : 하\n')
+        
 f = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/width.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    f.write(str(save_result[z])+'\n')
+    f.write(str(save_result[z])+'mm\n')
 f.close()
 fr = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/risk.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    fr.write(risklevelsample+'\n')
+    fr.write(str(save_risk[z]+'\n')
 fr.close()
-fgx = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/gps_x.txt", 'w')
-for z in range(0, len(skeleton_frames_Pw)):
-    fgx.write('x:'+str(gpssample_x)+'\n')
-fgx.close()
-fgy = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/gps_y.txt", 'w')
-for z in range(0, len(skeleton_frames_Pw)):
-    fgy.write('y:'+str(gpssample_y)+'\n')
-fgy.close()
