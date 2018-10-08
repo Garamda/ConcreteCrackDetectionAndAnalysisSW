@@ -553,8 +553,10 @@ for k in range(0,len(skeleton_frames_Pw)):
                 visit[next_x][next_y] = 1
                 
     crack_width_list.sort(reverse=True)
-    if(len(crack_width_list)==0): save_result.append(0)
-    if(len(crack_width_list)<10):
+    if(len(crack_width_list)==0): 
+        save_result.append(0)
+        real_width = 0
+    elif(len(crack_width_list)<10):
         real_width = round(crack_width_list[len(crack_width_list)-1]*0.92, 2)
         save_result.append(real_width)
     else: 
@@ -564,7 +566,7 @@ for k in range(0,len(skeleton_frames_Pw)):
     if(real_width >= 0.3):
         save_risk.append('상')
         print('위험군 : 상\n')
-    elif(real_width<0.3 or real_width>=0.2): 
+    elif(real_width<0.3 and real_width>=0.2): 
         save_risk.append('중')
         print('위험군 : 중\n')
     else: 
