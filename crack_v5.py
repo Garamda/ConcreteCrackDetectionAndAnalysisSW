@@ -141,7 +141,8 @@ orig_images = []
 input_images = []
 
 # range는 추후 영상 플레이 타임 정보를 사용할 수 있도록 변경
-for i in range(0, 320):
+frames_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+for i in range(0,frames_count):
     if (i % 6 == 0):
         # 프레임 캡쳐를 불러오는 경로
         # ---------------------------
@@ -168,7 +169,7 @@ print("Predicted boxes:\n")
 print('   class   conf xmin   ymin   xmax   ymax')
 
 # range는 추후 변수를 사용할 수 있도록 변경
-for i in range(0, 4):
+for i in range(0, frames_count):
     y_pred = model.predict(input_images[i * num_of_frames:i * num_of_frames + num_of_frames])
     confidence_threshold = 0.4
 
