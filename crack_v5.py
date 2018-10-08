@@ -571,10 +571,10 @@ for k in range(0,len(skeleton_frames_Pw)):
         print('위험군 : 하\n')
         
 f = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/width.txt", 'w')
-for z in range(0, len(skeleton_frames_Pw)):
+for z in range(0, len(save_result)):
     f.write(str(save_result[z])+'mm\n')
 f.close()
 fr = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/risk.txt", 'w')
-for z in range(0, len(skeleton_frames_Pw)):
+for z in range(0, len(save_risk)):
     fr.write(save_risk[z]+'\n')
 fr.close()
