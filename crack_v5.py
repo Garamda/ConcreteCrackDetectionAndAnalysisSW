@@ -95,10 +95,10 @@ newframepath = "/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack"
 if not os.path.exists(newframepath):
     os.makedirs(newframepath)
 
-newinfopath = "/home/starever222/SPARK/SPARK/public/images/"+filename+"_info"
+newlogpath = "/home/starever222/SPARK/SPARK/public/logs/"+filename
 
-if not os.path.exists(newinfopath):
-    os.makedirs(newinfopath)
+if not os.path.exists(newlogpath):
+    os.makedirs(newlogpath)
 
 #newcroppedpath = "/home/starever222/SPARK/SPARK/public/cropped_frames/"+filename
 
@@ -549,7 +549,21 @@ for k in range(0,len(skeleton_frames_Pw)):
     save_result.append(crack_width_list[9])
     print('균열 폭 : ',crack_width_list[9])
     print('위험군 : ','\n')
-f = open("/home/starever222/SPARK/SPARK/public/images/"+filename+"_info/output.txt", 'w')
+########## these are sample data please remove here when all the done
+risklevelsample = "상"
+gpssample_x = 31.212312312121
+gpssample_y = 923.123124123131
+###############################################################
+
+f = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/width.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    f.write('Crack width: '+str(save_result[z])+' Risk: \n')
+    f.write(str(save_result[z])+'\n')
 f.close()
+fr = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/risk.txt", 'w')
+for z in range(0, len(skeleton_frames_Pw)):
+    fr.write(risklevelsample+'\n')
+fr.close()
+fg = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/gps.txt", 'w')
+for z in range(0, len(skeleton_frames_Pw)):
+    fg.write('x:'+str(gpssample_x)+' y:'+str(gpssample_y)+'\n')
+fg.close()
