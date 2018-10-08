@@ -563,7 +563,11 @@ fr = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/risk.txt", 'w'
 for z in range(0, len(skeleton_frames_Pw)):
     fr.write(risklevelsample+'\n')
 fr.close()
-fg = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/gps.txt", 'w')
+fgx = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/gps_x.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    fg.write('x:'+str(gpssample_x)+' y:'+str(gpssample_y)+'\n')
-fg.close()
+    fgx.write('x:'+str(gpssample_x)+'\n')
+fgx.close()
+fgy = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/gps_y.txt", 'w')
+for z in range(0, len(skeleton_frames_Pw)):
+    fgy.write('y:'+str(gpssample_y)+'\n')
+fgy.close()
