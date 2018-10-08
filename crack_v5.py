@@ -553,8 +553,9 @@ for k in range(0,len(skeleton_frames_Pw)):
                 visit[next_x][next_y] = 1
                 
     crack_width_list.sort(reverse=True) 
+    if(len(crack_width_list)==0): continue;
     if(len(crack_width_list)<10):
-        crack_width_list[len(crack_width_list)-1]
+        real_width = round(crack_width_list[len(crack_width_list)-1]*0.92, 2)
     else: real_width = round(crack_width_list[9]*0.92, 2)
     
     save_result.append(real_width)
