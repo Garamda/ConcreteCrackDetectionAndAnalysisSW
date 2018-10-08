@@ -566,7 +566,7 @@ for k in range(0,len(skeleton_frames_Pw)):
     if(real_width >= 0.3):
         save_risk.append('상')
         print('위험군 : 상\n')
-    elif(real_width<0.3 or real_width>=0.2): 
+    elif(real_width<0.3 and real_width>=0.2): 
         save_risk.append('중')
         print('위험군 : 중\n')
     else: 
