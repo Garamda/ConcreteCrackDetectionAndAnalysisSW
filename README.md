@@ -108,6 +108,29 @@ d | d | d
 
 </br></br>
 
+## UI
+<img src="https://user-images.githubusercontent.com/37619253/46622342-32d8bb00-cb65-11e8-8bf4-2d6e6668974d.png" width="100%">
+</br>
+1. 드론 영상 부분</br>
+2. 영상 플레이 리스트(영상 섬네일 우측 파일 이름 클릭시 영상 실행)</br>
+3. 크랙이 감지된 이미지</br>
+4. 크랙 정보 리스트</br>
+</br>
+</br>
+link: </br>
+http://35.221.191.213:3000</br>
+</br>
+Front-End: html, css, JQuery</br>
+Back-End: Node.js, Python-shell</br>
+server: GCP</br>
+</br>
+해당 페이지 기능</br>
+1. 영상 옆 링크 누르면 보딩 된 영상 재생</br>
+2. 영상이 재생 되면서 크랙이 감지된 경우 가운데와 오른쪽에 이미지와 크랙정보 생성</br>
+3. 가운데 이미지 혹은 크랙 정보를 클릭시 해당 영상의 위치로 이동</br>
+4. 크랙의 균열이 0.0~0.2: 하0.2~0.3: 중0.3mm이상인 경우(Risk가 '상'인경우) 빨간 글씨로 표시(나머지는 검은글씨)</br>
+추후 정밀 진단이 필요할 경우 실제 위치를 알기 위한 촬영 당시의 GPS좌표 출력</br>
+</br></br>
 ## 사용하는 방법
 1. 균열 탐지 딥러닝 : Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
 2. 균열 폭 측정 알고리즘 : Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하여 설치합니다.</br>```pip install -U scikit-image```
