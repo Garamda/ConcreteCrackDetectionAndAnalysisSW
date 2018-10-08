@@ -15,6 +15,7 @@ var express = require('express');
 var router = express.Router();
 var videoDir = './public/videos';
 var imageDir = './assets/image';
+var logDir = './public/images'
 var fs = require('fs');
 const path = require('path');
 var multer = require('multer')
@@ -61,6 +62,7 @@ router.get('/', function(req, res, next) {
 	console.log("sdfsdfs");
 	var videolist = fs.readdirSync(videoDir);
 	console.log(videolist);
+	//var loglist = fs.readdirSync();
 	//videolist = filelist;
 	videolist = (videolist.length>0)?videolist:[];
 	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
@@ -89,20 +91,34 @@ router.get('/video/:name', function(req, res){
 	//균열 감지된 이미지 이름 리스트
 	var framelist = fs.readdirSync('./public/images/'+filename+'_crack/');
 	//균열 감지된 이미지 정보 이름 리스트
-	var textlist = fs.readdirSync('./public/images/'+filename+'_info/');
+	//var textlist = fs.readdirSync('./public/images/'+filename+'_info/');
 	// var files = fs.readdirSync('C:\Users\rlaal\Desktop\frame');
 
 	//send 균열정보
 	var txtoptions = {encoding:'utf-8', flag:'r'};
 	
-	var buffer = fs.readFileSync('./public/images/'+filename+'_info/output.txt', txtoptions);
+	//var buffer = fs.readFileSync('./public/images/'+filename+'_info/output.txt', txtoptions);
 	
-	var info = buffer.split("\n");
+	//var info = buffer.split("\n");
 	
-	// console.log(videolist);
+	//width
+	var widthbuffer = fs.readFileSync('./public/logs/'+filename+'/width.txt', txtoptions);
+	var width = widthbuffer.split("\n")
+	console.log(width);
+	//gps_x
+	var gpsxbuffer = fs.readFileSync('./public/logs/'+filename+'/gps_x.txt', txtoptions);
+	var gps_x = gpsxbuffer.split("\r\n");
+	console.log("aaaa"+gps_x);
+	//gps_y
+	var gpsybuffer = fs.readFileSync('./public/logs/'+filename+'/gps_y.txt', txtoptions);
+	var gps_y = gpsybuffer.split("\r\n");
+	console.log("aaaa"+gps_y);
+	//risk
+	var riskbuffer = fs.readFileSync('./public/logs/'+filename+'/risk.txt', txtoptions);
+	var risk = riskbuffer.split("\n");
+	console.log(risk);
 	console.log(videolist);
 	console.log(framelist);
-	console.log(info);
 	res.render('./index', {
 		title: filename,
 		videoList: videolist,
@@ -111,15 +127,17 @@ router.get('/video/:name', function(req, res){
 		imglistsize: imglist.length,
 		frameList: framelist,
 		framelistsize: framelist.length,
-		textList: textlist,
-		infomation: info
+		WidthList: width,
+		GpsxList: gps_x,
+		GpsyList: gps_y,
+		RiskList: risk
 	});
   });
 
 router.post('/upload', upload.single('userfile'), function(req, res){
 	//res.send('Uploaded! : '+req.file); // object를 리턴함
 	let options = {
-		mode: 'text',
+		ode: 'text',
 		pythonPath: '',
 		pythonOptions: ['-u'], // get print results in real-time
 		scriptPath: '',
@@ -129,9 +147,9 @@ router.post('/upload', upload.single('userfile'), function(req, res){
 	req.setTimeout(0); // no timeout
 	console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 	PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', options, function (err, results) {
-		res.send("processing");
+		//res.send("processing");
 		if (err) throw err;
-		console.log('result: %j', results);
+		//console.log('result: %j', results);
 		//res.send("processing");
 		res.status(200);
 		res.redirect('/video/'+req.file.filename.split('.')[0]);

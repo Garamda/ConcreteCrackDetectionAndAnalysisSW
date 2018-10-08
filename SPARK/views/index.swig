@@ -7,8 +7,8 @@
 		<style>
 			
 			#videobox {
-				width: 300px;
-				height:100px;
+				width: 100%;
+				height:33%;
 				vertical-align: middle;
 				font-size: 24px;
 				background-color:#ececec;
@@ -446,6 +446,20 @@
 					-moz-transform: rotate(900deg);
 				}
 			}
+			th {
+		            border-top: 1px solid #fdf9f9;
+			    padding: 10px;
+			    background-color: BlanchedAlmond ;
+			    text-align:center;
+			    font-size:25px;
+			}
+			td {
+				border-top: 1px solid #fdf9f9;
+				padding: 10px;
+				background-color: BlanchedAlmond ;
+				text-align:center;
+				font-size:25px;
+			}
 		</style>
 	</head>
 	<body>
@@ -464,21 +478,25 @@
 		        
 		    </div>
 			<div id="wrapper" style="text-align:center;float:center;width:100%;height:820px">
-				<div id="videoarea" style="margin-left:200px;margin-top:80px;float:left;width:440px;text-align:center;font-size:1.3em;">
-					<img id="imgvideo" style="width:458px;height:458px;">
-					<div style="overflow:scroll; margin:0 auto; text-align:center; font-size:14px; width:450px; height:250px; border:4px solid;border-color:#ead9d9" id="videos">
-						<div style="float:left; margin:0 auto; text-align:left; font-size:14px; width:100px" id="thumbnail">
+				<div id="videoarea" style="position:static;margin-left:2%;margin-top:80px;float:left;width:25%;text-align:center;font-size:1.3em;">
+					<div style="height:450px">
+					<img id="imgvideo" style="width:100%;">
+					</div>
+					<div style="overflow:scroll; margin:0 auto; text-align:center; font-size:14px; width:100%; height:250px; border:4px solid;border-color:#ead9d9" id="videos">
+						<p style="float:left; margin:0 auto; text-align:left; font-size:14px; width:100px" id="thumbnail">
 
-						</div>
-						<div style="float:right; margin:0 auto; margin-top:5px; text-align:center; font-size:14px; width:333px" id="playlist">
+						</p>
+						<div style="float:right; margin:0 auto; margin-top:5px; text-align:center; font-size:14px; width:73%;height:100px" id="playlist">
 
 						</div>
 						
 					</div>
-					<form action="/upload" method="post" enctype="multipart/form-data">
-			        	<input type="file" name="userfile">
-			        	<input onClick="window.location.href='./process.swig'" type="submit" value="파일 업로드하기">
-					</form>
+					<div style="100%">
+						<form action="/upload" method="post" enctype="multipart/form-data">
+				        		<input type="file" name="userfile">
+				        		<input onClick="process_img()" type="submit" value="파일 업로드하기">
+						</form>
+					</div>
 				</div>				
 				<!--<div style="float:right;margin:0 10px;width:45%;">
 					<div id="imglist" style="background:#ffffff">
@@ -490,17 +508,29 @@
 						<br/>
 					</div>
 				</div>-->
-				<div id="imagearea" style="overflow:scroll;height:710px;margin-left:80px;margin-top:80px;float:left;width:440px;font-size:1.3em;background-color: #fdf9f9; border:4px solid;border-color:#ead9d9;">
+				<div id="imagearea" style="position:static;overflow:scroll;height:710px;margin-left:2.5%;margin-top:80px;float:left;width:25%;font-size:1.3em;background-color: #fdf9f9; border:4px solid;border-color:#ead9d9;">
 					<!--<div style="overflow:scroll; padding -left:20px; float:left; font-size:14px; width:440px; height:710px;" id="imagelist">
 						<div id="imgbox" style="margin-left:10px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" src="../images/{{title}}/{{imgList[0]}}" style="width:130px;height:130px;position:static"><div id="imgname" style="width:130px; height:30px background-color: #111000">{{imgList[0]}}</div></div>
 					</div>-->
 				
 				</div>				
-				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:60px;margin-top:80px;width:440px;position:statici;border:4px solid;border-color:#ead9d9;">
-					
-					<div style="background:#fdf9f9;width:440px;height:710px">
-						<p style="line-height:2em;font-size:1.3em;">[Crack Information]<br/></p>
-						<div id="info"></div>
+				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:2.5%;margin-top:80px;width:40%;position:statici;border:4px solid;border-color:#ead9d9;">
+					<div style="background:#fdf9f9;width:100%;height:710px">
+						<p style="line-height:2em;font-size:30px;">[Crack Information]<br/></p>
+						<div id="info">
+							<table style="width:100%">
+								<thead>
+									<tr>
+										<th style="width:16%">Time</th>
+										<th style="width:16%">Width</th>
+										<th style="width:16%">Risk</th>
+										<th style="width:52%">GPS location</th>
+									</tr>
+								</thead>
+								<tbody id="info_table">
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div id="processing" style="width:1500px;height:830px;visibility:hidden;background-color:#ffffff;position:absolute;top:320px;left:200px;opacity:0.9;">	
@@ -521,14 +551,25 @@
 							<div class="wInnerBall"></div>
 						</div>
 					</div>
+					<p style="width:300px;top:30px;font-size:40px;">"처리중입니다"</p>
+					<script>
+						function process_img(){
+							console.log("in");
+							document.getElementById("processing").style.visibility = 'visible';
+						}
+					</script>
 				</div>
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript">
 		//console.log({{videoList}});
+		function process_img(){
+			console.log("sdlkfj");
+		}
 		var x = 0;
-		var img_count = {{imglistsize}};
+		if({{imglistsize}})
+			var img_count = {{imglistsize}};
 		jQuery(function($){
 			var frame_list = "{{frameList}}".split(",");
 			
@@ -551,25 +592,21 @@
 			for(var i = 0; i < {{listsize}}; i++){
 				var video_list = "{{videoList}}".split(",");
 					
-				$("#thumbnail").append('<video width="100" height="100" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video>');
-				$("#playlist").append("<a href='../video/"+ video_list[i].split(".")[0]  + "'><button id='videobox'>" + video_list[i] + "</button></a>");
+				$("#thumbnail").append('<video style="width:100%;margin-top:5%" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video>');
+				$("#playlist").append("<a href='../video/"+ video_list[i].split(".")[0]  + "'><button id='videobox'style='margin-top:0.8%;margin-bottom:0.8%;width:100%;height:95px;'>" + video_list[i] + "</button></a>");
 			}
 			var stop = "stop";											 
-			for(var i = 0; i < {{framelistsize}}; i++){
+			/*for(var i = 0; i < {{framelistsize}}; i++){
 				//var frame_list = "{{frameList}}".split(",");
 				//frame_list = frame_list.sort();
 				console.log(lists[i]);
-				$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+lists[i]+','+stop+')" src="/images/{{title}}/'+lists[i]+'.jpg" style="width:130px;height:130px;position:static"><div id="imgname" style="width:130px; height:30px background-color: #111000">'+lists[i]/24+'sec'+'</div></div>');
+				$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+lists[i]+','+stop+')" src="/images/{{title}}/'+lists[i]+'.jpg" style="width:130px;height:130px;position:static"><div id="imgname" style="text-align:center;width:130px; height:30px background-color: #111000">'+lists[i]/24+'sec'+'</div></div>');
 				$("#imagearea").append('<div id="openModal'+(i+1)+'" class="modalDialog" style="margin-top:200px;width: 800px;height:auto;"><div><a href="#close" title="Close" class="close">X</a> <div><img src="/images/{{title}}/'+lists[i]+'.jpg" style="margin-left:200px;width:600px;height:600px;background-color:#000000"></div>');
 				var modal = document.getElementById('myModal');
 
 				// Get the image and insert it inside the modal - use its "alt" text as a caption
 				var img = document.getElementById('imgbox');
 				var modalImg = document.getElementById("img"+(i+1));
-				/*img.onclick = function(){
-				    modal.style.display = "block";
-				    modalImg.src = this.src;
-				}*/
 
 				// Get the <span> element that closes the modal
 				var span = document.getElementsByClassName("close")[0];
@@ -578,19 +615,21 @@
 				span.onclick = function() { 
 				  modal.style.display = "none";
 				}
-			}
-			var infolist = "{{infomation}}".split(",");
+			}*/
+			/*var infolist = "{{infomation}}".split(",");
 			var infolen = infolist.length;
 			for(var i = 0; i < infolen; i++){
 				if(infolist[i] !==  ''){
 					$("#info").append('<p onclick="changeImage('+lists[i]+','+stop+')" style="text-align: left; margin: 10px; background-color:Yellow; color:red">['+lists[i]/24+'sec]'+infolist[i]+'</p>');
 			    	}
-			}
+			}*/
 
 		});
 		//var x = 0;
 
 		var img_list = "{{imgList}}".split(",");
+		var frame_list = "{{frameList}}".split(",");
+		console.log(frame_list);
 		function compareNumbers(a, b) {
 			return a - b;
 		}
@@ -600,29 +639,75 @@
 			return _fileExt;
 		}
 		var listlen = {{imglistsize}};
+		var framelen = {{framelistsize}};
 		var List = [];
+		var frameList = [];
 		for (var i = 0; i < listlen; i++){
 			List.push(parseInt(getnameOfFilename(img_list[i])));
 		}
+		for(var i = 0; i < framelen; i++){
+			frameList.push(parseInt(getnameOfFilename(frame_list[i])));
+		}
 		var lists = List.sort(compareNumbers);
+		var framelists = frameList.sort(compareNumbers);
 		console.log(lists);
+		console.log(framelists);
+		
+		var widthlist = "{{WidthList}}".split(",");
+	        var infolen = 5;//widthlist.length;
 
+		var gpsxlist = "{{GpsxList}}".split(",");
+		var gpsylist = "{{GpsyList}}".split(",");
+		var risklist = "{{RiskList}}".split(",");
+		console.log(gpsxlist);
+		console.log(gpsylist);
+		console.log(risklist);
+		var list_cnt = 0;
 		function changeImage(start, status){
 			var img_list = "{{imgList}}".split(",");
 			var img = document.getElementById("imgvideo");
-			x = start / 6 - 1;
-			img.src = "/images/{{title}}/"+lists[x]+".jpg";
+			x = start / 6;
 
-			if(x >= img_count-1){
-				//x = 0;
-				return;
-			}
 			console.log(x);
 			if(status == 'run'){
-				setTimeout("changeImage((x+2) * 6, 'run')", 250);
+				if(x >= img_count)
+					return;
+				img.src = "/images/{{title}}/"+lists[x]+".jpg";
+				if(frameList.includes(lists[x], 0)){
+					if(risklist[list_cnt] == "상"){
+						$("#info_table").append(
+							'<tr onclick="changeImage('+start+','+'stop'+')" style="color: red">'+
+							'<td rowspan="2" style="width:80px">'+lists[x]/24+'sec'+'</td>'+
+							'<td rowspan="2" style="width:80px">'+widthlist[list_cnt]+'</td>'+
+							'<td rowspan="2" style="width:80px">'+risklist[list_cnt]+'</td>'+
+							'<td style="width:100px">'+gpsxlist[list_cnt]+'</td>'+
+	  						'</tr>'+
+	  						'<tr onclick="changeImage('+start+','+'stop'+')" style="color: red">'+
+							'<td style="width:100px">'+gpsylist[list_cnt]+'</td>'+
+							'</tr>'
+						);
+					}else{
+						$("#info_table").append(
+							'<tr>'+
+							'<td rowspan="2" style="width:80px">'+lists[x]/24+'</td>'+
+							'<td rowspan="2" style="width:80px">'+widthlist[list_cnt]+'</td>'+
+							'<td rowspan="2" style="width:80px">'+risklist[list_cnt]+'</td>'+
+							'<td style="width:200px">'+gpsxlist[list_cnt]+'</td>'+
+							'</tr>'+
+	  						'<tr>'+
+							'<td style="width:200px">'+gpsylist[list_cnt]+'</td>'+
+							'</tr>'
+						);
+					}
+					list_cnt++;
+
+					$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:2%;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+start+','+"stop"+')" src="/images/{{title}}/'+start+'.jpg" style="width:100%;height:130px;position:static"><div id="imgname" style="text-align:center;width:100%; height:30px background-color: #111000">'+lists[x]/24+'sec'+'</div></div>');
+				}
+				setTimeout("changeImage((x+1)*6,'run')",250);
 			}else{
-				console.log('sdfsdf');
-				img_count = 0;
+				x = img_count;
+				console.log("start"+start);
+				img.src = "/images/{{title}}/"+start+".jpg";
 				return;
 			}
 		}
@@ -634,8 +719,44 @@
 			console.log(x);
 		}*/
 		function process_img(){
-			document.getElementById("process_img").style.visibility=hidden;
+			console.log("sdfklsjdflksjdkflsdkj");
+			document.getElementById("processing").style.visibility=visible;
 		}
+		var widthlist = "{{WidthList}}".split(",");
+	        var infolen = 5;//widthlist.length;
+
+		var gpsxlist = "{{GpsxList}}".split(",");
+		var gpsylist = "{{GpsyList}}".split(",");
+		var risklist = "{{RiskList}}".split(",");
+						             
+		console.log(gpsxlist);
+/*		for(var i = 0; i < infolen - 1; i++){
+			if(risklist[i] == "상"){
+				$("#info_table").append(
+					'<tr style="color: red">'+
+					'<td rowspan="2" style="width:80px">'+widthlist[i]+'</td>'+
+					'<td rowspan="2" style="width:80px">'+widthlist[i]+'</td>'+
+					'<td rowspan="2" style="width:80px">'+risklist[i]+'</td>'+
+					'<td style="width:100px">'+gpsxlist[i]+'</td>'+
+	  				'</tr>'+
+	  				'<tr>'+
+					'<td style="width:100px">'+gpsylist[i]+'</td>'+
+					'</tr>'
+				);
+			}else{
+				$("#info_table").append(
+					'<tr>'+
+					'<td rowspan="2" style="width:80px">'+1+'</td>'+
+					'<td rowspan="2" style="width:80px">'+2+'</td>'+
+					'<td rowspan="2" style="width:80px">'+3+'</td>'+
+					'<td style="width:200px">'+4+'</td>'+
+					'</tr>'+
+	  				'<tr>'+
+					'<td style="width:200px">'+5+'</td>'+
+					'</tr>'
+				);
+			}
+		}*/
 
 	</script>
 </html>
