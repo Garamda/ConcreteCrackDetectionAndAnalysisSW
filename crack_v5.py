@@ -54,7 +54,7 @@ model = ssd_300(image_size=(img_height, img_width, 3),
                 nms_max_output_size=400)
 
 # 학습된 weight의 경로를 지정
-weights_path = '/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/ssd300_pascal_07+12_epoch-04_loss-3.0387_val_loss-3.5244_weight.h5'
+weights_path = '/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.h5'
 
 
 model.load_weights(weights_path, by_name=True)
