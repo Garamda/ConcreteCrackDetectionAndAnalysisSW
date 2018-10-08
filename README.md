@@ -117,7 +117,6 @@ d | d | d
 4. 크랙 정보 리스트</br>
 </br>
 </br>
-link: </br>
 http://35.221.191.213:3000</br>
 </br>
 Front-End: html, css, JQuery</br>
