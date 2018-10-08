@@ -162,6 +162,7 @@ orig_images = np.array(orig_images)
 num_of_frames = 16
 counting = 0
 saving_bounding_boxes = []
+isBreak = 0;
 
 print("Predicted boxes:\n")
 print('   class   conf xmin   ymin   xmax   ymax')
@@ -177,6 +178,7 @@ for i in range(0, 4):
     for j in range(0, num_of_frames):
         print('frame :', counting)
         #   print(y_pred_thresh[j])
+        if(j>len(y_pred_thresh)): break;
         for box in y_pred_thresh[j]:
             # Transform the predicted bounding boxes for the 300x300 image to the original image dimensions.
             xmin = box[2] * orig_images[0].shape[1] / img_width
@@ -210,7 +212,10 @@ for i in range(0, 4):
                     # ----------------------------------------done
 
         counting += 6
-        if (counting > 320): break;
+        if(counting>frames_count): 
+            isBreak = 1;
+            break;
+    if(isBreak == 1): break;
 
 print(saving_bounding_boxes)
 
