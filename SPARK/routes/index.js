@@ -107,11 +107,11 @@ router.get('/video/:name', function(req, res){
 	console.log(width);
 	//gps_x
 	var gpsxbuffer = fs.readFileSync('./public/logs/'+filename+'/gps_x.txt', txtoptions);
-	var gps_x = gpsxbuffer.split("\r\n");
+	var gps_x = gpsxbuffer.split("\n");
 	console.log("aaaa"+gps_x);
 	//gps_y
 	var gpsybuffer = fs.readFileSync('./public/logs/'+filename+'/gps_y.txt', txtoptions);
-	var gps_y = gpsybuffer.split("\r\n");
+	var gps_y = gpsybuffer.split("\n");
 	console.log("aaaa"+gps_y);
 	//risk
 	var riskbuffer = fs.readFileSync('./public/logs/'+filename+'/risk.txt', txtoptions);
