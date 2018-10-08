@@ -30,7 +30,7 @@ img_width = 300
 K.clear_session() 
 
 model = ssd_300(image_size=(img_height, img_width, 3),
-                n_classes=1,
+                n_classes=2,
                 mode='inference',
                 l2_regularization=0.0005,
                 scales=[0.1, 0.2, 0.37, 0.54, 0.71, 0.88, 1.05], 
