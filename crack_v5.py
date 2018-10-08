@@ -560,8 +560,6 @@ for k in range(0,len(skeleton_frames_Pw)):
     else: 
         real_width = round(crack_width_list[9]*0.92, 2)
         save_result.append(real_width)
-    
-    save_result.append(real_width)
 
     if(real_width >= 0.3):
         save_risk.append('상')
