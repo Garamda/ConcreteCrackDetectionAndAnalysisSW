@@ -145,13 +145,314 @@
 			.close:hover {
 			    background: #00d9ff;
 			}
+			.windows8 {
+					position: relative;
+							width: 78px;
+									height:78px;
+											margin:auto;
+			}
+
+			.windows8 .wBall {
+					position: absolute;
+							width: 74px;
+									height: 74px;
+											opacity: 0;
+													transform: rotate(225deg);
+																-o-transform: rotate(225deg);
+																			-ms-transform: rotate(225deg);
+																						-webkit-transform: rotate(225deg);
+																									-moz-transform: rotate(225deg);
+																											animation: orbit 6.96s infinite;
+																														-o-animation: orbit 6.96s infinite;
+																																	-ms-animation: orbit 6.96s infinite;
+																																				-webkit-animation: orbit 6.96s infinite;
+																																							-moz-animation: orbit 6.96s infinite;
+			}
+
+			.windows8 .wBall .wInnerBall{
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				background: rgb(0,0,0);
+				left:0px;
+				top:0px;
+				border-radius: 10px;
+			}
+			.windows8 #wBall_1 {
+				animation-delay: 1.52s;
+				-o-animation-delay: 1.52s;
+				-ms-animation-delay: 1.52s;
+				-webkit-animation-delay: 1.52s;
+				-moz-animation-delay: 1.52s;
+			}
+			.windows8 #wBall_2 {
+				animation-delay: 0.3s;
+				-o-animation-delay: 0.3s;
+				-ms-animation-delay: 0.3s;
+				-webkit-animation-delay: 0.3s;
+				-moz-animation-delay: 0.3s;
+			}
+			.windows8 #wBall_3 {
+				animation-delay: 0.61s;
+				-o-animation-delay: 0.61s;
+				-ms-animation-delay: 0.61s;
+				-webkit-animation-delay: 0.61s;
+				-moz-animation-delay: 0.61s;
+			}
+			.windows8 #wBall_4 {
+				animation-delay: 0.91s;
+				-o-animation-delay: 0.91s;
+				-ms-animation-delay: 0.91s;
+				-webkit-animation-delay: 0.91s;
+				-moz-animation-delay: 0.91s;
+			}
+			.windows8 #wBall_5 {
+				animation-delay: 1.22s;
+				-o-animation-delay: 1.22s;
+				-ms-animation-delay: 1.22s;
+				-webkit-animation-delay: 1.22s;
+				-moz-animation-delay: 1.22s;
+			}
+			@keyframes orbit {
+				0% {
+					opacity: 1;
+					z-index:99;
+					transform: rotate(180deg);
+					animation-timing-function: ease-out;
+				}
+				7% {
+					opacity: 1;
+					transform: rotate(300deg);
+					animation-timing-function: linear;
+					origin:0%;
+				}
+				30% {
+					opacity: 1;
+					transform:rotate(410deg);
+					animation-timing-function: ease-in-out;
+					origin:7%;
+				}
+				39% {
+					opacity: 1;
+					transform: rotate(645deg);
+					animation-timing-function: linear;
+					origin:30%;
+				}
+				70% {
+					opacity: 1;
+					transform: rotate(770deg);
+					animation-timing-function: ease-out;
+					origin:39%;
+				}
+				75% {	
+					opacity: 1;
+					transform: rotate(900deg);
+					animation-timing-function: ease-out;
+					origin:70%;
+				}
+				76% {
+					opacity: 0;
+					transform:rotate(900deg);
+				}
+				100% {
+					opacity: 0;
+					transform: rotate(900deg);
+				}
+			}
+
+			@-o-keyframes orbit {
+				0% {
+					opacity: 1;
+					z-index:99;
+					-o-transform: rotate(180deg);
+					-o-animation-timing-function: ease-out;
+				}
+				7% {
+					opacity: 1;
+					-o-transform: rotate(300deg);
+					-o-animation-timing-function: linear;
+					-o-origin:0%;
+				}
+				30% {
+					opacity: 1;
+					-o-transform:rotate(410deg);
+					-o-animation-timing-function: ease-in-out;
+					-o-origin:7%;
+				}
+				39% {
+					opacity: 1;
+					-o-transform: rotate(645deg);
+					-o-animation-timing-function: linear;
+					-o-origin:30%;
+				}
+				70% {
+					opacity: 1;
+					-o-transform: rotate(770deg);
+					-o-animation-timing-function: ease-out;
+					-o-origin:39%;
+				}
+				75% {
+					opacity: 1;
+					-o-transform: rotate(900deg);
+					-o-animation-timing-function: ease-out;
+					-o-origin:70%;
+				}
+				76% {
+					opacity: 0;
+					-o-transform:rotate(900deg);
+				}
+				100% {
+					opacity: 0;
+					-o-transform: rotate(900deg);
+				}
+			}
+
+			@-ms-keyframes orbit {
+				0% {
+					opacity: 1;
+					z-index:99;
+					-ms-transform: rotate(180deg);
+					-ms-animation-timing-function: ease-out;
+				}
+				7% {
+					opacity: 1;
+					-ms-transform: rotate(300deg);
+					-ms-animation-timing-function: linear;
+					-ms-origin:0%;
+				}
+				30% {
+					opacity: 1;
+					-ms-transform:rotate(410deg);
+					-ms-animation-timing-function: ease-in-out;
+					-ms-origin:7%;
+				}
+				39% {
+					opacity: 1;
+					-ms-transform: rotate(645deg);
+					-ms-animation-timing-function: linear;
+					-ms-origin:30%;
+				}
+				70% {
+					opacity: 1;
+					-ms-transform: rotate(770deg);
+					-ms-animation-timing-function: ease-out;
+					-ms-origin:39%;
+				}
+				75% {
+					opacity: 1;
+					-ms-transform: rotate(900deg);
+					-ms-animation-timing-function: ease-out;
+					-ms-origin:70%;
+				}
+				76% {
+					opacity: 0;
+					-ms-transform:rotate(900deg);
+				}
+				100% {
+					opacity: 0;
+					-ms-transform: rotate(900deg);
+				}
+			}
+			@-webkit-keyframes orbit {
+				0% {
+					opacity: 1;
+					z-index:99;
+					-webkit-transform: rotate(180deg);
+					-webkit-animation-timing-function: ease-out;
+				}
+				7% {
+					opacity: 1;
+					-webkit-transform: rotate(300deg);
+					-webkit-animation-timing-function: linear;
+					-webkit-origin:0%;
+				}
+				30% {
+					opacity: 1;
+					-webkit-transform:rotate(410deg);
+					-webkit-animation-timing-function: ease-in-out;
+					-webkit-origin:7%;
+				}
+				39% {
+					opacity: 1;
+					-webkit-transform: rotate(645deg);
+					-webkit-animation-timing-function: linear;
+					-webkit-origin:30%;
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotate(770deg);
+					-webkit-animation-timing-function: ease-out;
+					-webkit-origin:39%;
+				}
+				75% {													
+					opacity: 1;
+					-webkit-transform: rotate(900deg);
+					-webkit-animation-timing-function: ease-out;
+					-webkit-origin:70%;
+				}
+				76% {
+					opacity: 0;
+					-webkit-transform:rotate(900deg);
+				}
+				100% {
+					opacity: 0;
+					-webkit-transform: rotate(900deg);
+				}
+			}
+
+			@-moz-keyframes orbit {
+				0% {
+					opacity: 1;
+					z-index:99;
+					-moz-transform: rotate(180deg);
+					-moz-animation-timing-function: ease-out;
+				}
+				7% {
+					opacity: 1;
+					-moz-transform: rotate(300deg);
+					-moz-animation-timing-function: linear;
+					-moz-origin:0%;
+				}
+				30% {
+					opacity: 1;
+					-moz-transform:rotate(410deg);
+					-moz-animation-timing-function: ease-in-out;
+					-moz-origin:7%;
+				}
+				39% {
+					opacity: 1;
+					-moz-transform: rotate(645deg);
+					-moz-animation-timing-function: linear;
+					-moz-origin:30%;
+				}			
+				70% {
+					opacity: 1;
+					-moz-transform: rotate(770deg);
+					-moz-animation-timing-function: ease-out;
+					-moz-origin:39%;
+				}
+				75% {
+					opacity: 1;
+					-moz-transform: rotate(900deg);
+					-moz-animation-timing-function: ease-out;
+					-moz-origin:70%;
+				}
+				76% {
+					opacity: 0;
+					-moz-transform:rotate(900deg);
+				}
+				100% {
+					opacity: 0;
+					-moz-transform: rotate(900deg);
+				}
+			}
 		</style>
 	</head>
 	<body>
 		<div style="text-align:center">
 			<div class="headline" style="text-
 			align:center;margin:0 auto;height:100px;">
-				<img src="../images/spark.png" style="float:left;width:1800px; height:300px;margin:0 auto;">
+				<img src="../images/spark.png" style="float:left;width:100%; height:300px;margin:0 auto;">
 			</div>
 			<div id="UploadBox">
 		        <!--<span id='UploadArea'>
@@ -162,10 +463,10 @@
 		        </span>-->
 		        
 		    </div>
-			<div id="wrapper" style="text-align:center;float:center;width:1800px;height:820px">
-				<div id="videoarea" style="margin-left:200px;margin-top:100px;float:left;width:440px;text-align:center;font-size:1.3em">
-					<img id="imgvideo" style="width:450px;height:450px;">
-					<div style="overflow:scroll; margin:0 auto; text-align:center; font-size:14px; width:450px; height:250px" id="videos">
+			<div id="wrapper" style="text-align:center;float:center;width:100%;height:820px">
+				<div id="videoarea" style="margin-left:200px;margin-top:80px;float:left;width:440px;text-align:center;font-size:1.3em;">
+					<img id="imgvideo" style="width:458px;height:458px;">
+					<div style="overflow:scroll; margin:0 auto; text-align:center; font-size:14px; width:450px; height:250px; border:4px solid;border-color:#ead9d9" id="videos">
 						<div style="float:left; margin:0 auto; text-align:left; font-size:14px; width:100px" id="thumbnail">
 
 						</div>
@@ -176,7 +477,7 @@
 					</div>
 					<form action="/upload" method="post" enctype="multipart/form-data">
 			        	<input type="file" name="userfile">
-			        	<input type="submit" value="파일 업로드하기">
+			        	<input onClick="window.location.href='./process.swig'" type="submit" value="파일 업로드하기">
 					</form>
 				</div>				
 				<!--<div style="float:right;margin:0 10px;width:45%;">
@@ -189,18 +490,36 @@
 						<br/>
 					</div>
 				</div>-->
-				<div id="imagearea" style="overflow:scroll;height:710px;margin-left:80px;margin-top:100px;float:left;width:440px;font-size:1.3em;background-color: #fdf9f9">
+				<div id="imagearea" style="overflow:scroll;height:710px;margin-left:80px;margin-top:80px;float:left;width:440px;font-size:1.3em;background-color: #fdf9f9; border:4px solid;border-color:#ead9d9;">
 					<!--<div style="overflow:scroll; padding -left:20px; float:left; font-size:14px; width:440px; height:710px;" id="imagelist">
 						<div id="imgbox" style="margin-left:10px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" src="../images/{{title}}/{{imgList[0]}}" style="width:130px;height:130px;position:static"><div id="imgname" style="width:130px; height:30px background-color: #111000">{{imgList[0]}}</div></div>
 					</div>-->
 				
 				</div>				
-				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:80px;margin-top:80px;width:440px;position:static">
+				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:60px;margin-top:80px;width:440px;position:statici;border:4px solid;border-color:#ead9d9;">
 					
 					<div style="background:#fdf9f9;width:440px;height:710px">
 						<p style="line-height:2em;font-size:1.3em;">[Crack Information]<br/></p>
-						
 						<div id="info"></div>
+					</div>
+				</div>
+				<div id="processing" style="width:1500px;height:830px;visibility:hidden;background-color:#ffffff;position:absolute;top:320px;left:200px;opacity:0.9;">	
+					<div class="windows8" style="top:240px;">
+						<div class="wBall" id="wBall_1">
+							<div class="wInnerBall"></div>
+						</div>
+						<div class="wBall" id="wBall_2">
+							<div class="wInnerBall"></div>
+						</div>
+						<div class="wBall" id="wBall_3">
+							<div class="wInnerBall"></div>
+						</div>
+						<div class="wBall" id="wBall_4">
+							<div class="wInnerBall"></div>
+						</div>
+						<div class="wBall" id="wBall_5">
+							<div class="wInnerBall"></div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -264,7 +583,7 @@
 			var infolen = infolist.length;
 			for(var i = 0; i < infolen; i++){
 				if(infolist[i] !==  ''){
-					$("#info").append('<div style="text-align: left; margin: 10px; background-color:Yellow; color:red">'+infolist[i]+'</div>');
+					$("#info").append('<p onclick="changeImage('+lists[i]+','+stop+')" style="text-align: left; margin: 10px; background-color:Yellow; color:red">['+lists[i]/24+'sec]'+infolist[i]+'</p>');
 			    	}
 			}
 
@@ -314,6 +633,9 @@
 			img_count = x;
 			console.log(x);
 		}*/
+		function process_img(){
+			document.getElementById("process_img").style.visibility=hidden;
+		}
 
 	</script>
 </html>

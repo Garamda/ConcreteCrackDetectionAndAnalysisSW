@@ -129,8 +129,11 @@ router.post('/upload', upload.single('userfile'), function(req, res){
 	req.setTimeout(0); // no timeout
 	console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 	PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', options, function (err, results) {
+		res.send("processing");
 		if (err) throw err;
 		console.log('result: %j', results);
+		//res.send("processing");
+		res.status(200);
 		res.redirect('/video/'+req.file.filename.split('.')[0]);
 	});
 	//res.redirect('/video/'+req.file.filename.split('.')[0]);

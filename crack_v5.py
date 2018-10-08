@@ -551,5 +551,5 @@ for k in range(0,len(skeleton_frames_Pw)):
     print('위험군 : ','\n')
 f = open("/home/starever222/SPARK/SPARK/public/images/"+filename+"_info/output.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    f.write('['+str(saving_bounding_boxes[z][0])+'] Crack width: '+str(save_result[z])+' Risk: \n')
+    f.write('Crack width: '+str(save_result[z])+' Risk: \n')
 f.close()
