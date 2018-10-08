@@ -569,5 +569,5 @@ for z in range(0, len(skeleton_frames_Pw)):
 f.close()
 fr = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/risk.txt", 'w')
 for z in range(0, len(skeleton_frames_Pw)):
-    fr.write(str(save_risk[z]+'\n')
+    fr.write(save_risk[z]+'\n')
 fr.close()
