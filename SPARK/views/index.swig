@@ -3,16 +3,16 @@
 	<meta charset="utf-8">
 	<head>
 		<script src="//code.jquery.com/jquery.min.js"></script>
-		<script src="js/jquery-1.8.2.js"></script>
+		<!--<script src="js/jquery-1.8.2.js"></script>-->
 		<style>
 			
 			#videobox {
 				width: 100%;
-				height:33%;
+				height:100px;
 				vertical-align: middle;
 				font-size: 24px;
 				background-color:#ececec;
-				box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+				//box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 			}
 			/* Style the Image Used to Trigger the Modal */
 			#imgbox {
@@ -469,12 +469,6 @@
 				<img src="../images/spark.png" style="float:left;width:100%; height:300px;margin:0 auto;">
 			</div>
 			<div id="UploadBox">
-		        <!--<span id='UploadArea'>
-		            <label for="FileBox">Choose A File: </label><input type="file" id="FileBox"><br>
-		            <label for="NameBox">Name: </label><input type="text" id="NameBox"><br>
-		 
-		            <button  type='button' id='UploadButton' class='Button'>Upload</button>
-		        </span>-->
 		        
 		    </div>
 			<div id="wrapper" style="text-align:center;float:center;width:100%;height:820px">
@@ -482,36 +476,22 @@
 					<div style="height:450px">
 					<img id="imgvideo" style="width:100%;">
 					</div>
-					<div style="overflow:scroll; margin:0 auto; text-align:center; font-size:14px; width:100%; height:250px; border:4px solid;border-color:#ead9d9" id="videos">
-						<p style="float:left; margin:0 auto; text-align:left; font-size:14px; width:100px" id="thumbnail">
-
-						</p>
-						<div style="float:right; margin:0 auto; margin-top:5px; text-align:center; font-size:14px; width:73%;height:100px" id="playlist">
-
-						</div>
-						
+					<div style="overflow:scroll; margin-top:10px; text-align:center; font-size:14px; width:100%;; height:240px; border:4px solid;border-color:#ead9d9" id="videos">
 					</div>
-					<div style="100%">
+					<!--<div style="width:100%">
 						<form action="/upload" method="post" enctype="multipart/form-data">
 				        		<input type="file" name="userfile">
-				        		<input onClick="process_img()" type="submit" value="파일 업로드하기">
+				        		<input onClick="process_img" type="submit" value="파일 업로드하기">
 						</form>
-					</div>
-				</div>				
-				<!--<div style="float:right;margin:0 10px;width:45%;">
-					<div id="imglist" style="background:#ffffff">
-						
-					</div>
-					<div style="background:#ffffff">
-						<p style="line-height:2em;font-size:1.3em;background:#ffffff">[Crack Information]<br/></p>
-						<p style="background:#ffffff"><span style="background:#ffffff">Predicted boxes: <span style="background:#ffffff;color:red">xmin: 3.14  ymin: 14.75 xmax: 830.31 ymax: 205.74</p>
-						<br/>
-					</div>
-				</div>-->
-				<div id="imagearea" style="position:static;overflow:scroll;height:710px;margin-left:2.5%;margin-top:80px;float:left;width:25%;font-size:1.3em;background-color: #fdf9f9; border:4px solid;border-color:#ead9d9;">
-					<!--<div style="overflow:scroll; padding -left:20px; float:left; font-size:14px; width:440px; height:710px;" id="imagelist">
-						<div id="imgbox" style="margin-left:10px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" src="../images/{{title}}/{{imgList[0]}}" style="width:130px;height:130px;position:static"><div id="imgname" style="width:130px; height:30px background-color: #111000">{{imgList[0]}}</div></div>
+						<script>
+							function process_img(){
+								console.log("in");
+								document.getElementById("processing").style.visibility = 'visible';
+							}
+						</script>
 					</div>-->
+				</div>				
+				<div id="imagearea" style="position:static;overflow:scroll;height:710px;margin-left:2.5%;margin-top:80px;float:left;width:25%;font-size:1.3em;background-color: #fdf9f9; border:4px solid;border-color:#ead9d9;">
 				
 				</div>				
 				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:2.5%;margin-top:80px;width:40%;position:statici;border:4px solid;border-color:#ead9d9;">
@@ -592,38 +572,9 @@
 			for(var i = 0; i < {{listsize}}; i++){
 				var video_list = "{{videoList}}".split(",");
 					
-				$("#thumbnail").append('<video style="width:100%;margin-top:5%" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video>');
-				$("#playlist").append("<a href='../video/"+ video_list[i].split(".")[0]  + "'><button id='videobox'style='margin-top:0.8%;margin-bottom:0.8%;width:100%;height:95px;'>" + video_list[i] + "</button></a>");
+				$("#videos").append('<div style="margin-left:20px;margin-top:5px;width:94%;"><div style="float:left;width:23%;height:23%"><video style="width:100%;height:100%margin-top:0px;float:left" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video></div><div style="float:left;width:75%;height:33%"><a href="../video/'+ video_list[i].split(".")[0]  + '"><button id="videobox"  style="float:left;width:100%;">' + video_list[i] + '</button></a></div></div>');
 			}
 			var stop = "stop";											 
-			/*for(var i = 0; i < {{framelistsize}}; i++){
-				//var frame_list = "{{frameList}}".split(",");
-				//frame_list = frame_list.sort();
-				console.log(lists[i]);
-				$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:10px;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+lists[i]+','+stop+')" src="/images/{{title}}/'+lists[i]+'.jpg" style="width:130px;height:130px;position:static"><div id="imgname" style="text-align:center;width:130px; height:30px background-color: #111000">'+lists[i]/24+'sec'+'</div></div>');
-				$("#imagearea").append('<div id="openModal'+(i+1)+'" class="modalDialog" style="margin-top:200px;width: 800px;height:auto;"><div><a href="#close" title="Close" class="close">X</a> <div><img src="/images/{{title}}/'+lists[i]+'.jpg" style="margin-left:200px;width:600px;height:600px;background-color:#000000"></div>');
-				var modal = document.getElementById('myModal');
-
-				// Get the image and insert it inside the modal - use its "alt" text as a caption
-				var img = document.getElementById('imgbox');
-				var modalImg = document.getElementById("img"+(i+1));
-
-				// Get the <span> element that closes the modal
-				var span = document.getElementsByClassName("close")[0];
-
-				// When the user clicks on <span> (x), close the modal
-				span.onclick = function() { 
-				  modal.style.display = "none";
-				}
-			}*/
-			/*var infolist = "{{infomation}}".split(",");
-			var infolen = infolist.length;
-			for(var i = 0; i < infolen; i++){
-				if(infolist[i] !==  ''){
-					$("#info").append('<p onclick="changeImage('+lists[i]+','+stop+')" style="text-align: left; margin: 10px; background-color:Yellow; color:red">['+lists[i]/24+'sec]'+infolist[i]+'</p>');
-			    	}
-			}*/
-
 		});
 		//var x = 0;
 
@@ -712,51 +663,10 @@
 			}
 		}
 		changeImage(6, 'run');
-		/*function changeStart(start){
-			console.log(start);
-			x = start / 6 - 1;
-			img_count = x;
-			console.log(x);
-		}*/
 		function process_img(){
 			console.log("sdfklsjdflksjdkflsdkj");
 			document.getElementById("processing").style.visibility=visible;
 		}
-		var widthlist = "{{WidthList}}".split(",");
-	        var infolen = 5;//widthlist.length;
-
-		var gpsxlist = "{{GpsxList}}".split(",");
-		var gpsylist = "{{GpsyList}}".split(",");
-		var risklist = "{{RiskList}}".split(",");
-						             
-		console.log(gpsxlist);
-/*		for(var i = 0; i < infolen - 1; i++){
-			if(risklist[i] == "상"){
-				$("#info_table").append(
-					'<tr style="color: red">'+
-					'<td rowspan="2" style="width:80px">'+widthlist[i]+'</td>'+
-					'<td rowspan="2" style="width:80px">'+widthlist[i]+'</td>'+
-					'<td rowspan="2" style="width:80px">'+risklist[i]+'</td>'+
-					'<td style="width:100px">'+gpsxlist[i]+'</td>'+
-	  				'</tr>'+
-	  				'<tr>'+
-					'<td style="width:100px">'+gpsylist[i]+'</td>'+
-					'</tr>'
-				);
-			}else{
-				$("#info_table").append(
-					'<tr>'+
-					'<td rowspan="2" style="width:80px">'+1+'</td>'+
-					'<td rowspan="2" style="width:80px">'+2+'</td>'+
-					'<td rowspan="2" style="width:80px">'+3+'</td>'+
-					'<td style="width:200px">'+4+'</td>'+
-					'</tr>'+
-	  				'<tr>'+
-					'<td style="width:200px">'+5+'</td>'+
-					'</tr>'
-				);
-			}
-		}*/
 
 	</script>
 </html>
