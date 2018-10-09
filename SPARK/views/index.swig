@@ -5,7 +5,6 @@
 		<script src="//code.jquery.com/jquery.min.js"></script>
 		<!--<script src="js/jquery-1.8.2.js"></script>-->
 		<style>
-			
 			#videobox {
 				width: 100%;
 				height:100px;
@@ -145,28 +144,29 @@
 			.close:hover {
 			    background: #00d9ff;
 			}
+			/*loading bar*/
 			.windows8 {
-					position: relative;
-							width: 78px;
-									height:78px;
-											margin:auto;
+				position: relative;
+				width: 78px;
+				height:78px;
+				margin:auto;
 			}
 
 			.windows8 .wBall {
-					position: absolute;
-							width: 74px;
-									height: 74px;
-											opacity: 0;
-													transform: rotate(225deg);
-																-o-transform: rotate(225deg);
-																			-ms-transform: rotate(225deg);
-																						-webkit-transform: rotate(225deg);
-																									-moz-transform: rotate(225deg);
-																											animation: orbit 6.96s infinite;
-																														-o-animation: orbit 6.96s infinite;
-																																	-ms-animation: orbit 6.96s infinite;
-																																				-webkit-animation: orbit 6.96s infinite;
-																																							-moz-animation: orbit 6.96s infinite;
+				position: absolute;
+				width: 74px;
+				height: 74px;
+				opacity: 0;
+				transform: rotate(225deg);
+				-o-transform: rotate(225deg);
+				-ms-transform: rotate(225deg);
+				-webkit-transform: rotate(225deg);
+				-moz-transform: rotate(225deg);
+				animation: orbit 6.96s infinite;
+				-o-animation: orbit 6.96s infinite;
+				-ms-animation: orbit 6.96s infinite;
+				-webkit-animation: orbit 6.96s infinite;
+				-moz-animation: orbit 6.96s infinite;
 			}
 
 			.windows8 .wBall .wInnerBall{
@@ -472,6 +472,7 @@
 		        
 		    </div>
 			<div id="wrapper" style="text-align:center;float:center;width:100%;height:820px">
+				<!--video part-->
 				<div id="videoarea" style="position:static;margin-left:2%;margin-top:80px;float:left;width:25%;text-align:center;font-size:1.3em;">
 					<div style="height:450px">
 					<img id="imgvideo" style="width:100%;">
@@ -490,10 +491,13 @@
 							}
 						</script>
 					</div>-->
-				</div>				
+				</div>
+				
+				<!--image part-->
 				<div id="imagearea" style="position:static;overflow:scroll;height:710px;margin-left:2.5%;margin-top:80px;float:left;width:25%;font-size:1.3em;background-color: #fdf9f9; border:4px solid;border-color:#ead9d9;">
 				
-				</div>				
+				</div>
+				<!--information part-->
 				<div id="infoarea" style="overflow:scroll;height:710px;float:left;margin-left:2.5%;margin-top:80px;width:40%;position:statici;border:4px solid;border-color:#ead9d9;">
 					<div style="background:#fdf9f9;width:100%;height:710px">
 						<p style="line-height:2em;font-size:30px;">[Crack Information]<br/></p>
@@ -513,6 +517,7 @@
 						</div>
 					</div>
 				</div>
+				<!--processing loading div-->
 				<div id="processing" style="width:1500px;height:830px;visibility:hidden;background-color:#ffffff;position:absolute;top:320px;left:200px;opacity:0.9;">	
 					<div class="windows8" style="top:240px;">
 						<div class="wBall" id="wBall_1">
@@ -543,10 +548,6 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-		//console.log({{videoList}});
-		function process_img(){
-			console.log("sdlkfj");
-		}
 		var x = 0;
 		if({{imglistsize}})
 			var img_count = {{imglistsize}};
@@ -568,7 +569,8 @@
 			}
 			var lists = List.sort(compareNumbers);
 			console.log(lists);
-
+			
+			//insert video
 			for(var i = 0; i < {{listsize}}; i++){
 				var video_list = "{{videoList}}".split(",");
 					
@@ -576,11 +578,9 @@
 			}
 			var stop = "stop";											 
 		});
-		//var x = 0;
-
+		
 		var img_list = "{{imgList}}".split(",");
 		var frame_list = "{{frameList}}".split(",");
-		console.log(frame_list);
 		function compareNumbers(a, b) {
 			return a - b;
 		}
@@ -601,8 +601,6 @@
 		}
 		var lists = List.sort(compareNumbers);
 		var framelists = frameList.sort(compareNumbers);
-		console.log(lists);
-		console.log(framelists);
 		
 		var widthlist = "{{WidthList}}".split(",");
 	        var infolen = 5;//widthlist.length;
@@ -610,10 +608,9 @@
 		var gpsxlist = "{{GpsxList}}".split(",");
 		var gpsylist = "{{GpsyList}}".split(",");
 		var risklist = "{{RiskList}}".split(",");
-		console.log(gpsxlist);
-		console.log(gpsylist);
-		console.log(risklist);
 		var list_cnt = 0;
+		
+		/*image->video or video->image*/
 		function changeImage(start, status){
 			var img_list = "{{imgList}}".split(",");
 			var img = document.getElementById("imgvideo");
@@ -625,6 +622,7 @@
 					return;
 				img.src = "/images/{{title}}/"+lists[x]+".jpg";
 				if(frameList.includes(lists[x], 0)){
+					/*insert information*/
 					if(risklist[list_cnt] == "상"){
 						$("#info_table").append(
 							'<tr onclick="changeImage('+start+','+'stop'+')" style="color: red">'+
@@ -651,7 +649,7 @@
 						);
 					}
 					list_cnt++;
-
+					/*insert image*/
 					$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:2%;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+start+','+"stop"+')" src="/images/{{title}}/'+start+'.jpg" style="width:100%;height:130px;position:static"><div id="imgname" style="text-align:center;width:100%; height:30px background-color: #111000">'+lists[x]/24+'sec'+'</div></div>');
 				}
 				setTimeout("changeImage((x+1)*6,'run')",250);
@@ -662,9 +660,9 @@
 				return;
 			}
 		}
+		/*run image video*/
 		changeImage(6, 'run');
 		function process_img(){
-			console.log("sdfklsjdflksjdkflsdkj");
 			document.getElementById("processing").style.visibility=visible;
 		}
 
