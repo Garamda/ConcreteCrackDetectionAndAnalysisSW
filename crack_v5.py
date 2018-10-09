@@ -11,10 +11,6 @@
 # limitations under the License.
 
 
-# Unless otherwise specified by LICENSE.txt files in individual
-# directories, all code is
-
-
 
 
 
