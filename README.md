@@ -30,9 +30,10 @@
 
 2. 높은 비용 
 <img src="https://user-images.githubusercontent.com/28426269/46481857-3bf91d80-c82f-11e8-8a9f-718a18bb5e86.jpg" width="70%">
-<사진 3. 굴절차를 사용한 구조물 안전진단>
+<br><br>
+<사진 3. 굴절차를 사용한 구조물 안전진단> <br>
 교량 안전 진단을 예시로 설명하겠습니다.
-
+<br>
 [1] 굴절차 대여 비용 : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 SPARK를 사용하면 초기 구매 비용만 소요됩니다.<br></br>
 [2] 투입 인력 : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 이와 같은 이유로, 10개 교량을 기준으로 평균 4천만원의 진단 비용이 발생합니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
 
@@ -53,11 +54,13 @@
 1. 균열 탐지 : Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용하였습니다. 다른 Image Detection 딥러닝 알고리즘에 비해 속도와 탐지 성능 면에서 가장 바람직한 trade-off 관계를 보입니다. 즉, 속도는 빠르면서 높은 수준의 탐지 성능을 보입니다. Faster-RCNN 보다는 빠르며 YOLO 보다는 정확합니다. </br>
 여기에 다양한 균열 이미지 데이터를 학습시켰습니다. Utah 주립 대학교에서 수집한 교량, 도보, 벽의 균열 이미지와, 중동 공과대학교(METU)에서 수집한 학교 건물의 균열 이미지를 사용하였습니다. 
 <img src="https://user-images.githubusercontent.com/28426269/46650652-4bce8400-cbd8-11e8-8fc7-47dc05a67801.JPG" width="40%">
+<br> 
 <사진 4. Utah 대학교에서 수집한 균열 이미지 데이터 세트>
 <br> 
 <img src="https://user-images.githubusercontent.com/28426269/46650653-4c671a80-cbd8-11e8-8908-46d2d392d5a7.JPG" width="40%">
+<br> 
 <사진 5. METU에서 수집한 균열 이미지 데이터 세트>
-
+<br> 
 이 데이터 세트들은 0.06mm의 미세균열부터 25mm에 이르는 대형 균열까지, 균열 폭의 스펙트럼이 매우 넓어 실제 안전 진단 현장에서 발견할 수 있는 모든 종류의 균열을 반영합니다. 이처럼 다양한 크기, 텍스쳐, 노이즈를 반영한 총 15000여장의 균열 이미지 데이터를 학습하였습니다. 학습한 weight와 (h5 파일) Annotation file(Annotation.zip)을 다운받으실 수 있습니다. 뿐만 아니라, 학습에 사용한 코드 역시 업로드 하였습니다. 필요에 따라 수정 사용이 가능합니다.
 </br></br>
 2. 균열 폭 측정
@@ -145,33 +148,35 @@ METU data set | 85.7% (1714/2000)
 </br>
 http://35.221.191.213:3000</br>
 </br>
-Front-End: html, css, JQuery</br>
-Back-End: Node.js, Python-shell</br>
-server: GCP</br>
 </br>
 해당 페이지 기능</br>
 1. 영상 옆 링크를 누르면 입력 된 영상 재생</br>
-2. 영상이 재생 되면서 크랙이 감지된 경우  오른쪽에 이미지와 크랙정보 생성</br>
-3. 가운데 이미지 혹은 크랙 정보를 클릭시 해당 영상의 위치로 이동</br>
-4. 크랙의 균열이 0.0~0.2: 하0.2~0.3: 중0.3mm이상인 경우(Risk가 '상'인경우) 빨간 글씨로 표시(나머지는 검은글씨)</br>
-추후 정밀 진단이 필요할 경우 실제 위치를 알기 위한 촬영 당시의 GPS좌표 출력</br>
+2. 영상을 균열 탐지 및 분석 엔진에 입력하고 코드를 실행</br>
+3. 탐지된 균열 이미지 혹은 분석된 균열 정보를 클릭시 영상의 해당 play time으로 이동</br>
+4. 탐지된 영상 시간, 균열의 폭, 위험군, GPS 좌표를 리포트. 균열의 폭이 0.3mm이상인 경우 (Risk가 '상'인경우) 빨간 글씨로 표시</br>
+</br>
 </br></br>
 ## 사용하는 방법
 1. 균열 탐지 딥러닝 : Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
 2. 균열 폭 측정 알고리즘 : Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하여 설치합니다.</br>```pip install -U scikit-image```
 </br></br>
 1. 균열 이미지 데이터</br>
-1) METU 캠퍼스 균열 이미지 데이터 세트 :  https://data.mendeley.com/datasets/5y9wdsg2zt/1 </br>
-2) </br>
-2. 학습된 weight 파일 : </br>
-3. h5 파일 링크, annotation file</br>
-4. Annotation 툴 : https://github.com/tzutalin/labelImg </br>
-기본 설정에 기반한 내 친절한 설명이 들어가 있어야 함 -> 내 오픈소스 장점 어필 가능</br>
+1) METU 캠퍼스 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19 </br>
+2) Utah 대학교 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19</br><br>
+2. 학습된 weight 파일 : ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.zip 파일을 다운로드 하여 압축 해제</br>
+3. Annotation file : Annotation.zip 파일을 다운로드 하여 압축 해제.</br>
+4. Annotation 툴 : 이미지 안에서 균열이 위치한 곳을 사람이 표시하여 저장하고, 이를 학습에 활용하기 위한 툴 https://github.com/tzutalin/labelImg 에서 다운로드하여 사용 가능</br>
 </br>
 
 ## 개발 문서
 </br>
-파일들간 관계를 설명, 중요한 파일들 위주로 설명 13 ~ 15 참조, EX) 얘는 학습용, 얘는 진단용, 얘는 UI, 얘는 라이브러리 등등 큰 범주들을 쓴 후 각 부분들을 들어가서 자세히, 폴더 구조로 해보자! 이게 제일 좋을듯 / 설정 파일(유저가 직접 변경해서 사용해야 하는 경우)은 
+1. Crack Width Estimation with Crack Detection v1.3.ipynb : 균열 인식 및 균열 폭 측정을 하는 파일입니다. </br>
+2. SSD Crack Detection Training v1.3.ipynb : 균열 이미지 학습에 사용한 파일입니다. </br>
+3. SSD Crack Detection Inference v1.1.ipynb : 균열 이미지를 한 장씩 딥러닝 엔진에 입력하여 출력 결과를 볼 수 있는 파일입니다.</br>
+4. SSD Crack Detection Evaluation v1.0.ipynb : 균열 이미지 여러 장을 한꺼번에 입력하여 탐지율을 % 단위로 불 수 있는 파일입니다.</br>
+5. crack_v5.py :  Crack Width Estimation with Crack Detection v1.3.ipynb 파일의 코드를 바탕으로, 서버에 업로드 하여 사용한 파일입니다.</br>
+<br>
+위 파일들은 모두 일부 경로 변수를 수정하여 직접 사용이 가능합니다. 코드 내 주석을 통해 해당 내용을 설명하였습니다.
 </br></br>
 
 ## 면담을 받은 공공기관
