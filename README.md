@@ -154,19 +154,26 @@ Web Page : http://35.221.191.213:3000 </br>
 </br></br>
 
 ## 사용하는 방법
-
+### 설치
 * 균열 탐지 딥러닝
 Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
 * 균열 폭 측정 알고리즘
 Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하여 설치합니다.</br>```pip install -U scikit-image```
+
+### 데이터
 * 균열 이미지 데이터
   -  METU 캠퍼스 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19
   -  Utah 대학교 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19
 * 학습된 weight 파일 : ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.zip 파일을 다운로드 하여 압축 해제
 * Annotation file : Annotation.zip 파일을 다운로드 하여 압축 해제.
 * Annotation 툴 : 이미지 안에서 균열이 위치한 곳을 사람이 표시하여 저장하고, 이를 학습에 활용하기 위한 툴 https://github.com/tzutalin/labelImg 에서 다운로드하여 사용 가능
-* 웹 서버 실행 : SPARK 디렉토리로 이동해 npm install로 패키지 파일 설치 후 node bin/www 명령어를 이용해 서버 실행.
-* 웹 페이지 접근 : 서버를 실행한 컴퓨터의 로컬 IP와 포트번호를 합쳐 http://(해당 IP 혹은 localhost):3000/ 주소로 
+
+### 웹
+* 웹 서버 실행
+  -  SPARK 디렉토리로 이동
+  -  '''npm install'''로 패키지 파일 설치
+  -  '''node bin/www''' 명령어를 이용해 서버 실행.
+* 웹 페이지 접근 : 서버를 실행한 컴퓨터의 로컬 IP와 포트번호를 합쳐 http://(해당 IP 혹은 localhost):3000/ 주소 입력
 
 
 ## 개발 문서
