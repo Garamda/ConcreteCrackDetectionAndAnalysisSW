@@ -157,8 +157,10 @@ Web Page : http://35.221.191.213:3000 </br>
 ## 사용하는 방법
 ### 설치
 * 균열 탐지 딥러닝
+
 Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
 * 균열 폭 측정 알고리즘
+
 Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하여 설치합니다.</br>```pip install -U scikit-image```
 
 ### 데이터
