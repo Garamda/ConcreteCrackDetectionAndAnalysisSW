@@ -69,6 +69,7 @@ Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를
 <img src="https://user-images.githubusercontent.com/28426269/46650969-6bb27780-cbd9-11e8-93b1-af089093aa66.JPG" width="40%">
 <br>
 <사진 6. 균열 폭 측정 작업 모식도>
+<br>
 
 * **Image Binarization**
 
@@ -175,6 +176,7 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
   -  '''node bin/www''' 명령어를 이용해 서버 실행.
 * 웹 페이지 접근 : 서버를 실행한 컴퓨터의 로컬 IP와 포트번호를 합쳐 http://(해당 IP 혹은 localhost):3000/ 주소 입력
 
+<br>
 
 ## 개발 문서
 
