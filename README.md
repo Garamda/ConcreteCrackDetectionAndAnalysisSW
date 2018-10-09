@@ -160,17 +160,16 @@ Web Page : http://35.221.191.213:3000 </br>
 Anaconda, CUDA & CuDNN, Python, Tensorflow-gpu, Keras를 차례로 설치해야 합니다. 가상 환경을 만드는 복잡한 과정을 거치기 때문에, 과정을 상세히 설명한 링크를 첨부합니다. (https://medium.com/@viveksingh.heritage/how-to-install-tensorflow-gpu-version-with-jupyter-windows-10-in-8-easy-steps-8797547028a4)</br>
 * 균열 폭 측정 알고리즘
 Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하여 설치합니다.</br>```pip install -U scikit-image```
-</br></br>
 * 균열 이미지 데이터
-  -  METU 캠퍼스 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19 </br>
-  -  Utah 대학교 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19</br><br>
-* 학습된 weight 파일 : ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.zip 파일을 다운로드 하여 압축 해제</br></br>
-* Annotation file : Annotation.zip 파일을 다운로드 하여 압축 해제.</br></br>
-* Annotation 툴 : 이미지 안에서 균열이 위치한 곳을 사람이 표시하여 저장하고, 이를 학습에 활용하기 위한 툴 https://github.com/tzutalin/labelImg 에서 다운로드하여 사용 가능</br>
-</br>
+  -  METU 캠퍼스 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19
+  -  Utah 대학교 균열 이미지 데이터 세트 : https://doi.org/10.15142/T3TD19
+* 학습된 weight 파일 : ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.zip 파일을 다운로드 하여 압축 해제
+* Annotation file : Annotation.zip 파일을 다운로드 하여 압축 해제.
+* Annotation 툴 : 이미지 안에서 균열이 위치한 곳을 사람이 표시하여 저장하고, 이를 학습에 활용하기 위한 툴 https://github.com/tzutalin/labelImg 에서 다운로드하여 사용 가능
+
 
 ## 개발 문서
-</br>
+
 * Crack Width Estimation with Crack Detection v1.3.ipynb : 균열 인식 및 균열 폭 측정을 하는 파일입니다.
 * SSD Crack Detection Training v1.3.ipynb : 균열 이미지 학습에 사용한 파일입니다
 * SSD Crack Detection Inference v1.1.ipynb : 균열 이미지를 한 장씩 딥러닝 엔진에 입력하여 출력 결과를 볼 수 있는 파일입니다.
@@ -181,11 +180,11 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 </br></br>
 
 ## 면담을 받은 공공기관
-* 한국건설기술연구원</br>
-* 한국시설안전공단</br>
-* 한국시설안전공단 시설성능연구소</br>
-* 한국도로공사 도로교통연구원</br>
-* 경기도건설본부 도로건설과 도로시설팀</br>
+* 한국건설기술연구원
+* 한국시설안전공단
+* 한국시설안전공단 시설성능연구소
+* 한국도로공사 도로교통연구원
+* 경기도건설본부 도로건설과 도로시설팀
 
 <br><br>
 
