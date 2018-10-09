@@ -19,32 +19,8 @@ var logDir = './public/images'
 var fs = require('fs');
 const path = require('path');
 var multer = require('multer')
-// var PythonShell = require('python-shell');
-
-// var options = {
-
-// 	mode: 'text',
-  
-// 	pythonPath: 'C:\Users\rlaal\AppData\Local\Programs\Python\Python36\Python.exe',
-  
-// 	pythonOptions: ['-u'],
-  
-// 	scriptPath: 'C:\Users\rlaal\Desktop\SPARK\routes',
-  
-// 	args: ['value1', 'value2', 'value3']
-  
-//   };
-//   PythonShell.run('test.py', options, function (err, results) {
-
-// 	if (err) throw err;
-  
-  
-// 	console.log('results: %j', results);
-  
-//   });  
 
 let {PythonShell} = require('python-shell');
-//console.log(PythonShell);
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -55,7 +31,6 @@ var storage = multer.diskStorage({
 	}
 })
 var upload = multer({ storage: storage })
-//const upload = multer({ dest: 'assets/video', limits: { fileSize: 5 * 1024 * 1024 } });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -97,9 +72,6 @@ router.get('/video/:name', function(req, res){
 	//send 균열정보
 	var txtoptions = {encoding:'utf-8', flag:'r'};
 	
-	//var buffer = fs.readFileSync('./public/images/'+filename+'_info/output.txt', txtoptions);
-	
-	//var info = buffer.split("\n");
 	
 	//width
 	var widthbuffer = fs.readFileSync('./public/logs/'+filename+'/width.txt', txtoptions);
@@ -134,8 +106,8 @@ router.get('/video/:name', function(req, res){
 	});
   });
 
+/*multiparty를 이용한 파일 업로드*/
 router.post('/upload', upload.single('userfile'), function(req, res){
-	//res.send('Uploaded! : '+req.file); // object를 리턴함
 	let options = {
 		ode: 'text',
 		pythonPath: '',
@@ -145,16 +117,11 @@ router.post('/upload', upload.single('userfile'), function(req, res){
 	};
 	
 	req.setTimeout(0); // no timeout
-	console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
 	PythonShell.run('/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/crack.py', options, function (err, results) {
-		//res.send("processing");
 		if (err) throw err;
-		//console.log('result: %j', results);
-		//res.send("processing");
 		res.status(200);
 		res.redirect('/video/'+req.file.filename.split('.')[0]);
 	});
-	//res.redirect('/video/'+req.file.filename.split('.')[0]);
 });
 
 module.exports = router;
