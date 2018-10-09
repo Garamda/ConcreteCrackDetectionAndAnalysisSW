@@ -125,6 +125,10 @@ METU data set | 85.7% (1714/2000)
 <br>
 <br>
 
+## 시스템 구성도
+
+<img src="https://user-images.githubusercontent.com/28426269/46669839-869ddf80-cc0b-11e8-9f02-97b93b76fb20.png" width="85%">
+
 ## Framework
 * **Crack detection** : Keras 2.2, Tensorflow-gpu 1.9.0, Python 3.6.6
 * **Crack width estimation** : Scikit-image 0.14.0, Python 3.6.6
@@ -182,9 +186,9 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 
 ## 개발 문서
 
-* Crack Width Estimation with Crack Detection v1.3.ipynb : 균열 인식 및 균열 폭 측정을 하는 파일입니다.
+* Crack Width Estimation with Crack Detection v1.3.ipynb : 균열 인식 및 균열 폭 측정을 하는 파일입니다. 이 파일이 SPARK에 사용되었습니다.
 * SSD Crack Detection Training v1.3.ipynb : 균열 이미지 학습에 사용한 파일입니다
-* SSD Crack Detection Inference v1.1.ipynb : 균열 이미지를 한 장씩 딥러닝 엔진에 입력하여 출력 결과를 볼 수 있는 파일입니다.
+* SSD Crack Detection Inference v1.1.ipynb : 균열 이미지를 한 장씩 딥러닝 엔진에 입력하여 탐지 결과를 볼 수 있는 파일입니다.
 * SSD Crack Detection Evaluation v1.0.ipynb : 균열 이미지 여러 장을 한꺼번에 입력하여 탐지율을 % 단위로 불 수 있는 파일입니다.
 * crack_v5.py :  Crack Width Estimation with Crack Detection v1.3.ipynb 파일의 코드를 바탕으로, 서버에 업로드 하여 사용한 파일입니다.
 
