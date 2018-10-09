@@ -120,26 +120,6 @@ newlogpath = "/home/starever222/SPARK/SPARK/public/logs/"+filename
 if not os.path.exists(newlogpath):
     os.makedirs(newlogpath)
 
-#newcroppedpath = "/home/starever222/SPARK/SPARK/public/cropped_frames/"+filename
-#
-#if not os.path.exists(newcroppedpath):
-#    os.makedirs(newcroppedpath)
-#
-#newSauvolapath = "/home/starever222/SPARK/SPARK/public/Sauvola/"+filename
-#
-#if not os.path.exists(newSauvolapath):
-#    os.makedirs(newSauvolapath)
-#
-#newSkeletonpath = "/home/starever222/SPARK/SPARK/public/Skeleton/"+filename
-#
-#if not os.path.exists(newSkeletonpath):
-#    os.makedirs(newSkeletonpath)
-#
-# newedgespath = "/home/starever222/SPARK/SPARK/public/edges/"+filename
-#
-#if not os.path.exists(newedgespath):
-#    os.makedirs(newedgespath)
-
 
 
 while success:
