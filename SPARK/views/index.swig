@@ -548,14 +548,11 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-<<<<<<< HEAD
 		//console.log({{videoList}});
 		alert("이 페이지는 Chrome 사용을 권장합니다.");
 		function process_img(){
 			console.log("sdlkfj");
 		}
-=======
->>>>>>> 81efb88afedb35933f21c93c1eb2880674112291
 		var x = 0;
 		//if({{imglistsize}})
 		var img_count = {{imglistsize}};
