@@ -549,7 +549,7 @@
 	</body>
 	<script type="text/javascript">
 		//console.log({{videoList}});
-		alert("이 페이지는 Chrome 사용을 권장합니다.");
+		//alert("이 페이지는 Chrome 사용을 권장합니다.");
 		function process_img(){
 			console.log("sdlkfj");
 		}
@@ -581,7 +581,8 @@
 					
 				$("#videos").append('<div style="margin-left:20px;margin-top:5px;width:94%;"><div style="float:left;width:23%;height:23%"><video style="width:100%;height:100%margin-top:0px;float:left" controls><source src="/videos/' + video_list[i] + '" type="video/mp4"></video></div><div style="float:left;width:75%;height:33%"><a href="../video/'+ video_list[i].split(".")[0]  + '"><button id="videobox"  style="float:left;width:100%;">' + video_list[i] + '</button></a></div></div>');
 			}
-			var stop = "stop";											 
+			var stop = "stop";
+
 		});
 		var img_list = "{{imgList}}".split(",");
 		var frame_list = "{{frameList}}".split(",");
@@ -625,7 +626,7 @@
 				if(x >= img_count)
 					return;
 				img.src = "/images/{{title}}/"+lists[x]+".jpg";
-				if(frameList.includes(lists[x], 0)){
+				if(frameList.indexOf(lists[x]) != -1){
 					/*insert information*/
 					if(risklist[list_cnt] == "상"){
 						$("#info_table").append(
@@ -654,7 +655,7 @@
 					}
 					list_cnt++;
 					/*insert image*/
-					$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:2%;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="changeImage('+start+','+"stop"+')" src="/images/{{title}}/'+start+'.jpg" style="width:100%;height:130px;position:static"><div id="imgname" style="text-align:center;width:100%; height:30px background-color: #111000">'+lists[x]/24+'sec'+'</div></div>');
+					$("#imagearea").append('<div id="img_box" class="imgbox" style="box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);margin-left:2%;margin-top:20px;float:left;text-align:middle;width:30%;height:160px; position:static"><img id="imgview" onclick="javascript:changeImage('+start+',stop)" src="/images/{{title}}/'+start+'.jpg" style="width:100%;height:130px;position:static"><div id="imgname" style="text-align:center;width:100%; height:30px background-color: #111000">'+lists[x]/24+'sec'+'</div></div>');
 				}
 				setTimeout("changeImage((x+1)*6,'run')",250);
 			}else{
