@@ -67,15 +67,23 @@ router.get('/', function(req, res, next) {
 	videolist = (videolist.length>0)?videolist:[];
 	var init_title = videolist.length>0?videolist[0]:'NO VIDEO';
 	//console.log(videolist[0].split('.')[0]);
-	if(videolist.length!=0)
+	/*if(videolist.length!=0)
 		res.redirect('/video/'+videolist[0].split('.')[0]);
-	else{
+	else{*/
 		res.render('./index', {
 			title: init_title,
 			videoList: videolist,
-			listsize: videolist.length
+			listsize: videolist.length,
+			imglistsize: 0,
+			imgList: [],
+			frameList: [],
+			framelistsize: 0,
+			WidthList: [],
+			GpsxList: [],
+			GpsyList: [],
+			RiskList: []
 		});
-	}
+	//}
 });
 // videoname을 이용한 python파일 실행 및 이미지,텍스트 정보 send
 router.get('/video/:name', function(req, res){

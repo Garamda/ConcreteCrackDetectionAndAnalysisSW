@@ -3,7 +3,7 @@
 	<meta charset="utf-8">
 	<head>
 		<script src="//code.jquery.com/jquery.min.js"></script>
-		<!--<script src="js/jquery-1.8.2.js"></script>-->
+		<script src="../js/jquery-1.8.2.js"></script>
 		<style>
 			
 			#videobox {
@@ -474,7 +474,7 @@
 			<div id="wrapper" style="text-align:center;float:center;width:100%;height:820px">
 				<div id="videoarea" style="position:static;margin-left:2%;margin-top:80px;float:left;width:25%;text-align:center;font-size:1.3em;">
 					<div style="height:450px">
-					<img id="imgvideo" style="width:100%;">
+					<img id="imgvideo" style="width:100%">
 					</div>
 					<div style="overflow:scroll; margin-top:10px; text-align:center; font-size:14px; width:100%;; height:240px; border:4px solid;border-color:#ead9d9" id="videos">
 					</div>
@@ -544,12 +544,13 @@
 	</body>
 	<script type="text/javascript">
 		//console.log({{videoList}});
+		alert("이 페이지는 Chrome 사용을 권장합니다.");
 		function process_img(){
 			console.log("sdlkfj");
 		}
 		var x = 0;
-		if({{imglistsize}})
-			var img_count = {{imglistsize}};
+		//if({{imglistsize}})
+		var img_count = {{imglistsize}};
 		jQuery(function($){
 			var frame_list = "{{frameList}}".split(",");
 			
@@ -577,7 +578,6 @@
 			var stop = "stop";											 
 		});
 		//var x = 0;
-
 		var img_list = "{{imgList}}".split(",");
 		var frame_list = "{{frameList}}".split(",");
 		console.log(frame_list);
@@ -667,6 +667,5 @@
 			console.log("sdfklsjdflksjdkflsdkj");
 			document.getElementById("processing").style.visibility=visible;
 		}
-
 	</script>
 </html>
