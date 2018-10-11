@@ -69,7 +69,7 @@ Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를
 <img src="https://user-images.githubusercontent.com/28426269/46650969-6bb27780-cbd9-11e8-93b1-af089093aa66.JPG" width="40%">
 <br>
 <사진 6. 균열 폭 측정 작업 모식도>
-<br>
+<br><br>
 
 * **Image Binarization**
 
@@ -148,8 +148,7 @@ METU data set | 85.7% (1714/2000)
 4.  크랙 정보 리스트</br>
 
 
-* Web Page : http://35.221.191.213:3000 
-<br><br> 현재 크롬 브라우저에서만 지원
+* Web Page : http://35.221.191.213:3000 (웹 페이지는 현재 크롬 브라우저에서만 지원)
 * 실행 동영상 : https://youtu.be/Yq5ULmGD-lw
 
 * 해당 페이지 기능
