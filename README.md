@@ -216,6 +216,7 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 ## LICENSE
 각 코드 상단에 명시하였습니다.
 
+</br>
 
 
 # Concrete Crack Detection Using Drone & Deep Learning
@@ -236,35 +237,34 @@ However, there isn't open source software yet to detect crack in the video recor
 
 The Current problem of hardware-based concrete structure safety inspection.
 
-1. Non-automation
+* Non-automation
 </br>The assessment on data is still done by safety inspectors, even though the process can be automated through software because crack has typical patterns. Hardware can only help to collect data, but cannot make any decision on data instead of human.
 
-2. Expensive 
-1) The rental charge for under-bridge inspection vehicle : under-bridge inspection vehicle is used when inspecting the status of bridges. The problem is that the rental charges are expensive. It costs approximately 1,000 dollars(1,000,000 won) per one rental. The drone, however, demands only one purchase cost.<br>
-2) Additional manpower for inspection : when inspecting bridges, normally 8 people are needed to control the traffic, 2 people to get on the arm of the vehicle to examine the under-bridge, and 1 person to drive the vehicle. Totally, 11 people are required to inspect one bridge, which means not only rental cost for the special vehicle, but also additional employees are needed when using the existing way of structual health monitoring. Only 1 person will be needed if using drone for same purpose.
+* Expensive 
+  -  The rental charge for under-bridge inspection vehicle : under-bridge inspection vehicle is used when inspecting the status of bridges. The problem is that the rental charges are expensive. It costs approximately 1,000 dollars(1,000,000 won) per one rental. The drone, however, demands only one purchase cost.<br>
+  -  Additional manpower for inspection : when inspecting bridges, normally 8 people are needed to control the traffic, 2 people to get on the arm of the vehicle to examine the under-bridge, and 1 person to drive the vehicle. Totally, 11 people are required to inspect one bridge, which means not only rental cost for the special vehicle, but also additional employees are needed when using the existing way of structual health monitoring. Only 1 person will be needed if using drone for same purpose.
 
 </br>
 
 ## The Objective of SPARK
-1. Crack detection : SPARK detects the cracks on the surface of the concrete structure.</br>
-2. Crack width estimation & classification based on seriousness: SPARK estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
-3. Crack location reporting : SPARK reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
+* Crack detection : SPARK detects the cracks on the surface of the concrete structure.</br>
+* Crack width estimation & classification based on seriousness: SPARK estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
+* Crack location reporting : SPARK reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
 
 </br>
 </br>
 
 ## User Benefit
 
-1. Automation of Safety Inspection
-</br>
+* Automation of Safety Inspection
+
 The examination on structual health can be partially automated. SPARK selects which crack must be inspected based on width, which makes the further safety inspection done by human more efficient. SPARK "filters".
-</br></br>
-2. Reducing the time spent on Safety Inspection
-</br></br>
-3. One-stop System 
-</br>
-</br>
-4. Assuring the higher level of safety in the long term
+
+* Reducing the time spent on Safety Inspection
+
+* One-stop System 
+
+* Assuring the higher level of safety in the long term
 
 </br></br>
 
@@ -280,9 +280,9 @@ Random crack images | 76% (19/25)
 </br>
 
 ## Framework
-1. Crack detection : Keras 2.2, Tensorflow 1.9.0, Python 3.6.6</br>
-2. Crack width estimation : Scikit-image 0.14.0, Python 3.6.6</br>
-3. Crack location reporting : </br>
+* Crack detection : Keras 2.2, Tensorflow 1.9.0, Python 3.6.6</br>
+* Crack width estimation : Scikit-image 0.14.0, Python 3.6.6</br>
+* Crack location reporting : </br>
 
 
 </br>
