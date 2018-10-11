@@ -215,3 +215,78 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 
 ## LICENSE
 각 코드 상단에 명시하였습니다.
+
+
+
+# Concrete Crack Detection Using Drone & Deep Learning
+
+</br>
+
+## Introduction
+
+Crack on the surface of concrete is the one of the most clear signs of deterioration of concrete structure. Therefore, the concrete crack on the surface is the first target for the safety inspection, in most cases. Since the concrete crack has typical patterns, software can support the structual health monitoring through automatic crack detection. However, there has been mainly hardware-supported approach to safety inspection, not software-based one. Software-supported approach can save the cost, time and effort for saftey inspection through automatic evaluation on concrete image data.
+</br></br>
+Plus, UAV(Unmanned Aerial Vehicle), or drone, can amplify the synergy for software-based safety inspection because it can easily approach where human is impossible to reach. Especially, drone becomes particularly useful if used to examine the large scale concrete structure where safety inspectors are not able to reach every parts directly. That's why drone is recently being actively researched and utilized for large scale concrete structure health monitoring system. Therefore, the software tool for drone-based safety inspection is needed for the efficient examination in the future.
+</br></br>
+However, there isn't open source software yet to detect crack in the video recorded by drone which shoots the concrete structure surface. Hereby, I share my own concrete crack detection software for drone-based safety inspection. Single Shot Multibox Detector(SSD) is used for detecting cracks and Hybrid image processing is employed to estimate the crack width.
+
+</br>
+
+## Problem of Current Safety Inspection Methods
+
+The Current problem of hardware-based concrete structure safety inspection.
+
+1. Non-automation
+</br>The assessment on data is still done by safety inspectors, even though the process can be automated through software because crack has typical patterns. Hardware can only help to collect data, but cannot make any decision on data instead of human.
+
+2. Expensive 
+1) The rental charge for under-bridge inspection vehicle : under-bridge inspection vehicle is used when inspecting the status of bridges. The problem is that the rental charges are expensive. It costs approximately 1,000 dollars(1,000,000 won) per one rental. The drone, however, demands only one purchase cost.<br>
+2) Additional manpower for inspection : when inspecting bridges, normally 8 people are needed to control the traffic, 2 people to get on the arm of the vehicle to examine the under-bridge, and 1 person to drive the vehicle. Totally, 11 people are required to inspect one bridge, which means not only rental cost for the special vehicle, but also additional employees are needed when using the existing way of structual health monitoring. Only 1 person will be needed if using drone for same purpose.
+
+</br>
+
+## The Objective of SPARK
+1. Crack detection : SPARK detects the cracks on the surface of the concrete structure.</br>
+2. Crack width estimation & classification based on seriousness: SPARK estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
+3. Crack location reporting : SPARK reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
+
+</br>
+</br>
+
+## User Benefit
+
+1. Automation of Safety Inspection
+</br>
+The examination on structual health can be partially automated. SPARK selects which crack must be inspected based on width, which makes the further safety inspection done by human more efficient. SPARK "filters".
+</br></br>
+2. Reducing the time spent on Safety Inspection
+</br></br>
+3. One-stop System 
+</br>
+</br>
+4. Assuring the higher level of safety in the long term
+
+</br></br>
+
+## Performance
+
+Data set | Detection rate
+:---: | :---:
+METU data set | 85.7% (1714/2000)
+Real concrete surface video | 81.1% (43/53)
+Random crack images | 76% (19/25)
+
+
+</br>
+
+## Framework
+1. Crack detection : Keras 2.2, Tensorflow 1.9.0, Python 3.6.6</br>
+2. Crack width estimation : Scikit-image 0.14.0, Python 3.6.6</br>
+3. Crack location reporting : </br>
+
+
+</br>
+
+## Reference
+1. Liu, Wei, et al. "SSD: Single shot multibox detector." European conference on computer vision. Springer, Cham, 2016. (Link : https://arxiv.org/abs/1512.02325) </br>
+2. Kim, Hyunjun, et al. "Concrete crack identification using a UAV incorporating hybrid image processing." Sensors 17.9 (2017): 2052. (Link : http://www.mdpi.com/1424-8220/17/9/2052/htm)
