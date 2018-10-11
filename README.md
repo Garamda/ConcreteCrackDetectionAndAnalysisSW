@@ -149,6 +149,7 @@ METU data set | 85.7% (1714/2000)
 
 
 * Web Page : http://35.221.191.213:3000 
+<br><br> 현재 크롬 브라우저에서만 지원
 * 실행 동영상 : https://youtu.be/Yq5ULmGD-lw
 
 * 해당 페이지 기능
