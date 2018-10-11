@@ -1,3 +1,54 @@
+# Copyright (C) 2018 Pierluigi Ferrari
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+#  Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+
+
+
+
+# Copyright (C) 2011, the scikit-image team
+# All rights reserved.
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in
+#     the documentation and/or other materials provided with the
+#     distribution.
+#  3. Neither the name of skimage nor the names of its contributors may be
+#     used to endorse or promote products derived from this software without
+#     specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+# IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+
+# 1. 사전에 학습시킨 균열 탐지 딥러닝 weight와 Single Shot Multibox Detector model을 불러옵니다. 
+
+# 1. Upload the pre-trained deep learning weight and Single Shot Multibox Detector model for crack detection.
+
 from keras import backend as K
 from keras.models import load_model
 from keras.preprocessing import image
@@ -24,10 +75,13 @@ from data_generator.object_detection_2d_geometric_ops import Resize
 from data_generator.object_detection_2d_misc_utils import apply_inverse_transforms
 
 
-img_height = 300
-img_width = 300
+img_height = 300  # Height of the model input images
+img_width = 300 # Width of the model input images
 
 K.clear_session() 
+
+# 변수 값은 Single Shot Multibox Detector의 원래 수치를 변경하지 않고 사용하였습니다.
+# The original value of parameters of 'Single Shot Multibox Detector' was used without any changes.
 
 model = ssd_300(image_size=(img_height, img_width, 3),
                 n_classes=2,
@@ -53,7 +107,10 @@ model = ssd_300(image_size=(img_height, img_width, 3),
                 top_k=200,
                 nms_max_output_size=400)
 
-# 학습된 weight의 경로를 지정
+# 2: Load some weights into the model.
+
+# 학습된 weight를 불러오는 경로를 입력합니다.
+# Input your own path for pre-trained weight.
 weights_path = '/usr/local/lib/python3.5/dist-packages/tensorflow/keras/ssd_keras/ssd300_pascal_07+12_epoch-08_loss-1.9471_val_loss-1.9156.h5'
 
 
@@ -65,9 +122,18 @@ ssd_loss = SSDLoss(neg_pos_ratio=3, alpha=1.0)
 
 model.compile(optimizer=adam, loss=ssd_loss.compute_loss)
 
-# 영상의 경로를 지정하고 프레임 캡쳐
-# 나중에는 비디오 캡쳐를 함과 동시에 input_images리스트에 곧바로 넣어버려서, 불필요한 이미지 입출력 과정을 줄이자
-# 1초에 4프레임 캡쳐로 바꿈 (6프레임마다 저장)
+
+# 2. 드론이 촬영한 콘크리트 외벽 영상에서 프레임을 추출합니다(4fps).
+#    이 프레임 이미지들을 균열 탐지 딥러닝 엔진에 입력하여 inference를 합니다.
+#    Inference의 결과 값으로 균열의 위치를 bounding box의 형태로 report합니다.
+
+# 2. Extract frames out of the video which recorded the concrete surface shoot by drone(4fps).
+#    Input the frame images into the deep learning engine for inference.
+#    The positional information will be reported as a bounding box, as a result of the inference.
+
+
+# 드론으로 촬영한 영상의 경로를 입력합니다.
+# Input the path of the video shoot by drone.
 
 from wand.drawing import Drawing
 from wand.image import Image
@@ -77,14 +143,15 @@ import sys
 
 # We will get video name from node.js server this is demo version
 
-filename = sys.argv[1]
+
+filename = sys.argv[1]  # get video's name from node.js file
 video_path = '/home/starever222/SPARK/SPARK/public/videos/'+filename+'.mp4'
 vidcap = cv2.VideoCapture(video_path)
 success, imagefile = vidcap.read()
 count = 0
 
-# make directory
 
+# make images' and logs' directory
 
 newimagepath = "/home/starever222/SPARK/SPARK/public/images/"+filename
 
@@ -100,56 +167,25 @@ newlogpath = "/home/starever222/SPARK/SPARK/public/logs/"+filename
 if not os.path.exists(newlogpath):
     os.makedirs(newlogpath)
 
-#newcroppedpath = "/home/starever222/SPARK/SPARK/public/cropped_frames/"+filename
-
-#if not os.path.exists(newcroppedpath):
-#    os.makedirs(newcroppedpath)
-
-# newcroppedpath = "home/starever222/SPARK/SPARK/public/cropped_frames/"+filename
-#
-# if not os.path.exists(newcroppedpath):
-#     os.makedirs(newcroppedpath)
-#
-# newSauvolapath = "home/starever222/SPARK/SPARK/public/Sauvola/"+filename
-#
-# if not os.path.exists(newSauvolapath):
-#     os.makedirs(newSauvolapath)
-#
-# newSkeletonpath = "home/starever222/SPARK/SPARK/public/Skeleton/"+filename
-#
-# if not os.path.exists(newSkeletonpath):
-#     os.makedirs(newSkeletonpath)
-#
-# newedgespath = "home/starever222/SPARK/SPARK/public/edges/"+filename
-#
-# if not os.path.exists(newedgespath):
-#     os.makedirs(newedgespath)
-
 
 
 while success:
 
     if (count % 6 == 0):
-        # 프레임 캡쳐를 저장할 경로
-        # img_path = "~/SPARK/SPARK/public/images/"+filename+"/%d.jpg" % count
+        # 추출된 프레임 이미지들을 저장할 경로를 입력합니다.
+        # Input the path to save the extracted frame images.
         cv2.imwrite("/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg" % count, imagefile)
-        # print("write", img_path, imagefile)
     success, imagefile = vidcap.read()
     count += 1
 
 orig_images = []
 input_images = []
 
-# range는 추후 영상 플레이 타임 정보를 사용할 수 있도록 변경
 frames_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 for i in range(0,frames_count):
     if (i % 6 == 0):
-        # 프레임 캡쳐를 불러오는 경로
-        # ---------------------------
-        # img_path = 'images/video/%d.jpg' % i
-        # img_path = 'C:\\Users\\rlaal\\Desktop\\frame\\frame%d.jpg'%i
-        # ----------------------------done
-        # print(img_path)
+        # 저장한 프레임 이미지들을 다시 불러올 수 있도록 동일한 경로를 입력합니다.
+        # Input the same path used before to load the saved frame images.
         img_path = '/home/starever222/SPARK/SPARK/public/images/'+filename+'/%d.jpg' % i
         orig_images.append(imread(img_path))
         img = image.load_img(img_path, target_size=(img_height, img_width))
@@ -160,6 +196,9 @@ for i in range(0,frames_count):
 input_images = np.array(input_images)
 orig_images = np.array(orig_images)
 
+# 한 번에 처리되는 프레임 이미지의 갯수를 입력합니다. 보유 GPU 성능에 따라 늘리거나 줄여야 할 수 있습니다. 
+# Input the number of frame images to be batch-processed.
+# You may increase or decrease the number depending on the performance of your own gpu.
 num_of_frames = 16
 counting = 0
 saving_bounding_boxes = []
@@ -168,7 +207,7 @@ isBreak = 0;
 print("Predicted boxes:\n")
 print('   class   conf xmin   ymin   xmax   ymax')
 
-# range는 추후 변수를 사용할 수 있도록 변경
+
 for i in range(0, frames_count):
     y_pred = model.predict(input_images[i * num_of_frames:i * num_of_frames + num_of_frames])
     confidence_threshold = 0.4
@@ -178,7 +217,6 @@ for i in range(0, frames_count):
 
     for j in range(0, num_of_frames):
         print('frame :', counting)
-        #   print(y_pred_thresh[j])
         if(j>len(y_pred_thresh)): break;
         for box in y_pred_thresh[j]:
             # Transform the predicted bounding boxes for the 300x300 image to the original image dimensions.
@@ -187,12 +225,13 @@ for i in range(0, frames_count):
             xmax = box[4] * orig_images[0].shape[1] / img_width
             ymax = box[5] * orig_images[0].shape[0] / img_height
             print('xmin : ', xmin, '  ymin : ', ymin, '  xmax : ', xmax, '  ymax : ', ymax)
-            # 균열이 탐지된 프레임과 b-box 정보가 saving_bounding_boxes <- 여기에 저장됨
+            # 균열이 탐지된 프레임의 bounding box 위치정보를 saving_bounding_boxes 리스트에 저장합니다.
+            # Append the positional information of the bounding box of the detected frame at'saving_bounding_boxes' list.
+            
             saving_bounding_boxes.append([(counting), xmin, ymin, xmax, ymax])
-            # --------------------------------------
-            #framepath = "images/video_crack/frame%d.jpg" % (count), imagefile
             cv2.imwrite("/home/starever222/SPARK/SPARK/public/images/"+filename+"_crack/%d.jpg" % (counting), imagefile)
-            #add drawing rectangle
+            
+            #add drawing red rectangle on cracked images (by Wand)
             with Drawing() as draw:
                 draw.stroke_width = 4.0
                 draw.stroke_color = Color('red')
@@ -203,14 +242,10 @@ for i in range(0, frames_count):
                 yMax = int(ymax)
                 draw.rectangle(left=xMin, top=yMin, right=xMax, bottom=yMax)
                 img_path = "/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg" % counting
-                #with Image(filename="/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg"% count) as image:
                 with Image(filename=img_path) as image:
                     draw(image)
-                    #boximg_path = "/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg"% count
                     boximg_path = "/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg" % counting
                     image.save(filename=boximg_path)
-                    #cv2.imwrite("C:\\Users\\rlaal\\Desktop\\detected\\frame%d.jpg"% (count), imagefile)
-                    # ----------------------------------------done
 
         counting += 6
         if(counting>frames_count): 
@@ -220,6 +255,8 @@ for i in range(0, frames_count):
 
 print(saving_bounding_boxes)
 
+# 3. 균열탐지 딥러닝 엔진이 리포트 한 균열 위치에 맞게 프레임 이미지를 잘라냅니다.
+# 3. Crop the frame image using the positional information of the crack reported by crack detection deep learning engine.
 from skimage import io
 
 cropped_frames = []
@@ -238,20 +275,27 @@ for i in range(0, len(saving_bounding_boxes)):
     print(xmin,ymin,xmax,ymax)
     cropped_frame = orig_images[frame_count][ymin:ymax, xmin:xmax, :]
     cropped_frame = cropped_frame.astype('uint8')
-    # -----------------------------
-    #newcroppedpath = "/home/starever222/SPARK/SPARK/public/cropped_frames/" + filename
-
-    #if not os.path.exists(newcroppedpath):
-    #    os.chmod(0777)
-    #    os.makedirs(newcroppedpath)
-    # img_path = newcroppedpath+'/%d.jpg' % frame_count
-    # img_path = '../../Desktop/test/%d.jpg'%frame_count
-    # -----------------------done
+    
+    # 잘라낸 프레임 이미지를 저장하는 리스트입니다.
+    # The list which saves the cropped frame images.
+    
     cropped_frames.append(cropped_frame)
-    # io.imsave(img_path, cropped_frame)
 
-# 1. Image binarization(Sauvola's method) using Pw and Pl, respectively
-# 오래 걸리는 문제가 있음
+# 4. 균열 탐지 딥러닝 엔진이 잘라낸 프레임 이미지에 전처리를 합니다.
+#    전처리는 총 3단계로 구성됩니다.
+#   1) Image Binarization : 균열인 부분과 균열이 아닌 부분을 분리합니다.
+#   2) Skeletonize : 균열의 뼈대를 추출합니다.
+#   3) Edge detection : 균열의 외곽선을 추출합니다.
+
+#   이 단계에서는 Image Binarization을 진행합니다.
+
+# 4. Preprocess the frame images cropped by crack detection deep learning engine.
+#    The preprocess consists of 3 stages.
+#   1) Image Binarization : seperate crack section and the noncrack section.
+#   2) Skeletonize : extract the central skeleton of the crack.
+#   3) Edge detection : extract the edge of the crack.
+
+#   At this stage, Image Binarization will be done.
 
 import time
 import matplotlib
@@ -272,7 +316,11 @@ for i in range(0, len(cropped_frames)):
     img = cropped_frames[i]
     img_gray = rgb2gray(img)
 
-    # 논문에선 각각 70,180이었으나 여기선 홀수 input만 가능
+    # window size와 k값은 'Concrete Crack Identification Using a UAV Incorporating Hybrid Image Processing' 논문이 제시한 값을
+    # 그대로 사용하였습니다.
+    
+    # window size and k value were used without any changes from the
+    # 'Concrete Crack Identification Using a UAV Incorporating Hybrid Image Processing' thesis.
     window_size_Pw = 71
     thresh_sauvola_Pw = threshold_sauvola(img_gray, window_size=window_size_Pw, k=0.42)
 
@@ -284,20 +332,15 @@ for i in range(0, len(cropped_frames)):
     binary_sauvola_Pw_bw.dtype = 'uint8'
 
     binary_sauvola_Pw_bw *= 255
-
+    
+    # Image Binarization이 완료된 이미지를 저장하는 리스트입니다.
+    # The list which saves the images after image binarization.
+    
     sauvola_frames_Pw_bw.append(binary_sauvola_Pw_bw)
     sauvola_frames_Pw.append(binary_sauvola_Pw)
-    # ----------------------------------------
-    # newSauvolapath = "/home/starever222/SPARK/SPARK/public/Sauvola/" + filename
 
-    # if not os.path.exists(newSauvolapath):
-    #    os.makedirs(newSauvolapath)
-    # img_path_Pw = newSauvolapath+'/Sauvola_Pw_%d.jpg' % i
-    #   img_path_Pw = '../../Desktop/Sauvola/Sauvola_Pw_%d.jpg'%i
-    # -------------------------------------------done
-    # io.imsave(img_path_Pw, binary_sauvola_Pw_bw)
-
-# 2. Extract the skeletons of each images
+# 5. 균열의 뼈대를 추출합니다.
+# 5. Extract the skeleton of the crack.
 
 from skimage.morphology import skeletonize
 from skimage.util import invert
@@ -315,21 +358,14 @@ for i in range(0, len(cropped_frames)):
     skeleton_Pw.dtype = 'uint8'
 
     skeleton_Pw *= 255
-
+    
+    # Skeletonize가 끝난 이미지를 저장하는 리스트입니다.
+    # The list which saves the images after the skeletonization.
     skeleton_frames_Pw.append(skeleton_Pw)
-    # ---------------------------
-    #newSkeletonpath = "/home/starever222/SPARK/SPARK/public/Skeleton/" + filename
 
-    #if not os.path.exists(newSkeletonpath):
-    #    os.chmod(0777)
-    #    os.makedirs(newSkeletonpath, 0777)
-    # img_path_Pw = newSkeletonpath+"/skeleton_Pw_%d.jpg" % i
-    # img_path_Pw = "../../Desktop/Skeleton/skeleton_Pw_%d.jpg"%i
-    # ---------------------------done
-    # io.imsave(img_path_Pw, skeleton_Pw)
+# 6. 균열의 외곽선을 추출합니다.
+# 6. Detect the edges of the crack.
 
-# 3. Detect the edges of each images
-### edge detection 할 때, 좋은 parameter를 찾아야 한다. 지금은 edge가 너무 두꺼움 (overestimation됨) ###
 import numpy as np
 from scipy import ndimage as ndi
 from skimage import feature
@@ -339,27 +375,15 @@ edges_frames_Pw = []
 for i in range(0,len(cropped_frames)):
     # Compute the Canny filter for two values of sigma
     # canny(image, sigma=1.0, low_threshold=None, high_threshold=None, mask=None, use_quantiles=False)
-    # sigma가 1이었으나, 0.1로 조정하여 실제 균열 edge와 거의 같게 만듦.
-    # 정확도에서 문제가 생긴다면 1. skeleton의 방향 설정 방법을 바꾸던가, 2. 여기서 시그마 값을 살짝 늘리거나 줄여가면서 정확도를 테스트 해볼 것
     edges_Pw = feature.canny(sauvola_frames_Pw[i], 0.09)
 
     edges_Pw.dtype = 'uint8'
 
     edges_Pw *= 255
-
+    
+    # Edge detection이 끝난 이미지를 저장하는 리스트입니다.
+    # The list which saves the images after edge detection.
     edges_frames_Pw.append(edges_Pw)
-    # ----------------------------
-    # newedgespath = "/home/starever222/SPARK/SPARK/public/edges/" + filename
-
-    # if not os.path.exists(newedgespath):
-    #     os.chmod(newedgespath, 0777)
-    #    os.makedirs(newedgespath)
-    # img_path_Pw = newedgespath+"/edges_Pw_%d.jpg"%i
-    # img_path_Pw = "../../Desktop/edges/edges_Pw_%d.jpg"%i
-    # ----------------------------done
-    # io.imsave(img_path_Pw, edges_Pw)
-
-# Crack만이 detection되어서 넘어왔다는 가정이 있어야 함. 아니면 외부 배경 이미지도 균열 계산에 포함 됨
 
 # 7. 균열의 폭을 계산합니다. 
 # 1) 균열의 Skeleton으로부터 균열의 진행 방향을 파악합니다.
@@ -369,7 +393,7 @@ for i in range(0,len(cropped_frames)):
 # 7. Calculate the width of the crack.
 # 1) Analyze the direction of the crack from the skeleton.
 # 2) Draw a perpendicular line of the direction
-# 3) The perpendicular line meets the edge. This distance is the width of the crack.
+# 3) The perpendicular line meets the edge. This distance is the width of the crack..
 
 import queue
 import math
@@ -562,7 +586,7 @@ for k in range(0,len(skeleton_frames_Pw)):
     else: 
         real_width = round(crack_width_list[9]*0.92, 2)
         save_result.append(real_width)
-
+    # give level of risk data in save_risk
     if(real_width >= 0.3):
         save_risk.append('상')
         print('위험군 : 상\n')
@@ -572,7 +596,8 @@ for k in range(0,len(skeleton_frames_Pw)):
     else: 
         save_risk.append('하')
         print('위험군 : 하\n')
-        
+
+# make width and level of risk data to text data
 f = open("/home/starever222/SPARK/SPARK/public/logs/"+filename+"/width.txt", 'w')
 for z in range(0, len(save_result)):
     f.write(str(save_result[z])+'mm\n')
