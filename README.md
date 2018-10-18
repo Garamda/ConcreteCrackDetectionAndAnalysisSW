@@ -214,7 +214,8 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 </br></br>
 
 ## LICENSE
-각 코드 상단에 명시하였습니다.
+* 프로젝트 라이선스 : GPL-3.0
+* Crack Width Estimation with Crack Detection v1.3.ipynb, crack_v5.py  :  Apache-2.0, BSD 3-Clause
 
 </br>
 
