@@ -210,7 +210,7 @@ print('   class   conf xmin   ymin   xmax   ymax')
 
 for i in range(0, frames_count):
     y_pred = model.predict(input_images[i * num_of_frames:i * num_of_frames + num_of_frames])
-    confidence_threshold = 0.4
+    confidence_threshold = 0.6
 
     y_pred_thresh = [y_pred[k][y_pred[k, :, 1] > confidence_threshold] for k in range(y_pred.shape[0])]
     np.set_printoptions(precision=2, suppress=True, linewidth=90)
