@@ -246,7 +246,7 @@ for i in range(0, frames_count):
                     draw(image)
                     boximg_path = "/home/starever222/SPARK/SPARK/public/images/"+filename+"/%d.jpg" % counting
                     image.save(filename=boximg_path)
-
+             break;
         counting += 6
         if(counting>frames_count): 
             isBreak = 1;
