@@ -205,6 +205,10 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 
 <br><br>
 
+## 도움을 주신 분
+* 서울시립대학교 토목공학과 조수진 교수님
+<br><br>
+
 ## Reference
 1. Liu, Wei, et al. "SSD: Single shot multibox detector." European conference on computer vision. Springer, Cham, 2016. (Link : https://arxiv.org/abs/1512.02325) </br>
 2. Kim, Hyunjun, et al. "Concrete crack identification using a UAV incorporating hybrid image processing." Sensors 17.9 (2017): 2052. (Link : http://www.mdpi.com/1424-8220/17/9/2052/htm)  </br>
@@ -285,6 +289,11 @@ Random crack images | 76% (19/25)
 * Crack width estimation : Scikit-image 0.14.0, Python 3.6.6</br>
 * Crack location reporting : </br>
 
+
+</br>
+
+## Special Thanks to
+* Soojin Cho, Assistant Professor of Department of Civil Engineering, University of Seoul.
 
 </br>
 
