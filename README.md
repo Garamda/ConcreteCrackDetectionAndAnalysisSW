@@ -15,7 +15,7 @@
 
 <사진 2. 드론을 활용한 구조물 안전 진단>
 
-따라서 드론을 활용한 안전 진단에 맞는 SW가 필요합니다. 하지만 드론으로 촬영한 콘크리트 외벽 영상에서 균열을 탐지하고 분석하는 오픈소스 SW는 아직 없는 실정입니다. 이제 SPARK에서 드론 활용 안전 진단을 위한 콘크리트 균열 탐지 SW를 사용하실 수 있습니다. 균열을 탐지하기 위한 딥러닝 알고리즘으로는 Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용했습니다. 균열의 폭을 측정하기 위해서 Image binarization, Skeletonize, Edge detection의 전처리 방법론을 사용하였습니다.
+따라서 드론을 활용한 안전 진단에 맞는 SW가 필요합니다. 하지만 드론으로 촬영한 콘크리트 외벽 영상에서 균열을 탐지하고 분석하는 오픈소스 SW는 아직 없는 실정입니다. 이제 Chamomile에서 드론 활용 안전 진단을 위한 콘크리트 균열 탐지 SW를 사용하실 수 있습니다. 균열을 탐지하기 위한 딥러닝 알고리즘으로는 Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를 사용했습니다. 균열의 폭을 측정하기 위해서 Image binarization, Skeletonize, Edge detection의 전처리 방법론을 사용하였습니다.
 
 </br>
 
@@ -31,18 +31,18 @@
 <사진 3. 굴절차를 사용한 구조물 안전진단> <br> <br>
 교량 안전 진단을 예시로 설명하겠습니다.
 <br> <br>
-* **굴절차 대여 비용** : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 SPARK를 사용하면 초기 구매 비용만 소요됩니다.<br></br>
-* **투입 인력** : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 이와 같은 이유로, 10개 교량을 기준으로 평균 4천만원의 진단 비용이 발생합니다. 드론과 SPARK를 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
+* **굴절차 대여 비용** : 교량 하부를 진단할 때에는 위 사진과 같이 굴절차를 사용합니다. 문제는 굴절차 1회 대여에 약 100만원 가량의 높은 비용이 발생한다는 점입니다. 드론과 Chamomile을 사용하면 초기 구매 비용만 소요됩니다.<br></br>
+* **투입 인력** : 교량 안전 진단 시 평균적으로 11명의 인력이 필요합니다. 굴절차를 운전하는 인원 1명, 굴절차의 팔에 탑승하여 교량 하부를 점검하는 인원 2명, 교량 상부에서 신호 통제를 하는 인원 8명이 필요합니다. 굴절차 대여 비용과 더불어 인력 고용의 비용까지 들어가는 것입니다. 이와 같은 이유로, 10개 교량을 기준으로 평균 4천만원의 진단 비용이 발생합니다. 드론과 Chamomile을 사용한다면 드론을 운전하는 인력 1명만이 필요합니다.
 
 </br>
 </br>
 
-## SPARK의 목표
+## Chamomile의 목표
 
 ### 1. 균열 탐지
 콘크리트 외벽상의 균열을 탐지합니다.</br></br>
 ### 2. 균열 폭 측정 & 심각도에 따른 분류
-탐지된 균열의 폭을 측정하고, 폭이 큰 심각한 균열을 우선적으로 리포트 합니다. 균열의 폭을 측정하는 이유는 실제 안전 진단 현장에서 위험도를 판단하기 위해 사용하는 중요한 정보이기 때문입니다.  <br> 폭이 0.3mm보다 크면 유지 보수 작업에 들어가고, 0.3mm~0.2mm에 해당하면 추이를 지켜봅니다. 0.2mm 미만인 균열은 위험도가 낮다고 판단합니다. SPARK에서는 이 기준을 그대로 사용하였습니다. 폭이 0.3mm보다 큰 균열은 "상"위험군으로, 0.3mm ~ 0.2mm의 균열은 "중"위험군으로, 0.2mm 미만의 균열은 "하" 위험군으로 분류합니다.</br></br>
+탐지된 균열의 폭을 측정하고, 폭이 큰 심각한 균열을 우선적으로 리포트 합니다. 균열의 폭을 측정하는 이유는 실제 안전 진단 현장에서 위험도를 판단하기 위해 사용하는 중요한 정보이기 때문입니다.  <br> 폭이 0.3mm보다 크면 유지 보수 작업에 들어가고, 0.3mm~0.2mm에 해당하면 추이를 지켜봅니다. 0.2mm 미만인 균열은 위험도가 낮다고 판단합니다. Chamomile에서는 이 기준을 그대로 사용하였습니다. 폭이 0.3mm보다 큰 균열은 "상"위험군으로, 0.3mm ~ 0.2mm의 균열은 "중"위험군으로, 0.2mm 미만의 균열은 "하" 위험군으로 분류합니다.</br></br>
 ### 3. 균열 위치 리포트
 균열이 탐지 되었을 때의 드론 GPS 정보를 리포트합니다.
 
@@ -84,11 +84,11 @@ Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를
 균열의 외곽선을 추출합니다. Skeleton에서 균열의 진행 방향에 수직인 선과 균열의 외곽선이 함께 균열의 폭을 구하는 데 활용됩니다.
 </br></br>
 
-## SPARK의 장점
+## Chamomile의 장점
 
 ### 1. 안전 진단의 자동화
 
-콘크리트 구조물의 안전 진단을 일부 자동화 할 수 있습니다. SPARK가 어떤 균열이 추가 진단이 필요할 지를 균열 폭에 근거하여 리포트합니다. 이는 후에 있을 추가 정밀 진단이 더욱 효율적으로 이루어지도록 돕습니다.
+콘크리트 구조물의 안전 진단을 일부 자동화 할 수 있습니다. Chamomile이 어떤 균열이 추가 진단이 필요할 지를 균열 폭에 근거하여 리포트합니다. 이는 후에 있을 추가 정밀 진단이 더욱 효율적으로 이루어지도록 돕습니다.
 
 ### 2. 비용 감소
 
@@ -101,7 +101,7 @@ Single Shot Multibox Detector(https://github.com/pierluigiferrari/ssd_keras) 를
 
 ### 3. 안전 진단 시간 절약
 
-추후 정밀 진단이 필요한 균열들의 위치와 심각한 정도를 사전에 알 수 있습니다. SPARK가 균열의 폭을 바탕으로 심각도가 높은 균열들부터 우선적으로 리포트하기 때문입니다. 따라서 안전 진단 시 소요 시간이 단축됩니다. 
+추후 정밀 진단이 필요한 균열들의 위치와 심각한 정도를 사전에 알 수 있습니다. Chamomile 균열의 폭을 바탕으로 심각도가 높은 균열들부터 우선적으로 리포트하기 때문입니다. 따라서 안전 진단 시 소요 시간이 단축됩니다. 
 
 ### 4. 장기적으로 더욱 높은 수준의 안전을 담보 
 
@@ -187,7 +187,7 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 
 ## 개발 문서
 
-* Crack Width Estimation with Crack Detection v1.3.ipynb : 균열 인식 및 균열 폭 측정을 하는 파일입니다. 이 파일이 SPARK에 사용되었습니다.
+* Crack Width Estimation with Crack Detection v1.3.ipynb : 균열 인식 및 균열 폭 측정을 하는 파일입니다. 이 파일이 Chamomile에 사용되었습니다.
 * SSD Crack Detection Training v1.3.ipynb : 균열 이미지 학습에 사용한 파일입니다
 * SSD Crack Detection Inference v1.1.ipynb : 균열 이미지를 한 장씩 딥러닝 엔진에 입력하여 탐지 결과를 볼 수 있는 파일입니다.
 * SSD Crack Detection Evaluation v1.0.ipynb : 균열 이미지 여러 장을 한꺼번에 입력하여 탐지율을 % 단위로 불 수 있는 파일입니다.
@@ -251,10 +251,10 @@ The Current problem of hardware-based concrete structure safety inspection.
 
 </br>
 
-## The Objective of SPARK
-* Crack detection : SPARK detects the cracks on the surface of the concrete structure.</br>
-* Crack width estimation & classification based on seriousness: SPARK estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
-* Crack location reporting : SPARK reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
+## The Objective of Chamomile
+* Crack detection : Chamomile detects the cracks on the surface of the concrete structure.</br>
+* Crack width estimation & classification based on seriousness: Chamomile estimate the width of the detected cracks, and reports the more serious crack first which has wider width than others. Basically, the crack of which width is more than 0.3mm is to be classified as "high risk crack", 0.3mm ~ 0.2mm as "low risk crack", and ~ 0.2mm as "minor crack.</br>
+* Crack location reporting : Chamomile reports the actual location of the crack based on the flight log saved in the drone. With combining pixel information and the flight log, the location of crack can be calculated. It is useful for safety inspectors to know where the serious cracks locates which needs further precision diagnosis, before they physically approach to the target structure.
 
 </br>
 </br>
@@ -263,7 +263,7 @@ The Current problem of hardware-based concrete structure safety inspection.
 
 * Automation of Safety Inspection
 
-The examination on structual health can be partially automated. SPARK selects which crack must be inspected based on width, which makes the further safety inspection done by human more efficient. SPARK "filters".
+The examination on structual health can be partially automated. Chamomile selects which crack must be inspected based on width, which makes the further safety inspection done by human more efficient. Chamomile "filters".
 
 * Reducing the time spent on Safety Inspection
 
