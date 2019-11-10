@@ -279,7 +279,6 @@ Random crack images | 76% (19/25)
 ## Framework
 * Crack detection : Keras 2.2, Tensorflow 1.9.0, Python 3.6.6</br>
 * Crack width estimation : Scikit-image 0.14.0, Python 3.6.6</br>
-* Crack location reporting : </br>
 
 
 </br>
