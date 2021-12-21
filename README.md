@@ -1,5 +1,9 @@
 # 드론을 활용한 콘크리트 구조물 균열 탐지 소프트웨어
 
+</br></br>
+
+<b>cf) 더 이상 현행화/업데이트가 지원되지 않습니다.</b>
+
 </br>
 
 ## 소개
@@ -230,9 +234,14 @@ Scikit-image 라이브러리를 사용합니다. 다음 명령어를 입력하�
 
 # Concrete Crack Detection Using Drone & Deep Learning
 
+</br></br>
+
+<b>cf) No more currentization and updates are supported.</b>
+
 </br>
 
 ## Introduction
+
 
 Crack on the surface of concrete is the one of the most clear signs of deterioration of concrete structure. Therefore, the concrete crack on the surface is the first target for the safety inspection, in most cases. Since the concrete crack has typical patterns, software can support the structual health monitoring through automatic crack detection. However, there has been mainly hardware-supported approach to safety inspection, not software-based one. Software-supported approach can save the cost, time and effort for saftey inspection through automatic evaluation on concrete image data.
 </br></br>
